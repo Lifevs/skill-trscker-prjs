@@ -1,0 +1,336 @@
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font-sans); }
+  .wrap { padding: 1rem 0; }
+  .header { margin-bottom: 1.5rem; }
+  .header h2 { font-size: 18px; font-weight: 500; color: var(--color-text-primary); }
+  .header p { font-size: 13px; color: var(--color-text-secondary); margin-top: 4px; }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 1.5rem; }
+  .stat { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 12px; text-align: center; }
+  .stat-n { font-size: 22px; font-weight: 500; color: var(--color-text-primary); }
+  .stat-l { font-size: 11px; color: var(--color-text-secondary); margin-top: 2px; }
+  .tabs { display: flex; gap: 6px; margin-bottom: 1rem; flex-wrap: wrap; }
+  .tab { padding: 6px 14px; border-radius: 20px; font-size: 13px; cursor: pointer; border: 0.5px solid var(--color-border-secondary); background: var(--color-background-primary); color: var(--color-text-secondary); transition: all 0.15s; }
+  .tab.active { background: var(--color-background-primary); color: var(--color-text-primary); border-color: var(--color-border-primary); font-weight: 500; }
+  .domain-label { font-size: 12px; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; padding: 4px 10px; border-radius: 20px; display: inline-block; margin-bottom: 1rem; }
+  .d1 { background: #E6F1FB; color: #0C447C; }
+  .d2 { background: #E1F5EE; color: #085041; }
+  .d3 { background: #FAEEDA; color: #633806; }
+  .d4 { background: #FCEBEB; color: #791F1F; }
+  .projects { display: flex; flex-direction: column; gap: 10px; }
+  .project { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 14px 16px; cursor: pointer; transition: border-color 0.15s; }
+  .project:hover { border-color: var(--color-border-secondary); }
+  .project.expanded { border-color: var(--color-border-primary); }
+  .proj-head { display: flex; align-items: flex-start; gap: 10px; }
+  .proj-num { font-size: 11px; font-weight: 500; min-width: 28px; color: var(--color-text-secondary); padding-top: 2px; }
+  .proj-title { font-size: 14px; font-weight: 500; color: var(--color-text-primary); flex: 1; line-height: 1.4; }
+  .proj-diff { font-size: 11px; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+  .easy { background: #EAF3DE; color: #3B6D11; }
+  .med { background: #FAEEDA; color: #854F0B; }
+  .hard { background: #FCEBEB; color: #A32D2D; }
+  .proj-body { margin-top: 12px; padding-top: 12px; border-top: 0.5px solid var(--color-border-tertiary); display: none; }
+  .proj-body.open { display: block; }
+  .proj-sub { font-size: 12px; font-weight: 500; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px; margin-top: 10px; }
+  .proj-sub:first-child { margin-top: 0; }
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag { font-size: 12px; background: var(--color-background-secondary); color: var(--color-text-secondary); padding: 2px 8px; border-radius: 10px; }
+  .steps { list-style: none; }
+  .steps li { font-size: 13px; color: var(--color-text-primary); padding: 3px 0 3px 16px; position: relative; line-height: 1.5; }
+  .steps li::before { content: "→"; position: absolute; left: 0; color: var(--color-text-secondary); font-size: 11px; top: 4px; }
+  .outcome { font-size: 13px; color: var(--color-text-primary); line-height: 1.5; margin-top: 4px; }
+  .progress-bar { height: 4px; background: var(--color-background-secondary); border-radius: 2px; margin-top: 1.5rem; }
+  .progress-fill { height: 100%; background: #185FA5; border-radius: 2px; transition: width 0.3s; }
+  .done-btn { font-size: 12px; color: var(--color-text-secondary); border: 0.5px solid var(--color-border-secondary); background: transparent; border-radius: var(--border-radius-md); padding: 5px 12px; cursor: pointer; margin-top: 10px; display: flex; align-items: center; gap: 5px; }
+  .done-btn.checked { background: #EAF3DE; color: #3B6D11; border-color: #C0DD97; }
+  .filter-row { display: flex; gap: 6px; margin-bottom: 1rem; align-items: center; flex-wrap: wrap; }
+  .filter-row span { font-size: 12px; color: var(--color-text-secondary); }
+  .pill { padding: 4px 10px; border-radius: 20px; font-size: 12px; cursor: pointer; border: 0.5px solid var(--color-border-tertiary); background: var(--color-background-primary); color: var(--color-text-secondary); }
+  .pill.on { background: var(--color-background-secondary); color: var(--color-text-primary); border-color: var(--color-border-primary); }
+  .empty { font-size: 14px; color: var(--color-text-secondary); padding: 2rem; text-align: center; }
+</style>
+
+<div class="wrap">
+  <h2 class="sr-only">AWS MLA-C01 micro-projects roadmap — 40 hands-on projects covering all 4 exam domains</h2>
+  <div class="header">
+    <h2>AWS MLA-C01 — 40 micro-projects roadmap</h2>
+    <p>Every project maps to specific exam tasks. Complete all to build 900+ exam readiness.</p>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="stat-n" id="total-done">0</div><div class="stat-l">completed</div></div>
+    <div class="stat"><div class="stat-n">40</div><div class="stat-l">total projects</div></div>
+    <div class="stat"><div class="stat-n">4</div><div class="stat-l">domains covered</div></div>
+    <div class="stat"><div class="stat-n" id="pct">0%</div><div class="stat-l">progress</div></div>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="prog" style="width:0%"></div></div>
+
+  <div style="margin-top:1.5rem;">
+    <div class="tabs">
+      <div class="tab active" onclick="setDomain('all')">All 40</div>
+      <div class="tab" onclick="setDomain('d1')">Domain 1 · Data Prep</div>
+      <div class="tab" onclick="setDomain('d2')">Domain 2 · Model Dev</div>
+      <div class="tab" onclick="setDomain('d3')">Domain 3 · Deploy</div>
+      <div class="tab" onclick="setDomain('d4')">Domain 4 · Monitor</div>
+    </div>
+    <div class="filter-row">
+      <span>Difficulty:</span>
+      <div class="pill on" onclick="toggleDiff('easy',this)">Starter</div>
+      <div class="pill on" onclick="toggleDiff('med',this)">Intermediate</div>
+      <div class="pill on" onclick="toggleDiff('hard',this)">Advanced</div>
+    </div>
+  </div>
+
+  <div class="projects" id="proj-list"></div>
+</div>
+
+<script>
+const PROJECTS = [
+  {id:1,domain:'d1',diff:'easy',title:'S3 data lake setup with multiple formats',task:'Task 1.1',
+   services:['Amazon S3','AWS Glue','Amazon Athena'],
+   steps:['Create S3 bucket with folders for raw/processed/curated zones','Upload sample data in CSV, JSON, and Parquet formats','Use Glue Crawler to auto-catalog all three formats','Query each format in Athena and compare performance','Enable S3 versioning and lifecycle rules for cost optimization'],
+   outcome:'You understand S3 storage tiers, data formats, Glue cataloging, and cost-aware storage decisions.'},
+  {id:2,domain:'d1',diff:'easy',title:'Kinesis Data Streams real-time ingestion pipeline',task:'Task 1.1',
+   services:['Amazon Kinesis','AWS Lambda','Amazon S3'],
+   steps:['Create a Kinesis Data Stream with 2 shards','Write a Python producer script that sends mock sensor data','Create a Lambda consumer that reads from the stream','Store processed records to S3 in Parquet via Data Firehose','Monitor shard metrics in CloudWatch'],
+   outcome:'Hands-on with streaming ingestion, Lambda integration, and Firehose delivery to S3.'},
+  {id:3,domain:'d1',diff:'med',title:'SageMaker Feature Store — create and retrieve features',task:'Task 1.1,1.2',
+   services:['SageMaker Feature Store','Amazon S3','AWS Glue'],
+   steps:['Create an online and offline Feature Group in SageMaker','Ingest engineered features from a CSV dataset','Retrieve features via the online store for real-time inference','Run a Glue job to sync the offline store to S3','Query the offline store with Athena'],
+   outcome:'Master Feature Store ingestion, retrieval patterns, and online vs offline store tradeoffs.'},
+  {id:4,domain:'d1',diff:'med',title:'AWS Glue ETL — clean and transform raw data',task:'Task 1.2',
+   services:['AWS Glue','Amazon S3','Amazon Redshift'],
+   steps:['Create a Glue job to read CSV from S3','Apply DynamicFrame transforms: drop nulls, rename columns, cast types','Write output as Parquet to a processed S3 prefix','Add a job bookmark to enable incremental processing','Load final data into a Redshift table'],
+   outcome:'Practical ETL experience with Glue transforms, job bookmarks, and Redshift loading.'},
+  {id:5,domain:'d1',diff:'easy',title:'DataBrew visual data profiling and recipe',task:'Task 1.2',
+   services:['AWS Glue DataBrew','Amazon S3'],
+   steps:['Connect DataBrew to an S3 CSV dataset','Review the auto-generated data profile report','Build a recipe: normalize a column, encode a categorical, fill nulls','Run the recipe as a job and output to S3','Compare before/after column statistics'],
+   outcome:'Ability to visually profile data and build reusable transformation recipes without code.'},
+  {id:6,domain:'d1',diff:'med',title:'Feature engineering with SageMaker Data Wrangler',task:'Task 1.2',
+   services:['SageMaker Data Wrangler','Amazon S3'],
+   steps:['Import a tabular dataset into Data Wrangler','Apply one-hot encoding to a categorical column','Add a log transformation to a skewed numeric feature','Use the bias report to check class imbalance','Export the flow as a SageMaker Processing job'],
+   outcome:'End-to-end feature engineering workflow using the Data Wrangler visual interface.'},
+  {id:7,domain:'d1',diff:'med',title:'SageMaker Ground Truth — image labeling job',task:'Task 1.2',
+   services:['SageMaker Ground Truth','Amazon S3','Amazon Mechanical Turk'],
+   steps:['Upload 100 unlabeled images to S3','Create a bounding-box labeling job in Ground Truth','Use a private workforce (your own account) to label 10 images','Enable automated labeling to extrapolate the rest','Export labeled manifest and inspect JSON output'],
+   outcome:'Experience with annotation workflows, labeling job setup, and labeled dataset formats.'},
+  {id:8,domain:'d1',diff:'hard',title:'SageMaker Clarify — detect pre-training bias',task:'Task 1.3',
+   services:['SageMaker Clarify','Amazon S3','SageMaker Studio'],
+   steps:['Load a tabular dataset with a known imbalanced class','Run a Clarify pre-training bias analysis job','Interpret CI and DPL metrics in the report','Apply SMOTE oversampling and re-run analysis','Compare bias metrics before and after resampling'],
+   outcome:'Ability to identify, measure, and mitigate data bias using Clarify metrics.'},
+  {id:9,domain:'d1',diff:'med',title:'AWS Glue Data Quality — validation rules',task:'Task 1.3',
+   services:['AWS Glue Data Quality','AWS Glue','Amazon S3'],
+   steps:['Define DQDL rules: completeness, uniqueness, value range checks','Run a Glue Data Quality evaluation on a dataset','Review the result report for pass/fail per rule','Add a conditional router to quarantine bad records','Automate the quality check as part of a Glue workflow'],
+   outcome:'Automated data quality validation integrated into an ETL pipeline.'},
+  {id:10,domain:'d1',diff:'hard',title:'PII detection and masking with Amazon Macie',task:'Task 1.3',
+   services:['Amazon Macie','AWS KMS','Amazon S3'],
+   steps:['Upload a CSV with fake PII (names, emails, SSNs) to S3','Enable Macie and run a sensitive data discovery job','Review findings in the Macie console','Write a Lambda to mask detected PII fields using regex','Re-encrypt the masked file using a KMS customer-managed key'],
+   outcome:'Full PII lifecycle: detect, classify, mask, and encrypt sensitive data.'},
+  {id:11,domain:'d2',diff:'easy',title:'Train a SageMaker built-in XGBoost model',task:'Task 2.1,2.2',
+   services:['Amazon SageMaker','Amazon S3'],
+   steps:['Prepare the Titanic dataset in CSV and upload to S3','Launch an XGBoost estimator using SageMaker built-in algorithm','Set hyperparameters: max_depth, eta, num_round','Start a training job and monitor logs in CloudWatch','Check training metrics: validation:error'],
+   outcome:'Core SageMaker training job workflow from data upload to metric review.'},
+  {id:12,domain:'d2',diff:'med',title:'SageMaker script mode — PyTorch custom model',task:'Task 2.2',
+   services:['Amazon SageMaker','Amazon S3','Amazon ECR'],
+   steps:['Write a PyTorch training script with argparse for hyperparameters','Package the script and requirements.txt','Launch training with SageMaker PyTorch estimator in script mode','Pass hyperparameters via the estimator','Retrieve and save the trained model artifact from S3'],
+   outcome:'Custom training scripts on managed infrastructure with SageMaker script mode.'},
+  {id:13,domain:'d2',diff:'med',title:'Automatic model tuning (HPO) with SageMaker AMT',task:'Task 2.2',
+   services:['Amazon SageMaker','Amazon S3'],
+   steps:['Define a hyperparameter tuning job for XGBoost (max_depth, eta)','Set objective metric: validation:auc','Run 10 jobs with Bayesian optimization strategy','Inspect the best training job in the console','Compare top 3 configs and retrain the winner'],
+   outcome:'Practical hyperparameter optimization experience with SageMaker AMT and Bayesian search.'},
+  {id:14,domain:'d2',diff:'med',title:'Fine-tune a foundation model via SageMaker JumpStart',task:'Task 2.2',
+   services:['SageMaker JumpStart','Amazon S3','Amazon SageMaker'],
+   steps:['Browse JumpStart and select a Hugging Face text classifier','Prepare a custom labeled dataset in JSONL format','Launch a fine-tuning job using the JumpStart SDK','Monitor training loss and validation accuracy','Deploy the fine-tuned model to a real-time endpoint'],
+   outcome:'Foundation model fine-tuning workflow using managed JumpStart templates.'},
+  {id:15,domain:'d2',diff:'easy',title:'Model evaluation — confusion matrix and ROC curve',task:'Task 2.3',
+   services:['Amazon SageMaker','SageMaker Studio','Amazon S3'],
+   steps:['Run batch transform on a held-out test set','Load predictions and ground truth in a SageMaker notebook','Compute confusion matrix, precision, recall, F1, AUC','Plot ROC curve with matplotlib','Log metrics to a SageMaker experiment run'],
+   outcome:'Ability to compute and interpret all major classification evaluation metrics.'},
+  {id:16,domain:'d2',diff:'hard',title:'SageMaker Clarify — post-training model explainability',task:'Task 2.3',
+   services:['SageMaker Clarify','Amazon SageMaker','Amazon S3'],
+   steps:['Deploy a trained XGBoost model to a SageMaker endpoint','Run a Clarify explainability job with SHAP config','Inspect global and local feature importance values','Identify the top 3 most influential features','Compare SHAP values across demographic subgroups'],
+   outcome:'Deep understanding of model explainability and fairness analysis with Clarify SHAP.'},
+  {id:17,domain:'d2',diff:'hard',title:'SageMaker Debugger — catch training convergence issues',task:'Task 2.3',
+   services:['SageMaker Debugger','Amazon SageMaker','Amazon CloudWatch'],
+   steps:['Train an overfit neural network with Debugger hooks enabled','Add built-in rules: vanishing_gradient, overfit, loss_not_decreasing','Trigger a training stop action when a rule fires','Review debug tensors in S3','Fix the issue (add dropout) and retrain'],
+   outcome:'Ability to detect and fix training anomalies using Debugger rules and tensor analysis.'},
+  {id:18,domain:'d2',diff:'med',title:'SageMaker Model Registry — versioning and approval',task:'Task 2.2',
+   services:['SageMaker Model Registry','Amazon SageMaker','Amazon S3'],
+   steps:['Register a trained model to a Model Package Group','Add metadata: metrics, description, data source','Approve the model version via the console or SDK','Create a second version and compare metrics side by side','Trigger a Lambda on approval event using EventBridge'],
+   outcome:'Full model lifecycle management: versioning, approval workflow, and event-driven automation.'},
+  {id:19,domain:'d2',diff:'med',title:'Amazon Bedrock — prompt engineering and model selection',task:'Task 2.1',
+   services:['Amazon Bedrock','Amazon S3','IAM'],
+   steps:['Enable Bedrock model access for Claude and Titan','Run a text summarization task with two different models','Compare output quality, latency, and cost per token','Try few-shot prompting to improve a classification task','Call the Bedrock API from a Lambda function'],
+   outcome:'Practical experience selecting and calling Bedrock foundation models for common business tasks.'},
+  {id:20,domain:'d2',diff:'easy',title:'Amazon Rekognition — image classification service',task:'Task 2.1',
+   services:['Amazon Rekognition','Amazon S3','AWS Lambda'],
+   steps:['Upload a set of test images to S3','Call DetectLabels API via Lambda for each image','Parse confidence scores from the response','Call DetectModerationLabels on a second image set','Build a simple routing logic: flag images below 80% confidence'],
+   outcome:'Hands-on with AWS AI services for vision tasks — when to use managed AI vs custom models.'},
+  {id:21,domain:'d3',diff:'easy',title:'Deploy a real-time SageMaker endpoint',task:'Task 3.1',
+   services:['Amazon SageMaker','Amazon CloudWatch','IAM'],
+   steps:['Take a trained model artifact from S3','Create a SageMaker Model object with a container image','Deploy to a real-time endpoint on ml.m5.large','Invoke the endpoint with a test payload using boto3','Review endpoint invocation metrics in CloudWatch'],
+   outcome:'Full deployment cycle from model artifact to live inference endpoint.'},
+  {id:22,domain:'d3',diff:'med',title:'Batch transform for offline inference',task:'Task 3.1',
+   services:['Amazon SageMaker','Amazon S3'],
+   steps:['Upload 10,000 rows of test data to S3','Create a SageMaker Batch Transform job','Configure instance type and batch size strategy','Run the job and retrieve output from S3','Compare cost and latency vs real-time endpoint'],
+   outcome:'Understanding of when to use batch vs real-time inference and cost tradeoffs.'},
+  {id:23,domain:'d3',diff:'med',title:'Asynchronous inference endpoint for large payloads',task:'Task 3.1',
+   services:['Amazon SageMaker','Amazon S3','Amazon SNS'],
+   steps:['Create an async inference endpoint configuration','Set S3 input and output locations in the config','Add an SNS notification for job completion','Submit a large inference request and get the response token','Retrieve the async output from S3 after SNS fires'],
+   outcome:'Async endpoint pattern for long-running or large-payload inference workloads.'},
+  {id:24,domain:'d3',diff:'hard',title:'Auto scaling SageMaker endpoint with custom metrics',task:'Task 3.2',
+   services:['Amazon SageMaker','AWS Auto Scaling','Amazon CloudWatch'],
+   steps:['Deploy a multi-instance endpoint on ml.m5.large (2 instances)','Register the endpoint variant as an Auto Scaling target','Create a scale-out policy on InvocationsPerInstance','Use a load test script to trigger scaling','Verify new instances launch and watch scale-in after cooldown'],
+   outcome:'Hands-on auto scaling configuration driven by inference metrics.'},
+  {id:25,domain:'d3',diff:'hard',title:'IaC — deploy SageMaker endpoint with CloudFormation',task:'Task 3.2',
+   services:['AWS CloudFormation','Amazon SageMaker','IAM'],
+   steps:['Write a CloudFormation template for SageMaker Model, Config, and Endpoint','Parameterize instance type and model S3 URI','Deploy the stack via AWS CLI','Update the stack to change instance type (rolling update)','Delete the stack and verify all resources removed'],
+   outcome:'Infrastructure-as-code skills for reproducible ML deployment environments.'},
+  {id:26,domain:'d3',diff:'hard',title:'SageMaker Pipelines — end-to-end ML pipeline',task:'Task 3.3',
+   services:['SageMaker Pipelines','Amazon S3','SageMaker Model Registry'],
+   steps:['Define a pipeline with ProcessingStep, TrainingStep, EvaluationStep','Add a ConditionStep to only register the model if AUC > 0.85','Run the pipeline and inspect step execution in Studio','Parameterize S3 paths and instance types','Re-run with different parameters via the SDK'],
+   outcome:'Complete MLOps pipeline: data processing → training → evaluation → conditional registration.'},
+  {id:27,domain:'d3',diff:'hard',title:'CI/CD for ML with CodePipeline + CodeBuild',task:'Task 3.3',
+   services:['AWS CodePipeline','AWS CodeBuild','Amazon SageMaker','Amazon S3'],
+   steps:['Create a CodeCommit repo with training script and buildspec.yml','Add a CodeBuild stage that runs unit tests and linting','Add a CodeBuild stage that triggers a SageMaker training job via CLI','Add a deploy stage that updates the SageMaker endpoint','Trigger the pipeline with a git push and verify end-to-end'],
+   outcome:'Full ML CI/CD pipeline that retrains and redeploys on every code commit.'},
+  {id:28,domain:'d3',diff:'med',title:'Canary and blue/green deployment strategies',task:'Task 3.3',
+   services:['Amazon SageMaker','AWS CodeDeploy','Amazon CloudWatch'],
+   steps:['Deploy a production endpoint variant (100% traffic)','Add a shadow variant at 0% traffic for validation','Shift 10% of traffic to the new variant (canary)','Monitor error rate and latency of both variants','Perform a full cutover or rollback based on metrics'],
+   outcome:'Practical experience with safe deployment strategies and traffic shifting for ML endpoints.'},
+  {id:29,domain:'d3',diff:'med',title:'Containerize a custom model with Amazon ECR',task:'Task 3.2',
+   services:['Amazon ECR','Amazon ECS','Amazon SageMaker','AWS CDK'],
+   steps:['Write a Flask inference server wrapping a scikit-learn model','Build a Docker image locally and test the /ping and /invocations routes','Push the image to ECR','Use the ECR image as a custom container in a SageMaker endpoint','Deploy the same container to ECS Fargate as an alternative target'],
+   outcome:'Bring-your-own-container skills for SageMaker and ECS deployment targets.'},
+  {id:30,domain:'d3',diff:'med',title:'Apache Airflow (MWAA) — ML workflow orchestration',task:'Task 3.1',
+   services:['Amazon MWAA','Amazon SageMaker','Amazon S3'],
+   steps:['Create an MWAA environment with an S3 DAGs bucket','Write a DAG with tasks: download data, run Glue job, trigger SageMaker training','Add a sensor to wait for the SageMaker job to complete','Trigger the DAG on a cron schedule','Monitor the DAG run in the Airflow UI'],
+   outcome:'Workflow orchestration with Airflow for scheduling and sequencing ML pipeline steps.'},
+  {id:31,domain:'d4',diff:'med',title:'SageMaker Model Monitor — detect data drift',task:'Task 4.1',
+   services:['SageMaker Model Monitor','Amazon S3','Amazon CloudWatch'],
+   steps:['Deploy an endpoint and enable data capture to S3','Create a baseline from training data statistics','Schedule a monitoring job every hour','Send requests with synthetically drifted features','Review the violation report and CloudWatch alarms'],
+   outcome:'Full drift detection setup: data capture → baseline → scheduled monitoring → alerts.'},
+  {id:32,domain:'d4',diff:'med',title:'A/B testing two model variants with traffic split',task:'Task 4.1',
+   services:['Amazon SageMaker','Amazon CloudWatch'],
+   steps:['Create an endpoint with two production variants (50/50 split)','Send 1000 test requests and capture predictions','Compare accuracy, latency, and error rate per variant','Use CloudWatch metrics to build a comparison dashboard','Shift traffic to the winning variant'],
+   outcome:'A/B testing methodology applied to SageMaker endpoint variants with metric-driven decisions.'},
+  {id:33,domain:'d4',diff:'easy',title:'CloudWatch dashboards for ML infrastructure',task:'Task 4.2',
+   services:['Amazon CloudWatch','Amazon SageMaker','AWS Lambda'],
+   steps:['Create a CloudWatch dashboard for a SageMaker endpoint','Add widgets: invocations, model latency, CPU utilization, memory','Create an alarm on model latency > 200ms','Configure SNS notification on alarm state change','Add a Lambda function invocation metric widget'],
+   outcome:'Operational observability setup for production ML inference infrastructure.'},
+  {id:34,domain:'d4',diff:'med',title:'CloudTrail — audit and trigger retraining',task:'Task 4.2',
+   services:['AWS CloudTrail','Amazon EventBridge','Amazon SageMaker'],
+   steps:['Enable a CloudTrail trail logging SageMaker API calls','Create an EventBridge rule for CreateEndpoint events','Trigger a Lambda that logs the event to DynamoDB','Add a second rule: on data drift alarm → trigger SageMaker Pipeline retraining','Verify the retraining pipeline fires automatically'],
+   outcome:'Automated audit logging and event-driven retraining triggered by CloudTrail + EventBridge.'},
+  {id:35,domain:'d4',diff:'med',title:'Cost optimization — Spot training and Savings Plans',task:'Task 4.2',
+   services:['Amazon SageMaker','AWS Cost Explorer','AWS Budgets'],
+   steps:['Run a training job on on-demand ml.p3.2xlarge and record cost','Re-run the same job using Managed Spot Training with checkpointing','Compare actual cost and time savings in Cost Explorer','Set up a Budget alert for SageMaker spend > $50/month','Use Inference Recommender to find the optimal instance for serving'],
+   outcome:'Cost optimization techniques: spot training, checkpointing, budgets, and instance rightsizing.'},
+  {id:36,domain:'d4',diff:'hard',title:'VPC isolation for SageMaker — network security',task:'Task 4.3',
+   services:['Amazon VPC','Amazon SageMaker','AWS PrivateLink'],
+   steps:['Create a VPC with private subnets and no NAT gateway','Launch a SageMaker training job inside the private subnet','Add a VPC interface endpoint for SageMaker API and runtime','Verify the job completes without public internet access','Confirm S3 access via VPC gateway endpoint'],
+   outcome:'Secure network isolation for ML workloads using VPC, private subnets, and VPC endpoints.'},
+  {id:37,domain:'d4',diff:'hard',title:'IAM least-privilege policies for ML roles',task:'Task 4.3',
+   services:['IAM','Amazon SageMaker','AWS KMS','Amazon S3'],
+   steps:['Create an IAM execution role for SageMaker with minimal permissions','Scope S3 permissions to specific bucket prefixes','Add a KMS key policy allowing SageMaker to encrypt/decrypt model artifacts','Test the role by running a training job — confirm it succeeds','Remove one permission and confirm the job fails with an access error'],
+   outcome:'Hands-on IAM policy design applying least-privilege principles to SageMaker workflows.'},
+  {id:38,domain:'d4',diff:'med',title:'Secrets Manager — secure credential management in ML pipelines',task:'Task 4.3',
+   services:['AWS Secrets Manager','AWS Lambda','Amazon SageMaker'],
+   steps:['Store a database credential as a secret in Secrets Manager','Update a SageMaker Processing job script to retrieve the secret at runtime','Rotate the secret and verify the job still works post-rotation','Add a resource-based policy to restrict secret access to the SageMaker role','Log secret access attempts in CloudTrail'],
+   outcome:'Secure credential handling in ML pipelines without hardcoded secrets.'},
+  {id:39,domain:'d4',diff:'hard',title:'SageMaker Clarify — production bias monitoring',task:'Task 4.1',
+   services:['SageMaker Clarify','SageMaker Model Monitor','Amazon CloudWatch'],
+   steps:['Deploy a binary classifier endpoint with data capture enabled','Create a Clarify bias monitor baseline from ground truth labels','Schedule hourly bias monitoring jobs checking DPPL metric','Inject biased requests and observe metric degradation','Set a CloudWatch alarm when bias threshold is exceeded'],
+   outcome:'Production bias monitoring pipeline that automatically detects fairness degradation over time.'},
+  {id:40,domain:'d4',diff:'hard',title:'End-to-end MLOps — full pipeline from data to monitoring',task:'All domains',
+   services:['SageMaker Pipelines','CodePipeline','SageMaker Model Monitor','CloudWatch','IAM','VPC'],
+   steps:['Chain a complete SageMaker Pipeline: Glue ETL → training → Clarify bias check → Model Registry','Add a CodePipeline that triggers on S3 data upload','Deploy the approved model to a VPC-isolated endpoint with data capture','Set up Model Monitor for drift + Clarify for bias in production','Build a CloudWatch dashboard showing all health metrics in one view'],
+   outcome:'Capstone project covering all 4 exam domains. This single project consolidates every skill learned.'},
+];
+
+let currentDomain = 'all';
+let diffs = {easy:true, med:true, hard:true};
+let done = new Set(JSON.parse(localStorage.getItem('mla_done')||'[]'));
+let expanded = new Set();
+
+function saveDone(){localStorage.setItem('mla_done',JSON.stringify([...done]));}
+
+function updateStats(){
+  const total = 40;
+  const n = done.size;
+  document.getElementById('total-done').textContent = n;
+  const p = Math.round(n/total*100);
+  document.getElementById('pct').textContent = p+'%';
+  document.getElementById('prog').style.width = p+'%';
+}
+
+function setDomain(d){
+  currentDomain = d;
+  document.querySelectorAll('.tab').forEach((t,i)=>{
+    t.classList.toggle('active', (d==='all'&&i===0)||(d==='d1'&&i===1)||(d==='d2'&&i===2)||(d==='d3'&&i===3)||(d==='d4'&&i===4));
+  });
+  render();
+}
+
+function toggleDiff(d, el){
+  diffs[d] = !diffs[d];
+  el.classList.toggle('on', diffs[d]);
+  render();
+}
+
+const DOMAIN_LABELS = {d1:'Domain 1 · Data Prep (28%)',d2:'Domain 2 · Model Dev (26%)',d3:'Domain 3 · Deploy (22%)',d4:'Domain 4 · Monitor (24%)'};
+const DOMAIN_CLS = {d1:'d1',d2:'d2',d3:'d3',d4:'d4'};
+const DIFF_LABELS = {easy:'Starter',med:'Intermediate',hard:'Advanced'};
+
+function render(){
+  const list = document.getElementById('proj-list');
+  let filtered = PROJECTS.filter(p=>(currentDomain==='all'||p.domain===currentDomain)&&diffs[p.diff]);
+  if(!filtered.length){list.innerHTML='<div class="empty">No projects match the current filters.</div>';return;}
+
+  let html='';
+  let lastDomain='';
+  filtered.forEach(p=>{
+    if(currentDomain==='all'&&p.domain!==lastDomain){
+      html+=`<div class="domain-label ${DOMAIN_CLS[p.domain]}">${DOMAIN_LABELS[p.domain]}</div>`;
+      lastDomain=p.domain;
+    }
+    const isOpen=expanded.has(p.id);
+    const isDone=done.has(p.id);
+    html+=`<div class="project ${isOpen?'expanded':''}" id="p${p.id}">
+      <div class="proj-head" onclick="toggle(${p.id})">
+        <span class="proj-num">#${String(p.id).padStart(2,'0')}</span>
+        <span class="proj-title">${isDone?'<span style="color:var(--color-text-secondary);text-decoration:line-through">'+p.title+'</span>':p.title}</span>
+        <span class="proj-diff ${p.diff}">${DIFF_LABELS[p.diff]}</span>
+      </div>
+      <div class="proj-body ${isOpen?'open':''}">
+        <div class="proj-sub">AWS services</div>
+        <div class="tags">${p.services.map(s=>`<span class="tag">${s}</span>`).join('')}</div>
+        <div class="proj-sub" style="margin-top:10px;">Tasks covered</div>
+        <div class="tags"><span class="tag">${p.task}</span></div>
+        <div class="proj-sub" style="margin-top:10px;">Steps</div>
+        <ul class="steps">${p.steps.map(s=>`<li>${s}</li>`).join('')}</ul>
+        <div class="proj-sub" style="margin-top:10px;">What you'll gain</div>
+        <div class="outcome">${p.outcome}</div>
+        <button class="done-btn ${isDone?'checked':''}" onclick="markDone(event,${p.id})">
+          <i class="ti ${isDone?'ti-check':'ti-circle'}" aria-hidden="true"></i> ${isDone?'Completed':'Mark as done'}
+        </button>
+      </div>
+    </div>`;
+  });
+  list.innerHTML=html;
+  updateStats();
+}
+
+function toggle(id){
+  if(expanded.has(id)) expanded.delete(id); else expanded.add(id);
+  render();
+}
+
+function markDone(e,id){
+  e.stopPropagation();
+  if(done.has(id)) done.delete(id); else done.add(id);
+  saveDone();
+  render();
+}
+
+render();
+</script>

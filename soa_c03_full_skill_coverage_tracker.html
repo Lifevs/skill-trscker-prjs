@@ -1,0 +1,242 @@
+
+<h2 class="sr-only">SOA-C03 Full Skill Coverage Tracker — every exam skill mapped to a hands-on CloudOps micro project</h2>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.w{padding:1rem 0;font-family:var(--font-sans)}
+.tb h1{font-size:19px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px}
+.tb p{font-size:12px;color:var(--color-text-secondary)}
+.tb{margin-bottom:1.25rem}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:1.25rem}
+.st{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px;text-align:center}
+.sn{font-size:20px;font-weight:500;color:var(--color-text-primary)}
+.sl{font-size:10px;color:var(--color-text-secondary);margin-top:2px;text-transform:uppercase;letter-spacing:.4px}
+.ctrl{display:flex;gap:6px;margin-bottom:1rem;flex-wrap:wrap;align-items:center}
+.fb{font-size:12px;padding:4px 10px;border-radius:20px;border:0.5px solid var(--color-border-secondary);background:transparent;cursor:pointer;color:var(--color-text-secondary)}
+.fb.on{background:var(--color-background-secondary);color:var(--color-text-primary);font-weight:500}
+.rst{margin-left:auto;font-size:12px;padding:4px 10px;border-radius:20px;border:0.5px solid var(--color-border-secondary);background:transparent;cursor:pointer;color:var(--color-text-secondary)}
+.dm{margin-bottom:1.25rem;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden}
+.dh{padding:11px 14px;display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none}
+.dh:hover{background:var(--color-background-secondary)}
+.dtg{font-size:10px;font-weight:500;padding:3px 7px;border-radius:12px;white-space:nowrap}
+.dti{font-size:13px;font-weight:500;color:var(--color-text-primary);flex:1}
+.dpr{font-size:11px;color:var(--color-text-secondary);white-space:nowrap}
+.dch{font-size:13px;color:var(--color-text-secondary);transition:transform .2s}
+.dch.open{transform:rotate(180deg)}
+.pb{height:3px;background:var(--color-background-secondary)}
+.pbi{height:3px;transition:width .3s}
+.tg{border-top:0.5px solid var(--color-border-tertiary)}
+.tgh{padding:8px 14px;background:var(--color-background-secondary);font-size:11px;font-weight:500;color:var(--color-text-secondary);letter-spacing:.3px;text-transform:uppercase;border-bottom:0.5px solid var(--color-border-tertiary)}
+.pj{padding:9px 14px;border-bottom:0.5px solid var(--color-border-tertiary);display:flex;align-items:flex-start;gap:9px;transition:background .12s}
+.pj:last-child{border-bottom:none}
+.pj:hover{background:var(--color-background-secondary)}
+.pj.dn{opacity:.55}
+.pj.dn .pt{text-decoration:line-through}
+.cb{width:17px;height:17px;min-width:17px;border-radius:4px;border:1.5px solid var(--color-border-secondary);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.cb i{font-size:10px;display:none}
+.cb.on i{display:block}
+.pb2{flex:1;min-width:0}
+.pr{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-bottom:3px}
+.pt{font-size:12px;font-weight:500;color:var(--color-text-primary)}
+.sk{font-size:10px;padding:1px 5px;border-radius:8px;background:var(--color-background-secondary);color:var(--color-text-secondary);border:0.5px solid var(--color-border-tertiary)}
+.df{font-size:10px;padding:2px 6px;border-radius:8px;font-weight:500}
+.e{background:#EAF3DE;color:#3B6D11}.m{background:#FAEEDA;color:#854F0B}.h{background:#FCEBEB;color:#A32D2D}
+.pd{font-size:11px;color:var(--color-text-secondary);line-height:1.5;margin-bottom:3px}
+.ps{font-size:10px;color:var(--color-text-tertiary)}
+.ps i{font-size:11px;vertical-align:-1px;margin-right:2px}
+.em{padding:12px 14px;font-size:12px;color:var(--color-text-secondary)}
+.d1 .dtg{background:#E6F1FB;color:#185FA5}.d1 .pbi,.d1 .cb.on{background:#378ADD}.d1 .cb.on{border-color:#378ADD}
+.d2 .dtg{background:#EAF3DE;color:#3B6D11}.d2 .pbi,.d2 .cb.on{background:#639922}.d2 .cb.on{border-color:#639922}
+.d3 .dtg{background:#FAEEDA;color:#854F0B}.d3 .pbi,.d3 .cb.on{background:#BA7517}.d3 .cb.on{border-color:#BA7517}
+.d4 .dtg{background:#FCEBEB;color:#A32D2D}.d4 .pbi,.d4 .cb.on{background:#E24B4A}.d4 .cb.on{border-color:#E24B4A}
+.d5 .dtg{background:#EEEDFE;color:#3C3489}.d5 .pbi,.d5 .cb.on{background:#7F77DD}.d5 .cb.on{border-color:#7F77DD}
+</style>
+<div class="w">
+<div class="tb">
+  <h1><i class="ti ti-server-cog" aria-hidden="true"></i> SOA-C03 full skill coverage tracker</h1>
+  <p>Every SOA-C03 skill (1.1.1 → 5.3.5) mapped to a hands-on CloudOps project · check off as you build</p>
+</div>
+<div class="stats">
+  <div class="st"><div class="sn" id="sT">0</div><div class="sl">projects</div></div>
+  <div class="st"><div class="sn" id="sD">0</div><div class="sl">done</div></div>
+  <div class="st"><div class="sn" id="sP">0%</div><div class="sl">complete</div></div>
+  <div class="st"><div class="sn" id="sH">0</div><div class="sl">hard left</div></div>
+  <div class="st"><div class="sn" id="sK">0</div><div class="sl">skills hit</div></div>
+</div>
+<div class="ctrl">
+  <span style="font-size:11px;color:var(--color-text-secondary)">Show:</span>
+  <button class="fb on" onclick="filt('all',this)">All</button>
+  <button class="fb" onclick="filt('todo',this)">To-do</button>
+  <button class="fb" onclick="filt('done',this)">Done</button>
+  <button class="fb" onclick="filt('hard',this)">Hard only</button>
+  <button class="rst" onclick="resetAll()"><i class="ti ti-refresh" aria-hidden="true"></i> Reset</button>
+</div>
+<div id="root"></div>
+</div>
+<script>
+const DATA=[
+{id:'d1',cls:'d1',tag:'Domain 1 · 22%',title:'Monitoring, Logging, Analysis, Remediation & Performance',tasks:[
+  {name:'Task 1.1 · Implement metrics, alarms, and filters',projects:[
+    {id:'o101',sk:'1.1.1',title:'Full CloudWatch + CloudTrail + Prometheus monitoring stack',diff:'h',desc:'Enable CloudTrail in all regions with S3 + CloudWatch Logs integration. Set up Amazon Managed Service for Prometheus with a Grafana workspace. Scrape EC2 and ECS metrics. Create unified dashboards across all three sources.',svc:'CloudTrail · CloudWatch · Prometheus · Grafana · S3'},
+    {id:'o102',sk:'1.1.2',title:'CloudWatch agent deployment on EC2, ECS, and EKS',diff:'h',desc:'Install CloudWatch agent on EC2 via SSM (no manual SSH). Configure agent JSON to collect: custom app metrics, disk usage, memory, and network. Deploy same agent config on ECS task definition and EKS DaemonSet. Compare metric collection across all three.',svc:'CloudWatch Agent · EC2 · ECS · EKS · SSM'},
+    {id:'o103',sk:'1.1.3',title:'CloudWatch composite alarm with auto-remediation',diff:'h',desc:'Create individual alarms: CPU > 80%, network errors > 100/min, ELB 5xx > 5%. Combine into a composite alarm (AND/OR logic). Route composite alarm to EventBridge rule that triggers SSM Automation runbook. Test each alarm state transition.',svc:'CloudWatch · EventBridge · SSM Automation · SNS · Lambda'},
+    {id:'o104',sk:'1.1.4',title:'Multi-account multi-region CloudWatch dashboard',diff:'h',desc:'Create cross-account observability by sharing CloudWatch metrics from Account B to Account A. Build a single CloudWatch dashboard in Account A showing resources from 3 accounts and 2 regions. Add dynamic metric math widgets.',svc:'CloudWatch · Organizations · IAM · Cross-account Observability'},
+    {id:'o105',sk:'1.1.5',title:'SNS alarm notification pipeline',diff:'m',desc:'Configure CloudWatch alarms for EC2, RDS, Lambda, and ECS to send to SNS topics. Add email, SMS, and Lambda subscribers per topic. Test notification delivery for each alarm type. Add alarm suppression during maintenance windows.',svc:'CloudWatch · SNS · Lambda · EC2 · RDS'},
+  ]},
+  {name:'Task 1.2 · Identify and remediate issues',projects:[
+    {id:'o201',sk:'1.2.1',title:'Auto-remediation with Lambda + Systems Manager',diff:'h',desc:'CloudWatch alarm fires on high EC2 CPU → EventBridge → Lambda that calls SSM Run Command to restart the app process. Add SSM Automation runbook that stops, snapshots, and restarts an unhealthy instance. Test full remediation chain end-to-end.',svc:'CloudWatch · EventBridge · Lambda · SSM · EC2'},
+    {id:'o202',sk:'1.2.2',title:'EventBridge event routing and troubleshooting lab',diff:'m',desc:'Create custom EventBridge bus with 5 rules: EC2 state change, RDS failover, S3 object created, ECS task stopped, CloudTrail API events. Route each to different targets (Lambda, SQS, SNS, Step Functions). Intentionally break a rule and debug using CloudWatch Logs.',svc:'EventBridge · Lambda · SQS · SNS · CloudWatch'},
+    {id:'o203',sk:'1.2.3',title:'SSM Automation runbook library',diff:'h',desc:'Build 4 custom SSM Automation runbooks: (1) patch and restart EC2, (2) rotate IAM access keys, (3) take EBS snapshot + verify restore, (4) update ASG launch template. Run each via console, CLI, and EventBridge trigger. Add approval gates to runbook steps.',svc:'SSM Automation · EC2 · IAM · EBS · Auto Scaling'},
+  ]},
+  {name:'Task 1.3 · Implement performance optimization strategies',projects:[
+    {id:'o301',sk:'1.3.1',title:'Compute performance optimization with Compute Optimizer',diff:'m',desc:'Launch over-provisioned EC2 instances. Generate 7 days of CloudWatch metrics. Review Compute Optimizer recommendations. Right-size each instance. Tag resources by performance profile. Use Lambda right-sizing recommendations too.',svc:'Compute Optimizer · EC2 · Lambda · CloudWatch · Cost Explorer'},
+    {id:'o302',sk:'1.3.2',title:'EBS performance deep-dive and optimization',diff:'h',desc:'Deploy gp2, gp3, io2, st1, and sc1 volumes. Run fio benchmarks (sequential + random IOPS, throughput). Monitor EBS CloudWatch metrics: VolumeReadOps, VolumeWriteOps, BurstBalance. Migrate gp2 to gp3 in-place. Set up alarm on BurstBalance < 20%.',svc:'EBS · EC2 · CloudWatch · fio'},
+    {id:'o303',sk:'1.3.3',title:'S3 performance optimization full lab',diff:'h',desc:'Compare: standard upload vs multipart upload vs S3 Transfer Acceleration for a 5GB file. Set up DataSync job from EFS to S3. Configure S3 Lifecycle policy (Standard→IA→Glacier). Measure throughput for each transfer method. Enable S3 request metrics.',svc:'S3 · DataSync · S3 Transfer Acceleration · CloudWatch · S3 Lifecycle'},
+    {id:'o304',sk:'1.3.4',title:'EFS and FSx shared storage selection and tuning',diff:'m',desc:'Mount EFS (Bursting vs Provisioned throughput) on 3 EC2 instances simultaneously. Configure EFS lifecycle policy (IA after 14 days). Deploy FSx for Windows and FSx for Lustre. Benchmark each for: throughput, latency, and concurrent access. Document use cases.',svc:'EFS · FSx · EC2 · CloudWatch'},
+    {id:'o305',sk:'1.3.5',title:'RDS performance monitoring and tuning',diff:'h',desc:'Enable RDS Performance Insights. Generate slow queries intentionally. Identify top SQL statements by load. Enable Enhanced Monitoring (OS-level metrics). Set CloudWatch alarms on FreeStorageSpace, CPUUtilization, DatabaseConnections. Add RDS Proxy and measure connection overhead reduction.',svc:'RDS · Performance Insights · CloudWatch · RDS Proxy'},
+    {id:'o306',sk:'1.3.6',title:'EC2 instance placement groups and network tuning',diff:'m',desc:'Deploy 4 EC2 instances in: cluster placement group (low latency HPC), spread placement group (fault isolation), and partition placement group (Hadoop/HDFS). Benchmark inter-instance network latency for each. Enable enhanced networking (ENA). Monitor network metrics.',svc:'EC2 · Placement Groups · CloudWatch · ENA'},
+  ]}
+]},
+{id:'d2',cls:'d2',tag:'Domain 2 · 22%',title:'Reliability and Business Continuity',tasks:[
+  {name:'Task 2.1 · Implement scalability and elasticity',projects:[
+    {id:'o401',sk:'2.1.1',title:'Compute scaling mechanisms comparison lab',diff:'h',desc:'Implement all EC2 Auto Scaling policies: simple (alarm-based), step (tiered), target tracking (CPU 50%), scheduled (cron), and predictive. Run load tests against each. Compare scale-out speed and over/under-provisioning. Add ECS Service Auto Scaling and Lambda concurrency scaling.',svc:'EC2 Auto Scaling · ECS · Lambda · CloudWatch · ALB'},
+    {id:'o402',sk:'2.1.2',title:'Multi-layer caching for dynamic scalability',diff:'h',desc:'Deploy app with 3 caching layers: CloudFront (edge, 5min TTL for API), ElastiCache Redis (session + hot data, 60s TTL), ElastiCache Memcached (simple object cache). Simulate 10x traffic spike. Observe cache hit rates. Measure DB load reduction at each layer.',svc:'CloudFront · ElastiCache Redis · ElastiCache Memcached · RDS · CloudWatch'},
+    {id:'o403',sk:'2.1.3',title:'Managed database scaling deep-dive',diff:'h',desc:'RDS Aurora Auto Scaling (add read replicas at CPU > 60%). DynamoDB Auto Scaling (provisioned capacity via target tracking). DynamoDB on-demand (no scaling config). Aurora Serverless v2 (ACU auto-scale). Load test each. Document scale speed and behavior under burst.',svc:'Aurora · Aurora Serverless v2 · DynamoDB · RDS Auto Scaling · CloudWatch'},
+  ]},
+  {name:'Task 2.2 · Implement highly available and resilient environments',projects:[
+    {id:'o501',sk:'2.2.1',title:'ELB and Route 53 health check troubleshooting lab',diff:'h',desc:'Deploy ALB with target group health checks (HTTP /health endpoint). Set Route 53 health checks on the ALB endpoint. Intentionally break the /health endpoint. Observe: ALB removes unhealthy targets, Route 53 fails over to secondary. Debug using ELB access logs and Route 53 health check logs.',svc:'ALB · Route 53 · EC2 · CloudWatch · ELB Access Logs'},
+    {id:'o502',sk:'2.2.2',title:'Multi-AZ fault-tolerant architecture build',diff:'h',desc:'Deploy across 3 AZs: Auto Scaling group (min 2 per AZ), RDS Multi-AZ (automatic failover), ElastiCache Multi-AZ (with replication), EFS (multi-AZ by default), ALB (cross-zone load balancing). Simulate AZ failure (terminate all instances in one AZ). Measure recovery time.',svc:'EC2 · Auto Scaling · RDS Multi-AZ · ElastiCache · EFS · ALB'},
+  ]},
+  {name:'Task 2.3 · Implement backup and restore strategies',projects:[
+    {id:'o601',sk:'2.3.1',title:'AWS Backup centralized policy for all resource types',diff:'m',desc:'Create an AWS Backup plan covering: EC2 (daily AMI), EBS (6-hourly snapshot), RDS (daily + 35-day retention), DynamoDB (continuous + PITR), EFS (weekly). Set backup vault with cross-region copy. Verify each backup job completes. Set CloudWatch alarm on failed backup jobs.',svc:'AWS Backup · EC2 · EBS · RDS · DynamoDB · EFS'},
+    {id:'o602',sk:'2.3.2',title:'Database restore methods comparison',diff:'h',desc:'Practice restoring RDS: (1) from automated backup (point-in-time restore to 5min ago), (2) from manual snapshot (different instance class), (3) Aurora clone (instant, copy-on-write), (4) Aurora cross-region restore. Measure restore time for each. Document which meets tight RTO requirements.',svc:'RDS · Aurora · AWS Backup · CloudWatch'},
+    {id:'o603',sk:'2.3.3',title:'Versioning for S3 and FSx',diff:'m',desc:'Enable S3 Versioning on a bucket. Upload 5 versions of the same file. Recover a deleted file. Enable MFA Delete. Set up FSx for Windows with shadow copies (VSS snapshots). Recover a previous version of a file from FSx. Compare version management across both services.',svc:'S3 · FSx · AWS Backup'},
+    {id:'o604',sk:'2.3.4',title:'Full disaster recovery runbook execution',diff:'h',desc:'Simulate a region failure. Execute DR runbook: restore RDS from cross-region snapshot, launch EC2 from cross-region AMI copy, update Route 53 to point to DR region, verify application is functional. Measure actual RTO vs target. Document every step with timestamps.',svc:'RDS · EC2 · Route 53 · AWS Backup · S3 · CloudFormation'},
+  ]}
+]},
+{id:'d3',cls:'d3',tag:'Domain 3 · 22%',title:'Deployment, Provisioning, and Automation',tasks:[
+  {name:'Task 3.1 · Provision and maintain cloud resources',projects:[
+    {id:'o701',sk:'3.1.1',title:'AMI and container image lifecycle management',diff:'m',desc:'Build a golden AMI pipeline with EC2 Image Builder: base OS → install packages → harden → test → distribute to 3 regions. Build a container image pipeline: Dockerfile → CodeBuild → ECR with lifecycle policy. Automate both on a weekly schedule. Verify Image Builder compliance scans.',svc:'EC2 Image Builder · ECR · CodeBuild · SSM · CloudWatch'},
+    {id:'o702',sk:'3.1.2',title:'CloudFormation and CDK full IaC lab',diff:'h',desc:'Write a CloudFormation template for a 3-tier app (VPC, ALB, EC2 ASG, RDS). Add change sets for updates. Detect and remediate stack drift. Rebuild same infrastructure in CDK (Python or TypeScript). Practice CloudFormation rollback. Add cfn-hup for EC2 config management.',svc:'CloudFormation · CDK · EC2 · RDS · VPC · ALB'},
+    {id:'o703',sk:'3.1.3',title:'Deployment issue diagnosis and remediation',diff:'h',desc:'Intentionally create 5 CloudFormation failures: subnet CIDR overlap, IAM permission denied, resource limit exceeded, circular dependency, and invalid AMI ID. Debug each using CloudFormation events. Fix and redeploy each. Document root cause and resolution for each failure type.',svc:'CloudFormation · IAM · VPC · EC2 · CloudWatch'},
+    {id:'o704',sk:'3.1.4',title:'Cross-account and cross-region resource sharing',diff:'h',desc:'Use AWS RAM to share: VPC subnets across accounts, EC2 Image Builder recipes, and License Manager configurations. Deploy CloudFormation StackSets across 3 accounts and 2 regions. Verify resource availability in each account. Test RAM resource access from a member account.',svc:'AWS RAM · CloudFormation StackSets · Organizations · EC2 · License Manager'},
+    {id:'o705',sk:'3.1.5',title:'Deployment strategies comparison lab',diff:'h',desc:'Deploy the same app using: in-place (SSM Run Command update), rolling (ASG instance refresh), blue/green (CodeDeploy Lambda + ECS), canary (CodeDeploy with traffic shifting). Intentionally fail each deployment and observe rollback. Document traffic impact during each strategy.',svc:'CodeDeploy · ECS · Lambda · Auto Scaling · CloudWatch · ALB'},
+    {id:'o706',sk:'3.1.6',title:'Terraform and Git for resource automation',diff:'m',desc:'Write Terraform modules for: VPC, EC2 ASG, RDS, and S3. Use remote state in S3 with DynamoDB locking. Integrate with Git (GitHub/CodeCommit): PR triggers plan, merge triggers apply. Compare Terraform vs CloudFormation for the same infrastructure.',svc:'Terraform · S3 · DynamoDB · CodeCommit · CloudWatch'},
+  ]},
+  {name:'Task 3.2 · Automate the management of existing resources',projects:[
+    {id:'o801',sk:'3.2.1',title:'Systems Manager full operations automation',diff:'h',desc:'Use SSM for: Patch Manager (patch all EC2 on schedule), Run Command (execute script on 50 instances simultaneously), Session Manager (SSH-less access, no bastion), Inventory (collect installed software), Parameter Store (centralized config), Maintenance Windows (zero-downtime patching). Document each capability.',svc:'SSM Patch Manager · SSM Run Command · Session Manager · SSM Inventory · Parameter Store'},
+    {id:'o802',sk:'3.2.2',title:'Event-driven automation with Lambda and S3 events',diff:'h',desc:'Build 5 event-driven automations: (1) S3 object upload → Lambda → image resize + store, (2) EC2 state change → Lambda → update CMDB tag, (3) RDS event → SNS → Lambda → PagerDuty webhook, (4) CloudTrail API event → Lambda → auto-revoke over-privileged IAM key, (5) Config rule violation → SSM Automation remediation.',svc:'Lambda · S3 · EventBridge · CloudTrail · SSM · Config'},
+  ]}
+]},
+{id:'d4',cls:'d4',tag:'Domain 4 · 16%',title:'Security and Compliance',tasks:[
+  {name:'Task 4.1 · Implement and manage security and compliance tools',projects:[
+    {id:'o901',sk:'4.1.1',title:'IAM full security hardening lab',diff:'h',desc:'Enforce password policy (14 char, complexity, rotation). Enable MFA for all console users via Config rule. Create federated access with IAM Identity Center (SAML). Build roles with condition-based policies (MFA required, time-of-day restriction, IP restriction). Test every condition.',svc:'IAM · Config · IAM Identity Center · CloudTrail · Organizations'},
+    {id:'o902',sk:'4.1.2',title:'Access issue troubleshooting with IAM tools',diff:'m',desc:'Simulate 5 access denial scenarios: missing S3 permission, wrong region, explicit deny overriding allow, SCP blocking action, resource policy conflict. Debug each using: CloudTrail (find the API call), IAM Access Analyzer (find policy issues), IAM Policy Simulator (test what is and is not allowed). Document root cause for each.',svc:'CloudTrail · IAM Access Analyzer · IAM Policy Simulator · S3 · SCPs'},
+    {id:'o903',sk:'4.1.3',title:'Multi-account security strategy implementation',diff:'h',desc:'Set up AWS Organizations with SCPs. Create a Security OU with dedicated security account. Enable Security Hub (aggregate findings from all member accounts). Enable Config with organization-wide rules. Enable GuardDuty organization with delegated admin. Centralize CloudTrail to security account S3 bucket.',svc:'Organizations · Security Hub · Config · GuardDuty · CloudTrail · SCPs'},
+    {id:'o904',sk:'4.1.4',title:'Trusted Advisor security check remediation sprint',diff:'m',desc:'Review all Trusted Advisor security checks: exposed access keys, unrestricted ports (0.0.0.0/0), public S3 buckets, IAM root account usage, no MFA on root. Remediate every finding. Set up EventBridge rule to alert on new Trusted Advisor security findings automatically.',svc:'Trusted Advisor · IAM · S3 · EC2 · EventBridge · SNS'},
+    {id:'o905',sk:'4.1.5',title:'Region and service restriction enforcement via SCPs',diff:'m',desc:'Write SCPs that: (1) deny all actions outside approved regions, (2) deny specific services (e.g. Lightsail, AppStream), (3) require encryption on S3 PutObject, (4) prevent disabling CloudTrail. Test each SCP against a member account. Verify SCPs do not affect management account.',svc:'Organizations · SCPs · CloudTrail · S3 · IAM'},
+  ]},
+  {name:'Task 4.2 · Implement strategies to protect data and infrastructure',projects:[
+    {id:'o1001',sk:'4.2.1',title:'Data classification and tagging enforcement',diff:'m',desc:'Define 4 data classification levels (Public/Internal/Confidential/Restricted). Apply tags to S3 buckets, RDS instances, and DynamoDB tables. Create Config rules that enforce required classification tags. Use Macie to scan S3 buckets for untagged PII. Build EventBridge rule to auto-tag new S3 buckets.',svc:'S3 · Macie · Config · DynamoDB · RDS · EventBridge'},
+    {id:'o1002',sk:'4.2.2',title:'KMS encryption at rest troubleshooting lab',diff:'h',desc:'Enable KMS encryption on: S3 (SSE-KMS), EBS (CMK), RDS (CMK), DynamoDB (CMK), ElastiCache (in-transit + at-rest). Simulate 3 failure scenarios: deleted key, revoked key access, wrong key policy. Debug each using CloudTrail. Document how to recover from each scenario without data loss.',svc:'KMS · S3 · EBS · RDS · DynamoDB · CloudTrail'},
+    {id:'o1003',sk:'4.2.3',title:'TLS in-transit encryption troubleshooting',diff:'m',desc:'Deploy ACM certificate on ALB (HTTPS only, redirect HTTP). Configure API Gateway custom domain with ACM cert. Force TLS 1.2 minimum. Simulate: expired cert, mismatched domain, revoked cert. Debug each using ALB access logs and CloudWatch. Set up CloudWatch alarm for ACM cert expiry < 30 days.',svc:'ACM · ALB · API Gateway · CloudWatch · Route 53'},
+    {id:'o1004',sk:'4.2.4',title:'Secrets management with Secrets Manager and SSM',diff:'m',desc:'Store 3 secret types: DB credentials (Secrets Manager with auto-rotation), API keys (SSM SecureString with KMS), feature flags (SSM Parameter Store standard). Compare access patterns from EC2, Lambda, and ECS. Test rotation: verify app continues working during secret rotation without restart.',svc:'Secrets Manager · SSM Parameter Store · Lambda · EC2 · KMS'},
+    {id:'o1005',sk:'4.2.5',title:'Security findings aggregation and auto-remediation',diff:'h',desc:'Enable: Security Hub (all standards), GuardDuty (with S3 protection + EKS), Config (30+ managed rules), Inspector (EC2 + ECR scanning). Aggregate all findings to Security Hub. Build EventBridge rules to auto-remediate: GuardDuty finding → isolate EC2 (remove from ASG, quarantine SG), Config non-compliant → SSM Automation fix.',svc:'Security Hub · GuardDuty · Config · Inspector · EventBridge · Lambda · SSM'},
+  ]}
+]},
+{id:'d5',cls:'d5',tag:'Domain 5 · 18%',title:'Networking and Content Delivery',tasks:[
+  {name:'Task 5.1 · Implement and optimize networking features',projects:[
+    {id:'o1101',sk:'5.1.1',title:'VPC full build from scratch',diff:'h',desc:'Build a production VPC: 3 AZs, public/private/data subnets (9 total), IGW, NAT Gateway per AZ, custom route tables, NACLs per tier (stateless rules), security groups per service layer. Add VPC Flow Logs to S3. Deploy a 3-tier app and verify full connectivity and isolation.',svc:'VPC · NAT Gateway · IGW · NACLs · Security Groups · Flow Logs'},
+    {id:'o1102',sk:'5.1.2',title:'Private connectivity options lab',diff:'h',desc:'Implement 4 private connectivity options: (1) VPC Peering (2 VPCs, non-overlapping CIDRs), (2) PrivateLink (expose a service to another VPC without peering), (3) Transit Gateway (connect 5 VPCs hub-and-spoke), (4) VPC Endpoints (Gateway for S3/DynamoDB, Interface for SSM/Secrets Manager). Test connectivity for each.',svc:'VPC Peering · PrivateLink · Transit Gateway · VPC Endpoints · SSM'},
+    {id:'o1103',sk:'5.1.3',title:'Network protection services audit',diff:'h',desc:'Deploy and configure: Route 53 Resolver DNS Firewall (block malicious domains), WAF (SQL injection + rate limiting on ALB and CloudFront), Shield Advanced (DDoS protection), Network Firewall (stateful traffic inspection between subnets). Run simulated attack traffic against each. Review logs.',svc:'Route 53 Resolver DNS Firewall · WAF · Shield · Network Firewall · CloudWatch'},
+    {id:'o1104',sk:'5.1.4',title:'Network cost optimization audit',diff:'m',desc:'Identify and fix 5 network cost waste items: (1) replace NAT Gateway with VPC Endpoints for S3/DynamoDB, (2) use same-AZ placement for high-traffic EC2 pairs, (3) replace public IPs with private IPs for inter-VPC traffic, (4) Transit Gateway vs VPC Peering cost analysis, (5) CloudFront to reduce S3 egress.',svc:'VPC Endpoints · NAT Gateway · Transit Gateway · CloudFront · Cost Explorer'},
+  ]},
+  {name:'Task 5.2 · Configure domains, DNS services, and content delivery',projects:[
+    {id:'o1201',sk:'5.2.1',title:'Route 53 Resolver DNS configuration',diff:'m',desc:'Configure Route 53 Resolver: inbound endpoint (on-premises DNS resolves AWS private hosted zone records), outbound endpoint (EC2 instances resolve on-premises DNS). Set DNS Firewall with domain block list. Test resolution flow end-to-end. Add query logging to CloudWatch.',svc:'Route 53 Resolver · VPN · VPC · CloudWatch'},
+    {id:'o1202',sk:'5.2.2',title:'Route 53 routing policies master lab',diff:'h',desc:'Configure all 6 routing policies for the same domain: simple, weighted (80/20 split), latency-based (3 regions), failover (primary + secondary with health checks), geolocation (region-specific), multivalue answer (multiple IPs). Add Route 53 query logging. Simulate failures and observe failover behavior.',svc:'Route 53 · EC2 · ALB · CloudWatch'},
+    {id:'o1203',sk:'5.2.3',title:'CloudFront + Global Accelerator distribution lab',diff:'h',desc:'Deploy CloudFront distribution: S3 origin (static site), ALB origin (dynamic API), Lambda@Edge (auth at edge). Configure: behaviors per path, geo-restriction, signed URLs for private content, OAC for S3. Deploy Global Accelerator for a TCP application. Compare latency vs CloudFront for non-HTTP traffic.',svc:'CloudFront · Global Accelerator · S3 · ALB · Lambda@Edge · Route 53'},
+  ]},
+  {name:'Task 5.3 · Troubleshoot network connectivity issues',projects:[
+    {id:'o1301',sk:'5.3.1',title:'VPC connectivity troubleshooting lab',diff:'h',desc:'Deploy a broken environment with 8 intentional networking faults: missing route table entry, NACL blocking return traffic, security group missing inbound rule, missing IGW attachment, NAT Gateway in wrong subnet, Transit Gateway missing attachment, VPC Peering route not added, missing VPC Endpoint policy. Debug and fix each using Reachability Analyzer.',svc:'VPC · Reachability Analyzer · Route Tables · NACLs · Security Groups · NAT GW'},
+    {id:'o1302',sk:'5.3.2',title:'Network log analysis and troubleshooting',diff:'h',desc:'Generate real traffic and analyze: VPC Flow Logs (identify port scan, rejected connections), ELB access logs (5xx errors, slow requests), WAF logs (blocked requests, rule matches), CloudFront logs (cache hit rates, error rates), EKS container logs (network failures). Correlate events across all log sources.',svc:'VPC Flow Logs · ELB Logs · WAF Logs · CloudFront · CloudWatch Logs Insights'},
+    {id:'o1303',sk:'5.3.3',title:'CloudFront caching issues identification and fix',diff:'m',desc:'Simulate 5 CloudFront caching problems: (1) dynamic content being cached (TTL too high), (2) user-specific content served to wrong user (missing cache key), (3) origin not reachable (502 errors), (4) HTTPS cert mismatch, (5) cache not invalidating after deployment. Debug each using CloudFront access logs and CloudWatch metrics.',svc:'CloudFront · S3 · ALB · CloudWatch · Cache Invalidation'},
+    {id:'o1304',sk:'5.3.4',title:'Hybrid and private connectivity troubleshooting',diff:'h',desc:'Set up Site-to-Site VPN between 2 VPCs (simulating on-premises). Introduce 4 hybrid connectivity failures: BGP session down, wrong PSK, missing route propagation, security group blocking VPN traffic. Debug each. Set up CloudWatch alarms on VPN tunnel state. Test Client VPN connectivity and certificate issues.',svc:'Site-to-Site VPN · Client VPN · Transit Gateway · BGP · CloudWatch'},
+    {id:'o1305',sk:'5.3.5',title:'CloudWatch network monitoring and VPC IPAM',diff:'m',desc:'Enable CloudWatch Network Monitor for path monitoring between VPCs and to internet endpoints. Set up VPC IPAM to manage IP address space across 5 VPCs. Detect IP exhaustion with IPAM alerts. Use Network Monitor to detect and alert on latency degradation between two services.',svc:'CloudWatch Network Monitor · VPC IPAM · VPC · Transit Gateway · CloudWatch'},
+  ]}
+]}
+];
+
+const SK='soa_c03_v1';
+function load(){try{return JSON.parse(localStorage.getItem(SK)||'{}')}catch{return{}}}
+function save(s){try{localStorage.setItem(SK,JSON.stringify(s))}catch{}}
+let ST=load();
+let CF='all';
+
+function toggle(id){ST[id]=!ST[id];save(ST);render()}
+function filt(f,el){CF=f;document.querySelectorAll('.fb').forEach(b=>b.classList.remove('on'));el.classList.add('on');render()}
+function resetAll(){if(confirm('Reset all progress?')){ST={};save(ST);render();}}
+function toggleDomain(id){
+  const l=document.getElementById('dl-'+id);
+  const c=document.getElementById('dc-'+id);
+  const open=l.style.display!=='none';
+  l.style.display=open?'none':'';
+  c.classList.toggle('open',!open);
+}
+
+function render(){
+  const all=DATA.flatMap(d=>d.tasks.flatMap(t=>t.projects));
+  const total=all.length;
+  const done=all.filter(p=>ST[p.id]).length;
+  const hardLeft=all.filter(p=>p.diff==='h'&&!ST[p.id]).length;
+  const skillsDone=new Set(all.filter(p=>ST[p.id]).map(p=>p.sk)).size;
+  document.getElementById('sT').textContent=total;
+  document.getElementById('sD').textContent=done;
+  document.getElementById('sP').textContent=Math.round(done/total*100)+'%';
+  document.getElementById('sH').textContent=hardLeft;
+  document.getElementById('sK').textContent=skillsDone+'/'+all.length;
+
+  const root=document.getElementById('root');
+  root.innerHTML='';
+  DATA.forEach(d=>{
+    const dP=d.tasks.flatMap(t=>t.projects);
+    const dD=dP.filter(p=>ST[p.id]).length;
+    const pct=Math.round(dD/dP.length*100);
+
+    const tasksHTML=d.tasks.map(t=>{
+      let projs=t.projects;
+      if(CF==='todo') projs=projs.filter(p=>!ST[p.id]);
+      if(CF==='done') projs=projs.filter(p=>ST[p.id]);
+      if(CF==='hard') projs=projs.filter(p=>p.diff==='h'&&!ST[p.id]);
+      const pH=projs.length?projs.map(p=>`
+        <div class="pj${ST[p.id]?' dn':''}">
+          <button class="cb${ST[p.id]?' on':''}" onclick="toggle('${p.id}')" aria-label="${ST[p.id]?'Uncheck':'Check'}: ${p.title}">
+            <i class="ti ti-check" aria-hidden="true"></i>
+          </button>
+          <div class="pb2">
+            <div class="pr">
+              <span class="pt">${p.title}</span>
+              <span class="sk">${p.sk}</span>
+              <span class="df ${p.diff}">${p.diff==='e'?'easy':p.diff==='m'?'medium':'hard'}</span>
+            </div>
+            <div class="pd">${p.desc}</div>
+            <div class="ps"><i class="ti ti-cloud" aria-hidden="true"></i>${p.svc}</div>
+          </div>
+        </div>`).join(''):'<div class="em">No projects match this filter.</div>';
+      return`<div class="tg"><div class="tgh">${t.name}</div>${pH}</div>`;
+    }).join('');
+
+    const el=document.createElement('div');
+    el.className=`dm ${d.cls}`;
+    el.innerHTML=`
+      <div class="dh" onclick="toggleDomain('${d.id}')">
+        <span class="dtg">${d.tag}</span>
+        <span class="dti">${d.title}</span>
+        <span class="dpr">${dD}/${dP.length}</span>
+        <i class="ti ti-chevron-down dch open" id="dc-${d.id}" aria-hidden="true"></i>
+      </div>
+      <div class="pb"><div class="pbi" style="width:${pct}%"></div></div>
+      <div id="dl-${d.id}">${tasksHTML}</div>`;
+    root.appendChild(el);
+  });
+}
+render();
+</script>

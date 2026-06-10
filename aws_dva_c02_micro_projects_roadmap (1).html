@@ -1,0 +1,484 @@
+
+<style>
+:root { --gap: 10px; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-sans); }
+
+.header { padding: 1.5rem 0 1rem; }
+.header h2 { font-size: 18px; font-weight: 500; color: var(--color-text-primary); }
+.header p { font-size: 13px; color: var(--color-text-secondary); margin-top: 4px; }
+
+.domain-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1rem; }
+.tab { padding: 6px 14px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-secondary); font-size: 13px; cursor: pointer; background: var(--color-background-primary); color: var(--color-text-secondary); transition: all 0.15s; }
+.tab.active { background: var(--color-background-secondary); color: var(--color-text-primary); border-color: var(--color-border-primary); font-weight: 500; }
+
+.domain-section { display: none; }
+.domain-section.active { display: block; }
+
+.domain-header { display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; padding: 10px 14px; border-radius: var(--border-radius-md); border-left: 3px solid; }
+.d1 .domain-header { background: #E6F1FB; border-color: #185FA5; }
+.d2 .domain-header { background: #FAECE7; border-color: #993C1D; }
+.d3 .domain-header { background: #E1F5EE; border-color: #0F6E56; }
+.d4 .domain-header { background: #EEEDFE; border-color: #534AB7; }
+.domain-header .dtitle { font-size: 14px; font-weight: 500; color: var(--color-text-primary); }
+.domain-header .dpct { font-size: 12px; color: var(--color-text-secondary); }
+
+.project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--gap); }
+
+.project-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 14px; }
+.project-card:hover { border-color: var(--color-border-secondary); }
+
+.card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 8px; }
+.proj-num { font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: var(--border-radius-md); }
+.d1 .proj-num { background: #B5D4F4; color: #0C447C; }
+.d2 .proj-num { background: #F5C4B3; color: #712B13; }
+.d3 .proj-num { background: #9FE1CB; color: #085041; }
+.d4 .proj-num { background: #CECBF6; color: #3C3489; }
+
+.diff-badge { font-size: 11px; padding: 2px 8px; border-radius: var(--border-radius-md); }
+.diff-starter { background: #EAF3DE; color: #3B6D11; }
+.diff-intermediate { background: #FAEEDA; color: #854F0B; }
+.diff-advanced { background: #FCEBEB; color: #A32D2D; }
+
+.proj-title { font-size: 14px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 5px; }
+.proj-desc { font-size: 12px; color: var(--color-text-secondary); line-height: 1.5; margin-bottom: 10px; }
+
+.skills-label { font-size: 11px; color: var(--color-text-secondary); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.04em; }
+.skill-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 10px; }
+.skill-tag { font-size: 11px; padding: 2px 7px; background: var(--color-background-secondary); color: var(--color-text-secondary); border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-tertiary); }
+
+.services-row { display: flex; flex-wrap: wrap; gap: 4px; }
+.svc { font-size: 10px; padding: 2px 6px; border-radius: var(--border-radius-md); font-family: var(--font-mono); }
+.d1 .svc { background: #E6F1FB; color: #185FA5; }
+.d2 .svc { background: #FAECE7; color: #993C1D; }
+.d3 .svc { background: #E1F5EE; color: #0F6E56; }
+.d4 .svc { background: #EEEDFE; color: #534AB7; }
+
+.progress-bar-wrap { margin-top: 12px; border-top: 0.5px solid var(--color-border-tertiary); padding-top: 10px; }
+.progress-label { font-size: 11px; color: var(--color-text-secondary); margin-bottom: 5px; display: flex; justify-content: space-between; }
+.pbar { height: 4px; background: var(--color-background-secondary); border-radius: 2px; overflow: hidden; }
+.pbar-fill { height: 100%; border-radius: 2px; }
+.d1 .pbar-fill { background: #378ADD; }
+.d2 .pbar-fill { background: #D85A30; }
+.d3 .pbar-fill { background: #1D9E75; }
+.d4 .pbar-fill { background: #7F77DD; }
+
+.summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 1.2rem; }
+.sum-card { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 10px 12px; text-align: center; }
+.sum-num { font-size: 22px; font-weight: 500; }
+.sum-label { font-size: 11px; color: var(--color-text-secondary); margin-top: 2px; }
+.s1 .sum-num { color: #185FA5; }
+.s2 .sum-num { color: #993C1D; }
+.s3 .sum-num { color: #0F6E56; }
+.s4 .sum-num { color: #534AB7; }
+</style>
+
+<h2 class="sr-only" style="position:absolute;left:-9999px">AWS DVA-C02 Micro Projects Roadmap</h2>
+
+<div class="header">
+  <h2>DVA-C02 micro projects — complete skill coverage</h2>
+  <p>32 hands-on projects mapped to every exam skill. Complete all to hit 900+.</p>
+</div>
+
+<div class="summary-grid">
+  <div class="sum-card s1"><div class="sum-num">10</div><div class="sum-label">Domain 1 projects</div></div>
+  <div class="sum-card s2"><div class="sum-num">8</div><div class="sum-label">Domain 2 projects</div></div>
+  <div class="sum-card s3"><div class="sum-num">8</div><div class="sum-label">Domain 3 projects</div></div>
+  <div class="sum-card s4"><div class="sum-num">6</div><div class="sum-label">Domain 4 projects</div></div>
+</div>
+
+<div class="domain-tabs">
+  <button class="tab active" onclick="showDomain('d1',this)">Domain 1 — Development (32%)</button>
+  <button class="tab" onclick="showDomain('d2',this)">Domain 2 — Security (26%)</button>
+  <button class="tab" onclick="showDomain('d3',this)">Domain 3 — Deployment (24%)</button>
+  <button class="tab" onclick="showDomain('d4',this)">Domain 4 — Troubleshooting (18%)</button>
+</div>
+
+<div id="d1" class="domain-section d1 active">
+  <div class="domain-header"><div><div class="dtitle">Domain 1 — Development with AWS Services</div><div class="dpct">32% of exam · Tasks 1.1, 1.2, 1.3 · 13 skills each task</div></div></div>
+  <div class="project-grid">
+
+    <div class="project-card d1">
+      <div class="card-top"><span class="proj-num">P-01</span><span class="diff-badge diff-starter">starter</span></div>
+      <div class="proj-title">Serverless order processing pipeline</div>
+      <div class="proj-desc">Build an event-driven order system: API Gateway → Lambda → SQS → Lambda → DynamoDB. Implement fanout via SNS topics. Add dead-letter queues and retry logic.</div>
+      <div class="skills-label">Skills covered</div>
+      <div class="skill-tags"><span class="skill-tag">1.1.1 arch patterns</span><span class="skill-tag">1.1.2 stateless</span><span class="skill-tag">1.1.3 loose coupling</span><span class="skill-tag">1.1.4 async</span><span class="skill-tag">1.1.8 messaging</span><span class="skill-tag">1.2.3 event lifecycle</span></div>
+      <div class="skills-label">Services</div>
+      <div class="services-row"><span class="svc">Lambda</span><span class="svc">SQS</span><span class="svc">SNS</span><span class="svc">API GW</span><span class="svc">DynamoDB</span></div>
+      <div class="progress-bar-wrap"><div class="progress-label"><span>Skill coverage</span><span>6 skills</span></div><div class="pbar"><div class="pbar-fill" style="width:46%"></div></div></div>
+    </div>
+
+    <div class="project-card d1">
+      <div class="card-top"><span class="proj-num">P-02</span><span class="diff-badge diff-starter">starter</span></div>
+      <div class="proj-title">REST API with validation and transformations</div>
+      <div class="proj-desc">Create an API Gateway REST API with request/response mapping templates, input validation models, custom status codes, and Lambda proxy integration. Write unit tests using AWS SAM local.</div>
+      <div class="skills-label">Skills covered</div>
+      <div class="skill-tags"><span class="skill-tag">1.1.6 APIs</span><span class="skill-tag">1.1.7 unit tests SAM</span><span class="skill-tag">1.1.9 SDK calls</span><span class="skill-tag">1.2.4 test code</span></div>
+      <div class="skills-label">Services</div>
+      <div class="services-row"><span class="svc">API Gateway</span><span class="svc">Lambda</span><span class="svc">SAM</span></div>
+      <div class="progress-bar-wrap"><div class="progress-label"><span>Skill coverage</span><span>4 skills</span></div><div class="pbar"><div class="pbar-fill" style="width:31%"></div></div></div>
+    </div>
+
+    <div class="project-card d1">
+      <div class="card-top"><span class="proj-num">P-03</span><span class="diff-badge diff-intermediate">intermediate</span></div>
+      <div class="proj-title">Resilient third-party integration with circuit breaker</div>
+      <div class="proj-desc">Lambda function calling an external payment API. Implement exponential backoff, circuit breaker state in ElastiCache, and error handling patterns. Simulate failures to test resilience.</div>
+      <div class="skills-label">Skills covered</div>
+      <div class="skill-tags"><span class="skill-tag">1.1.5 fault tolerant</span><span class="skill-tag">1.1.13 circuit breakers</span><span class="skill-tag">1.2.5 Lambda integrations</span><span class="skill-tag">1.2.6 tuning</span></div>
+      <div class="skills-label">Services</div>
+      <div class="services-row"><span class="svc">Lambda</span><span class="svc">ElastiCache</span><span class="svc">CloudWatch</span></div>
+      <div class="progress-bar-wrap"><div class="progress-label"><span>Skill coverage</span><span>4 skills</span></div><div class="pbar"><div class="pbar-fill" style="width:31%"></div></div></div>
+    </div>
+
+    <div class="project-card d1">
+      <div class="card-top"><span class="proj-num">P-04</span><span class="diff-badge diff-intermediate">intermediate</span></div>
+      <div class="proj-title">EventBridge rule engine with multi-service fanout</div>
+      <div class="proj-desc">Build an EventBridge event bus with custom event patterns, rules routing to Lambda, SQS, and Step Functions. Implement choreography vs orchestration. Use Amazon Q Developer for code assistance throughout.</div>
+      <div class="skills-label">Skills covered</div>
+      <div class="skill-tags"><span class="skill-tag">1.1.11 Amazon Q Dev</span><span class="skill-tag">1.1.12 EventBridge</span><span class="skill-tag">1.1.1 choreography</span></div>
+      <div class="skills-label">Services</div>
+      <div class="services-row"><span class="svc">EventBridge</span><span class="svc">Step Functions</span><span class="svc">Lambda</span><span class="svc">SQS</span></div>
+      <div class="progress-bar-wrap"><div class="progress-label"><span>Skill coverage</span><span>3 skills</span></div><div class="pbar"><div class="pbar-fill" style="width:23%"></div></div></div>
+    </div>
+
+    <div class="project-card d1">
+      <div class="card-top"><span class="proj-num">P-05</span><span class="diff-badge diff-intermediate">intermediate</span></div>
+      <div class="proj-title">Kinesis real-time data stream processor</div>
+      <div class="proj-desc">Producer app sends clickstream events to Kinesis Data Streams. Lambda consumer processes, transforms, and aggregates in near-real-time. Write to DynamoDB and S3. Tune Lambda concurrency for throughput.</div>
+      <div class="skills-label">Skills covered</div>
+      <div class="skill-tags"><span class="skill-tag">1.1.10 streaming</span><span class="skill-tag">1.2.6 Lambda tuning</span><span class="skill-tag">1.2.7 real-time transform</span></div>
+      <div class="skills-label">Services</div>
+      <div class="services-row"><span class="svc">Kinesis</span><span class="svc">Lambda</span><span class="svc">DynamoDB</span><span class="svc">S3</span></div>
+      <div class="progress-bar-wrap"><div class="progress-label"><span>Skill coverage</span><span>3 skills</span></div><div class="pbar"><div class="pbar-fill" style="width:23%"></div></div></div>
+    </div>
+
+    <div class="project-card d1">
+      <div class="card-top"><span class="proj-num">P-06</span><span class="diff-badge diff-intermediate">intermediate</span></div>
+      <div class="proj-title">DynamoDB e-commerce catalog with advanced patterns</div>
+      <div class="proj-desc">Design a single-table DynamoDB schema for products, orders, users. Use high-cardinality partition keys, GSIs, and LSIs. Implement query vs scan comparisons. Add ElastiCache caching layer for hot items.</div>
+      <div class="skills-label">Skills covered</div>
+      <div class="skill-tags"><span class="skill-tag">1.3.1 partition keys</span><span class="skill-tag">1.3.2 consistency</span><span class="skill-tag">1.3.3 query vs scan</span><span class="skill-tag">1.3.4 keys & indexes</span><span class="skill-tag">1.3.8 caching</span></div>
+      <div class="skills-label">Services</div>
+      <div class="services-row"><span class="svc">DynamoDB</span><span class="svc">ElastiCache</span><span class="svc">Lambda</span></div>
+      <div class="progress-bar-wrap"><div class="progress-label"><span>Skill coverage</span><span>5 skills</span></div><div class="pbar"><div class="pbar-fill" style="width:38%"></div></div></div>
+    </div>
+
+    <div class="project-card d1">
+      <div class="card-top"><span class="proj-num">P-07</span><span class="diff-badge diff-intermediate">intermediate</span></div>
+      <div class="proj-title">S3 + RDS data lifecycle manager</div>
+      <div class="proj-desc">App that serializes objects to JSON/Protobuf, persists to S3 and Aurora. Implement S3 lifecycle rules (transition to Glacier, expiry). Use TTL in DynamoDB. Demonstrate serialization/deserialization patterns.</div>
+      <div class="skills-label">Skills covered</div>
+      <div class="skill-tags"><span class="skill-tag">1.3.5 serialize/deserialize</span><span class="skill-tag">1.3.6 data stores</span><span class="skill-tag">1.3.7 data lifecycle</span></div>
+      <div class="skills-label">Services</div>
+      <div class="services-row"><span class="svc">S3</span><span class="svc">Aurora</span><span class="svc">DynamoDB</span><span class="svc">Lambda</span></div>
+      <div class="progress-bar-wrap"><div class="progress-label"><span>Skill coverage</span><span>3 skills</span></div><div class="pbar"><div class="pbar-fill" style="width:23%"></div></div></div>
+    </div>
+
+    <div class="project-card d1">
+      <div class="card-top"><span class="proj-num">P-08</span><span class="diff-badge diff-advanced">advanced</span></div>
+      <div class="proj-title">OpenSearch full-text search + DynamoDB streams</div>
+      <div class="proj-desc">DynamoDB Streams trigger Lambda to index records into OpenSearch. Build a search API on top. Compare access patterns: DynamoDB for key lookups, OpenSearch for full-text/analytics queries.</div>
+      <div class="skills-label">Skills covered</div>
+      <div class="skill-tags"><span class="skill-tag">1.3.9 specialized stores</span><span class="skill-tag">1.2.5 Lambda integrations</span><span class="skill-tag">1.3.3 query patterns</span></div>
+      <div class="skills-label">Services</div>
+      <div class="services-row"><span class="svc">OpenSearch</span><span class="svc">DynamoDB</span><span class="svc">Lambda</span></div>
+      <div class="progress-bar-wrap"><div class="progress-label"><span>Skill coverage</span><span>3 skills</span></div><div class="pbar"><div class="pbar-fill" style="width:23%"></div></div></div>
+    </div>
+
+    <div class="project-card d1">
+      <div class="card-top"><span class="proj-num">P-09</span><span class="diff-badge diff-advanced">advanced</span></div>
+      <div class="proj-title">Lambda VPC integration with RDS Proxy</div>
+      <div class="proj-desc">Deploy Lambda in a VPC, connect to RDS in private subnet via RDS Proxy. Configure security groups, NAT Gateway for external calls. Tune memory/timeout. Handle cold start latency.</div>
+      <div class="skills-label">Skills covered</div>
+      <div class="skill-tags"><span class="skill-tag">1.2.1 VPC access</span><span class="skill-tag">1.2.2 Lambda config</span><span class="skill-tag">1.2.6 performance</span></div>
+      <div class="skills-label">Services</div>
+      <div class="services-row"><span class="svc">Lambda</span><span class="svc">VPC</span><span class="svc">RDS</span><span class="svc">RDS Proxy</span></div>
+      <div class="progress-bar-wrap"><div class="progress-label"><span>Skill coverage</span><span>3 skills</span></div><div class="pbar"><div class="pbar-fill" style="width:23%"></div></div></div>
+    </div>
+
+    <div class="project-card d1">
+      <div class="card-top"><span class="proj-num">P-10</span><span class="diff-badge diff-advanced">advanced</span></div>
+      <div class="proj-title">AppSync GraphQL API with real-time subscriptions</div>
+      <div class="proj-desc">Build a GraphQL API using AppSync with DynamoDB resolvers. Add real-time subscriptions for live updates. Implement a Step Functions orchestration workflow. Write SDK code using Boto3/JS SDK.</div>
+      <div class="skills-label">Skills covered</div>
+      <div class="skill-tags"><span class="skill-tag">1.1.9 SDK usage</span><span class="skill-tag">1.1.1 orchestration</span><span class="skill-tag">1.2.5 integrations</span></div>
+      <div class="skills-label">Services</div>
+      <div class="services-row"><span class="svc">AppSync</span><span class="svc">Step Functions</span><span class="svc">DynamoDB</span><span class="svc">Lambda</span></div>
+      <div class="progress-bar-wrap"><div class="progress-label"><span>Skill coverage</span><span>3 skills</span></div><div class="pbar"><div class="pbar-fill" style="width:23%"></div></div></div>
+    </div>
+
+  </div>
+</div>
+
+<div id="d2" class="domain-section d2">
+  <div class="domain-header"><div><div class="dtitle">Domain 2 — Security</div><div class="dpct">26% of exam · Tasks 2.1, 2.2, 2.3 · Authentication, encryption, sensitive data</div></div></div>
+  <div class="project-grid">
+
+    <div class="project-card d2">
+      <div class="card-top"><span class="proj-num">P-11</span><span class="diff-badge diff-starter">starter</span></div>
+      <div class="proj-title">Cognito authentication with fine-grained authorization</div>
+      <div class="proj-desc">Build a user pool + identity pool. Implement JWT bearer token auth. Add custom Lambda triggers for pre-token generation. Use Cognito groups to define IAM role mappings and resource-level permissions.</div>
+      <div class="skills-label">Skills covered</div>
+      <div class="skill-tags"><span class="skill-tag">2.1.1 federated access</span><span class="skill-tag">2.1.2 bearer tokens</span><span class="skill-tag">2.1.6 IAM permissions</span><span class="skill-tag">2.1.7 fine-grained auth</span></div>
+      <div class="skills-label">Services</div>
+      <div class="services-row"><span class="svc">Cognito</span><span class="svc">IAM</span><span class="svc">Lambda</span><span class="svc">API GW</span></div>
+      <div class="progress-bar-wrap"><div class="progress-label"><span>Skill coverage</span><span>4 skills</span></div><div class="pbar"><div class="pbar-fill" style="width:50%"></div></div></div>
+    </div>
+
+    <div class="project-card d2">
+      <div class="card-top"><span class="proj-num">P-12</span><span class="diff-badge diff-starter">starter</span></div>
+      <div class="proj-title">IAM roles, STS assume-role & programmatic access</div>
+      <div class="proj-desc">Write code to assume IAM roles using STS. Use temporary credentials in SDK calls. Configure programmatic access with least privilege. Implement cross-account role assumption. Test all with CLI.</div>
+      <div class="skills-label">Skills covered</div>
+      <div class="skill-tags"><span class="skill-tag">2.1.3 programmatic access</span><span class="skill-tag">2.1.4 authenticated calls</span><span class="skill-tag">2.1.5 assume role</span></div>
+      <div class="skills-label">Services</div>
+      <div class="services-row"><span class="svc">IAM</span><span class="svc">STS</span><span class="svc">AWS CLI</span></div>
+      <div class="progress-bar-wrap"><div class="progress-label"><span>Skill coverage</span><span>3 skills</span></div><div class="pbar"><div class="pbar-fill" style="width:37%"></div></div></div>
+    </div>
+
+    <div class="project-card d2">
+      <div class="card-top"><span class="proj-num">P-13</span><span class="diff-badge diff-intermediate">intermediate</span></div>
+      <div class="proj-title">Cross-service auth in microservices (service-to-service)</div>
+      <div class="proj-desc">Two Lambda functions calling each other via API Gateway. Service A assumes a role to call Service B. Implement execution roles with minimal permissions. Test cross-account boundaries.</div>
+      <div class="skills-label">Skills covered</div>
+      <div class="skill-tags"><span class="skill-tag">2.1.8 cross-service auth</span><span class="skill-tag">2.1.5 assume role</span><span class="skill-tag">2.1.4 authenticated calls</span></div>
+      <div class="skills-label">Services</div>
+      <div class="services-row"><span class="svc">Lambda</span><span class="svc">IAM</span><span class="svc">STS</span><span class="svc">API GW</span></div>
+      <div class="progress-bar-wrap"><div class="progress-label"><span>Skill coverage</span><span>3 skills</span></div><div class="pbar"><div class="pbar-fill" style="width:37%"></div></div></div>
+    </div>
+
+    <div class="project-card d2">
+      <div class="card-top"><span class="proj-num">P-14</span><span class="diff-badge diff-intermediate">intermediate</span></div>
+      <div class="proj-title">KMS encryption at rest and in transit</div>
+      <div class="proj-desc">Encrypt S3 objects (SSE-KMS vs SSE-S3 vs client-side). Encrypt DynamoDB fields using envelope encryption. Enable key rotation. Use KMS across account boundaries with key policies. Generate SSH keys and certificates.</div>
+      <div class="skills-label">Skills covered</div>
+      <div class="skill-tags"><span class="skill-tag">2.2.1 encryption types</span><span class="skill-tag">2.2.3 client vs server</span><span class="skill-tag">2.2.4 encrypt/decrypt</span><span class="skill-tag">2.2.6 cross-account</span><span class="skill-tag">2.2.7 key rotation</span></div>
+      <div class="skills-label">Services</div>
+      <div class="services-row"><span class="svc">KMS</span><span class="svc">S3</span><span class="svc">DynamoDB</span></div>
+      <div class="progress-bar-wrap"><div class="progress-label"><span>Skill coverage</span><span>5 skills</span></div><div class="pbar"><div class="pbar-fill" style="width:62%"></div></div></div>
+    </div>
+
+    <div class="project-card d2">
+      <div class="card-top"><span class="proj-num">P-15</span><span class="diff-badge diff-intermediate">intermediate</span></div>
+      <div class="proj-title">Secrets Manager + Parameter Store rotation app</div>
+      <div class="proj-desc">Store DB credentials in Secrets Manager with automatic rotation Lambda. Store config values in SSM Parameter Store (SecureString). Write app code that retrieves secrets at runtime. Never hardcode credentials.</div>
+      <div class="skills-label">Skills covered</div>
+      <div class="skill-tags"><span class="skill-tag">2.3.3 secret management</span><span class="skill-tag">2.3.2 encrypt env vars</span><span class="skill-tag">2.3.1 data classification</span></div>
+      <div class="skills-label">Services</div>
+      <div class="services-row"><span class="svc">Secrets Manager</span><span class="svc">SSM</span><span class="svc">Lambda</span><span class="svc">RDS</span></div>
+      <div class="progress-bar-wrap"><div class="progress-label"><span>Skill coverage</span><span>3 skills</span></div><div class="pbar"><div class="pbar-fill" style="width:37%"></div></div></div>
+    </div>
+
+    <div class="project-card d2">
+      <div class="card-top"><span class="proj-num">P-16</span><span class="diff-badge diff-intermediate">intermediate</span></div>
+      <div class="proj-title">PII data masking & sanitization API</div>
+      <div class="proj-desc">Build a Lambda function that receives user data, identifies PII (email, phone, SSN), masks/redacts fields before storing in DynamoDB. Implement sanitization (SQL injection prevention). Add WAF rules on API Gateway.</div>
+      <div class="skills-label">Skills covered</div>
+      <div class="skill-tags"><span class="skill-tag">2.3.4 sanitize data</span><span class="skill-tag">2.3.5 data masking</span><span class="skill-tag">2.3.1 PII/PHI</span></div>
+      <div class="skills-label">Services</div>
+      <div class="services-row"><span class="svc">Lambda</span><span class="svc">WAF</span><span class="svc">DynamoDB</span><span class="svc">API GW</span></div>
+      <div class="progress-bar-wrap"><div class="progress-label"><span>Skill coverage</span><span>3 skills</span></div><div class="pbar"><div class="pbar-fill" style="width:37%"></div></div></div>
+    </div>
+
+    <div class="project-card d2">
+      <div class="card-top"><span class="proj-num">P-17</span><span class="diff-badge diff-advanced">advanced</span></div>
+      <div class="proj-title">Multi-tenant SaaS data isolation</div>
+      <div class="proj-desc">Build a multi-tenant app where each tenant has isolated DynamoDB access via Cognito identity pools + IAM condition keys (tenant ID in partition key). Implement tenant-scoped data access patterns.</div>
+      <div class="skills-label">Skills covered</div>
+      <div class="skill-tags"><span class="skill-tag">2.3.6 multi-tenant</span><span class="skill-tag">2.1.7 fine-grained</span><span class="skill-tag">2.1.1 federated</span></div>
+      <div class="skills-label">Services</div>
+      <div class="services-row"><span class="svc">Cognito</span><span class="svc">IAM</span><span class="svc">DynamoDB</span></div>
+      <div class="progress-bar-wrap"><div class="progress-label"><span>Skill coverage</span><span>3 skills</span></div><div class="pbar"><div class="pbar-fill" style="width:37%"></div></div></div>
+    </div>
+
+    <div class="project-card d2">
+      <div class="card-top"><span class="proj-num">P-18</span><span class="diff-badge diff-advanced">advanced</span></div>
+      <div class="proj-title">Certificate management with Private CA</div>
+      <div class="proj-desc">Use AWS Private CA to issue TLS certificates for internal services. Set up mTLS on API Gateway. Understand ACM for public certificates. Generate SSH key pairs for EC2 access programmatically.</div>
+      <div class="skills-label">Skills covered</div>
+      <div class="skill-tags"><span class="skill-tag">2.2.2 certificate mgmt</span><span class="skill-tag">2.2.5 generate certs/keys</span><span class="skill-tag">2.2.1 transit encryption</span></div>
+      <div class="skills-label">Services</div>
+      <div class="services-row"><span class="svc">ACM</span><span class="svc">Private CA</span><span class="svc">API GW</span></div>
+      <div class="progress-bar-wrap"><div class="progress-label"><span>Skill coverage</span><span>3 skills</span></div><div class="pbar"><div class="pbar-fill" style="width:37%"></div></div></div>
+    </div>
+
+  </div>
+</div>
+
+<div id="d3" class="domain-section d3">
+  <div class="domain-header"><div><div class="dtitle">Domain 3 — Deployment</div><div class="dpct">24% of exam · Tasks 3.1–3.4 · CI/CD, IaC, environments, strategies</div></div></div>
+  <div class="project-grid">
+
+    <div class="project-card d3">
+      <div class="card-top"><span class="proj-num">P-19</span><span class="diff-badge diff-starter">starter</span></div>
+      <div class="proj-title">SAM multi-environment deployment with AppConfig</div>
+      <div class="proj-desc">Write an AWS SAM template deploying Lambda + API Gateway. Use AppConfig for feature flags per environment (dev/staging/prod). Deploy to multiple environments with different parameter files. Organize directory structure correctly.</div>
+      <div class="skills-label">Skills covered</div>
+      <div class="skill-tags"><span class="skill-tag">3.1.1 dependencies</span><span class="skill-tag">3.1.2 directory structure</span><span class="skill-tag">3.1.5 AppConfig</span><span class="skill-tag">3.4.3 update IaC</span></div>
+      <div class="skills-label">Services</div>
+      <div class="services-row"><span class="svc">SAM</span><span class="svc">Lambda</span><span class="svc">AppConfig</span><span class="svc">API GW</span></div>
+      <div class="progress-bar-wrap"><div class="progress-label"><span>Skill coverage</span><span>4 skills</span></div><div class="pbar"><div class="pbar-fill" style="width:50%"></div></div></div>
+    </div>
+
+    <div class="project-card d3">
+      <div class="card-top"><span class="proj-num">P-20</span><span class="diff-badge diff-starter">starter</span></div>
+      <div class="proj-title">CloudFormation IaC with nested stacks</div>
+      <div class="proj-desc">Build CloudFormation templates for a 3-tier app. Use nested stacks, cross-stack references, and exports. Deploy same stack to dev/prod with different parameters. Practice stack update and rollback.</div>
+      <div class="skills-label">Skills covered</div>
+      <div class="skill-tags"><span class="skill-tag">3.3.4 IaC templates</span><span class="skill-tag">3.3.5 manage environments</span><span class="skill-tag">3.1.4 resource requirements</span></div>
+      <div class="skills-label">Services</div>
+      <div class="services-row"><span class="svc">CloudFormation</span><span class="svc">CDK</span><span class="svc">S3</span><span class="svc">Lambda</span></div>
+      <div class="progress-bar-wrap"><div class="progress-label"><span>Skill coverage</span><span>3 skills</span></div><div class="pbar"><div class="pbar-fill" style="width:37%"></div></div></div>
+    </div>
+
+    <div class="project-card d3">
+      <div class="card-top"><span class="proj-num">P-21</span><span class="diff-badge diff-intermediate">intermediate</span></div>
+      <div class="proj-title">CodePipeline CI/CD with CodeBuild and CodeDeploy</div>
+      <div class="proj-desc">Full CI/CD pipeline: CodeCommit → CodeBuild (unit tests, build) → CodeDeploy (EC2/Lambda). Use buildspec.yml. Trigger on git push. Add approval stage. Use CodeArtifact for dependency management.</div>
+      <div class="skills-label">Skills covered</div>
+      <div class="skill-tags"><span class="skill-tag">3.4.6 commit to trigger</span><span class="skill-tag">3.4.7 orchestrated workflows</span><span class="skill-tag">3.1.3 code repos</span><span class="skill-tag">3.4.9 labels/branches</span></div>
+      <div class="skills-label">Services</div>
+      <div class="services-row"><span class="svc">CodePipeline</span><span class="svc">CodeBuild</span><span class="svc">CodeDeploy</span><span class="svc">CodeArtifact</span></div>
+      <div class="progress-bar-wrap"><div class="progress-label"><span>Skill coverage</span><span>4 skills</span></div><div class="pbar"><div class="pbar-fill" style="width:50%"></div></div></div>
+    </div>
+
+    <div class="project-card d3">
+      <div class="card-top"><span class="proj-num">P-22</span><span class="diff-badge diff-intermediate">intermediate</span></div>
+      <div class="proj-title">Blue/green and canary deployments with traffic shifting</div>
+      <div class="proj-desc">Configure CodeDeploy Lambda deployment with canary (10% for 10 min) and blue/green for EC2. Add CloudWatch alarms as rollback triggers. Implement rollback manually and via pipeline. Test all three strategies: canary, blue/green, rolling.</div>
+      <div class="skills-label">Skills covered</div>
+      <div class="skill-tags"><span class="skill-tag">3.4.5 deploy versions</span><span class="skill-tag">3.4.8 rollbacks</span><span class="skill-tag">3.4.11 deployment strategies</span></div>
+      <div class="skills-label">Services</div>
+      <div class="services-row"><span class="svc">CodeDeploy</span><span class="svc">Lambda</span><span class="svc">EC2</span><span class="svc">CloudWatch</span></div>
+      <div class="progress-bar-wrap"><div class="progress-label"><span>Skill coverage</span><span>3 skills</span></div><div class="pbar"><div class="pbar-fill" style="width:37%"></div></div></div>
+    </div>
+
+    <div class="project-card d3">
+      <div class="card-top"><span class="proj-num">P-23</span><span class="diff-badge diff-intermediate">intermediate</span></div>
+      <div class="proj-title">API Gateway stages with Lambda aliases and stage variables</div>
+      <div class="proj-desc">Create dev/test/prod stages in API Gateway. Use stage variables to point to Lambda aliases ($dev, $prod). Implement canary deployments at stage level. Configure custom domains per environment.</div>
+      <div class="skills-label">Skills covered</div>
+      <div class="skill-tags"><span class="skill-tag">3.4.2 stages/domains</span><span class="skill-tag">3.4.10 runtime config</span><span class="skill-tag">3.3.3 approved versions</span><span class="skill-tag">3.2.3 dev endpoints</span></div>
+      <div class="skills-label">Services</div>
+      <div class="services-row"><span class="svc">API GW</span><span class="svc">Lambda</span><span class="svc">Route 53</span><span class="svc">ACM</span></div>
+      <div class="progress-bar-wrap"><div class="progress-label"><span>Skill coverage</span><span>4 skills</span></div><div class="pbar"><div class="pbar-fill" style="width:50%"></div></div></div>
+    </div>
+
+    <div class="project-card d3">
+      <div class="card-top"><span class="proj-num">P-24</span><span class="diff-badge diff-intermediate">intermediate</span></div>
+      <div class="proj-title">Integration testing with mock APIs and event testing</div>
+      <div class="proj-desc">Write integration tests for a Lambda + API Gateway + DynamoDB app. Mock external APIs using SAM local. Create JSON test event payloads for Lambda. Test event-driven flows end-to-end. Use Q Developer to generate tests.</div>
+      <div class="skills-label">Skills covered</div>
+      <div class="skill-tags"><span class="skill-tag">3.2.1 test deployed code</span><span class="skill-tag">3.2.2 integration tests</span><span class="skill-tag">3.2.5 event-driven tests</span><span class="skill-tag">3.3.1 test events</span><span class="skill-tag">3.3.6 Q Dev tests</span></div>
+      <div class="skills-label">Services</div>
+      <div class="services-row"><span class="svc">SAM</span><span class="svc">Lambda</span><span class="svc">API GW</span><span class="svc">DynamoDB</span></div>
+      <div class="progress-bar-wrap"><div class="progress-label"><span>Skill coverage</span><span>5 skills</span></div><div class="pbar"><div class="pbar-fill" style="width:62%"></div></div></div>
+    </div>
+
+    <div class="project-card d3">
+      <div class="card-top"><span class="proj-num">P-25</span><span class="diff-badge diff-advanced">advanced</span></div>
+      <div class="proj-title">ECS containerized app with ECR and ECS rolling deploy</div>
+      <div class="proj-desc">Containerize a Node.js app, push to ECR. Deploy to ECS Fargate with task definitions. Set up CodePipeline to build, push, and deploy. Implement rolling update deployment. Tag images for versioning.</div>
+      <div class="skills-label">Skills covered</div>
+      <div class="skill-tags"><span class="skill-tag">3.1.1 container images</span><span class="skill-tag">3.4.9 version labels</span><span class="skill-tag">3.4.4 manage environments</span><span class="skill-tag">3.3.3 approved versions</span></div>
+      <div class="skills-label">Services</div>
+      <div class="services-row"><span class="svc">ECS</span><span class="svc">ECR</span><span class="svc">CodePipeline</span><span class="svc">Fargate</span></div>
+      <div class="progress-bar-wrap"><div class="progress-label"><span>Skill coverage</span><span>4 skills</span></div><div class="pbar"><div class="pbar-fill" style="width:50%"></div></div></div>
+    </div>
+
+    <div class="project-card d3">
+      <div class="card-top"><span class="proj-num">P-26</span><span class="diff-badge diff-advanced">advanced</span></div>
+      <div class="proj-title">Elastic Beanstalk + Amplify multi-branch deployment</div>
+      <div class="proj-desc">Deploy a web app to Elastic Beanstalk. Set up Amplify for frontend with branch-based environments (main=prod, dev=staging). Configure .ebextensions. Practice deploying stack updates across environments.</div>
+      <div class="skills-label">Skills covered</div>
+      <div class="skill-tags"><span class="skill-tag">3.2.4 stack updates</span><span class="skill-tag">3.3.3 Amplify branches</span><span class="skill-tag">3.4.4 manage environments</span></div>
+      <div class="skills-label">Services</div>
+      <div class="services-row"><span class="svc">Elastic Beanstalk</span><span class="svc">Amplify</span><span class="svc">CodePipeline</span></div>
+      <div class="progress-bar-wrap"><div class="progress-label"><span>Skill coverage</span><span>3 skills</span></div><div class="pbar"><div class="pbar-fill" style="width:37%"></div></div></div>
+    </div>
+
+  </div>
+</div>
+
+<div id="d4" class="domain-section d4">
+  <div class="domain-header"><div><div class="dtitle">Domain 4 — Troubleshooting & Optimization</div><div class="dpct">18% of exam · Tasks 4.1, 4.2, 4.3 · Observability, debugging, performance</div></div></div>
+  <div class="project-grid">
+
+    <div class="project-card d4">
+      <div class="card-top"><span class="proj-num">P-27</span><span class="diff-badge diff-starter">starter</span></div>
+      <div class="proj-title">CloudWatch observability dashboard + alarms</div>
+      <div class="proj-desc">Instrument a Lambda app to emit custom metrics using CloudWatch EMF. Create a dashboard showing error rates, latency, throttles. Set up alarms with SNS notifications for quota limits and errors. Add log insights queries.</div>
+      <div class="skills-label">Skills covered</div>
+      <div class="skill-tags"><span class="skill-tag">4.1.4 custom metrics EMF</span><span class="skill-tag">4.1.5 dashboards</span><span class="skill-tag">4.2.3 emit metrics</span><span class="skill-tag">4.2.5 notifications</span></div>
+      <div class="skills-label">Services</div>
+      <div class="services-row"><span class="svc">CloudWatch</span><span class="svc">Lambda</span><span class="svc">SNS</span></div>
+      <div class="progress-bar-wrap"><div class="progress-label"><span>Skill coverage</span><span>4 skills</span></div><div class="pbar"><div class="pbar-fill" style="width:44%"></div></div></div>
+    </div>
+
+    <div class="project-card d4">
+      <div class="card-top"><span class="proj-num">P-28</span><span class="diff-badge diff-starter">starter</span></div>
+      <div class="proj-title">X-Ray distributed tracing across microservices</div>
+      <div class="proj-desc">Instrument multiple Lambda functions and API Gateway with X-Ray SDK. Add custom annotations and subsegments. Trace a full request across services. Analyze service maps to find bottlenecks. Compare logging vs monitoring vs tracing.</div>
+      <div class="skills-label">Skills covered</div>
+      <div class="skill-tags"><span class="skill-tag">4.2.1 logging vs tracing</span><span class="skill-tag">4.2.4 annotations</span><span class="skill-tag">4.2.6 tracing</span><span class="skill-tag">4.1.2 metrics/traces</span></div>
+      <div class="skills-label">Services</div>
+      <div class="services-row"><span class="svc">X-Ray</span><span class="svc">Lambda</span><span class="svc">API GW</span><span class="svc">DynamoDB</span></div>
+      <div class="progress-bar-wrap"><div class="progress-label"><span>Skill coverage</span><span>4 skills</span></div><div class="pbar"><div class="pbar-fill" style="width:44%"></div></div></div>
+    </div>
+
+    <div class="project-card d4">
+      <div class="card-top"><span class="proj-num">P-29</span><span class="diff-badge diff-intermediate">intermediate</span></div>
+      <div class="proj-title">Structured logging + CloudWatch Logs Insights queries</div>
+      <div class="proj-desc">Implement structured JSON logging (request ID, user ID, action, duration) in Lambda. Query logs with CloudWatch Logs Insights to find errors, slow calls, and user actions. Build a log-based alert for anomalies.</div>
+      <div class="skills-label">Skills covered</div>
+      <div class="skill-tags"><span class="skill-tag">4.2.2 logging strategy</span><span class="skill-tag">4.2.7 structured logging</span><span class="skill-tag">4.1.3 query logs</span><span class="skill-tag">4.3.9 bottlenecks</span></div>
+      <div class="skills-label">Services</div>
+      <div class="services-row"><span class="svc">CloudWatch</span><span class="svc">Lambda</span><span class="svc">Logs Insights</span></div>
+      <div class="progress-bar-wrap"><div class="progress-label"><span>Skill coverage</span><span>4 skills</span></div><div class="pbar"><div class="pbar-fill" style="width:44%"></div></div></div>
+    </div>
+
+    <div class="project-card d4">
+      <div class="card-top"><span class="proj-num">P-30</span><span class="diff-badge diff-intermediate">intermediate</span></div>
+      <div class="proj-title">Lambda performance profiling and optimization</div>
+      <div class="proj-desc">Use Lambda Power Tuning to find optimal memory for cost/speed. Analyze cold starts with X-Ray. Implement provisioned concurrency. Profile a real function and document before/after metrics. Determine minimum memory for a task.</div>
+      <div class="skills-label">Skills covered</div>
+      <div class="skill-tags"><span class="skill-tag">4.3.1 concurrency</span><span class="skill-tag">4.3.2 profiling</span><span class="skill-tag">4.3.3 min memory/compute</span><span class="skill-tag">4.3.7 resource usage</span><span class="skill-tag">4.3.8 perf analysis</span></div>
+      <div class="skills-label">Services</div>
+      <div class="services-row"><span class="svc">Lambda</span><span class="svc">X-Ray</span><span class="svc">CloudWatch</span></div>
+      <div class="progress-bar-wrap"><div class="progress-label"><span>Skill coverage</span><span>5 skills</span></div><div class="pbar"><div class="pbar-fill" style="width:55%"></div></div></div>
+    </div>
+
+    <div class="project-card d4">
+      <div class="card-top"><span class="proj-num">P-31</span><span class="diff-badge diff-intermediate">intermediate</span></div>
+      <div class="proj-title">CloudFront caching + SNS filter policies for optimization</div>
+      <div class="proj-desc">Configure CloudFront with cache behaviors based on request headers and query strings. Set up SNS subscription filter policies to reduce processing. Add ElastiCache in front of RDS. Measure cache hit rates.</div>
+      <div class="skills-label">Skills covered</div>
+      <div class="skill-tags"><span class="skill-tag">4.3.4 SNS filter policies</span><span class="skill-tag">4.3.5 cache headers</span><span class="skill-tag">4.3.6 app caching</span></div>
+      <div class="skills-label">Services</div>
+      <div class="services-row"><span class="svc">CloudFront</span><span class="svc">SNS</span><span class="svc">ElastiCache</span><span class="svc">RDS</span></div>
+      <div class="progress-bar-wrap"><div class="progress-label"><span>Skill coverage</span><span>3 skills</span></div><div class="pbar"><div class="pbar-fill" style="width:33%"></div></div></div>
+    </div>
+
+    <div class="project-card d4">
+      <div class="card-top"><span class="proj-num">P-32</span><span class="diff-badge diff-advanced">advanced</span></div>
+      <div class="proj-title">Root cause analysis — inject and debug live failures</div>
+      <div class="proj-desc">Deliberately introduce failures: wrong IAM permission, Lambda timeout, DynamoDB throttle, deployment rollback failure. Use CloudTrail, CloudWatch, X-Ray to diagnose each. Add health checks and readiness probes to ECS tasks. Resolve and document each.</div>
+      <div class="skills-label">Skills covered</div>
+      <div class="skill-tags"><span class="skill-tag">4.1.1 debug defects</span><span class="skill-tag">4.1.6 deployment logs</span><span class="skill-tag">4.1.7 integration issues</span><span class="skill-tag">4.2.8 health checks</span></div>
+      <div class="skills-label">Services</div>
+      <div class="services-row"><span class="svc">CloudTrail</span><span class="svc">CloudWatch</span><span class="svc">X-Ray</span><span class="svc">ECS</span></div>
+      <div class="progress-bar-wrap"><div class="progress-label"><span>Skill coverage</span><span>4 skills</span></div><div class="pbar"><div class="pbar-fill" style="width:44%"></div></div></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function showDomain(id, btn) {
+  document.querySelectorAll('.domain-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>

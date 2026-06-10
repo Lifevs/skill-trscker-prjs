@@ -1,0 +1,531 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+.wrap{padding:1rem 0}
+.hdr h2{font-size:18px;font-weight:500;color:var(--color-text-primary)}
+.hdr p{font-size:13px;color:var(--color-text-secondary);margin-top:4px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:1rem 0}
+.stat{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px;text-align:center}
+.stat-n{font-size:22px;font-weight:500;color:var(--color-text-primary)}
+.stat-l{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
+.pbar{height:4px;background:var(--color-background-secondary);border-radius:2px;margin-bottom:1.25rem}
+.pfill{height:100%;background:#185FA5;border-radius:2px;transition:width .3s}
+.tabs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:.75rem}
+.tab{padding:5px 13px;border-radius:20px;font-size:12px;cursor:pointer;border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);color:var(--color-text-secondary);transition:all .15s}
+.tab.on{background:var(--color-background-secondary);color:var(--color-text-primary);border-color:var(--color-border-primary);font-weight:500}
+.filters{display:flex;gap:5px;margin-bottom:1rem;align-items:center;flex-wrap:wrap}
+.filters span{font-size:12px;color:var(--color-text-secondary)}
+.pill{padding:3px 10px;border-radius:20px;font-size:12px;cursor:pointer;border:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary);color:var(--color-text-secondary)}
+.pill.on{background:var(--color-background-secondary);color:var(--color-text-primary);border-color:var(--color-border-primary)}
+.dlabel{font-size:11px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;padding:3px 10px;border-radius:20px;display:inline-block;margin:6px 0 8px}
+.d1l{background:#E6F1FB;color:#0C447C}
+.d2l{background:#E1F5EE;color:#085041}
+.d3l{background:#FCEBEB;color:#791F1F}
+.d4l{background:#FAEEDA;color:#633806}
+.d5l{background:#EEEDFE;color:#3C3489}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:13px 15px;cursor:pointer;transition:border-color .15s;margin-bottom:8px}
+.card:hover{border-color:var(--color-border-secondary)}
+.card.open{border-color:var(--color-border-primary)}
+.ch{display:flex;align-items:flex-start;gap:9px}
+.cnum{font-size:11px;font-weight:500;min-width:30px;color:var(--color-text-secondary);padding-top:2px}
+.ctitle{font-size:14px;font-weight:500;color:var(--color-text-primary);flex:1;line-height:1.4}
+.ctitle.done{color:var(--color-text-secondary);text-decoration:line-through}
+.dbadge{font-size:11px;padding:2px 7px;border-radius:10px;white-space:nowrap}
+.easy{background:#EAF3DE;color:#3B6D11}
+.med{background:#FAEEDA;color:#854F0B}
+.hard{background:#FCEBEB;color:#A32D2D}
+.cbody{margin-top:11px;padding-top:11px;border-top:0.5px solid var(--color-border-tertiary);display:none}
+.cbody.open{display:block}
+.sub{font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px;margin-top:9px}
+.sub:first-child{margin-top:0}
+.tags{display:flex;flex-wrap:wrap;gap:4px}
+.tag{font-size:11px;background:var(--color-background-secondary);color:var(--color-text-secondary);padding:2px 7px;border-radius:9px}
+.steps{list-style:none}
+.steps li{font-size:13px;color:var(--color-text-primary);padding:2px 0 2px 14px;position:relative;line-height:1.5}
+.steps li::before{content:"→";position:absolute;left:0;color:var(--color-text-secondary);font-size:11px;top:4px}
+.outcome{font-size:13px;color:var(--color-text-primary);line-height:1.5;margin-top:3px}
+.donebtn{font-size:12px;color:var(--color-text-secondary);border:0.5px solid var(--color-border-secondary);background:transparent;border-radius:var(--border-radius-md);padding:4px 11px;cursor:pointer;margin-top:9px;display:inline-flex;align-items:center;gap:5px}
+.donebtn.ck{background:#EAF3DE;color:#3B6D11;border-color:#C0DD97}
+.empty{font-size:14px;color:var(--color-text-secondary);padding:2rem;text-align:center}
+</style>
+
+<div class="wrap">
+<h2 class="sr-only">AWS AIP-C01 Generative AI Developer Professional — 75 micro-projects covering all 5 exam domains</h2>
+<div class="hdr">
+  <h2>AWS AIP-C01 — 75 micro-projects roadmap</h2>
+  <p>Every project maps to exam tasks and skills. Complete all to build real-world GenAI expertise and 900+ score readiness.</p>
+</div>
+<div class="stats">
+  <div class="stat"><div class="stat-n" id="sdone">0</div><div class="stat-l">completed</div></div>
+  <div class="stat"><div class="stat-n">75</div><div class="stat-l">total projects</div></div>
+  <div class="stat"><div class="stat-n">5</div><div class="stat-l">domains</div></div>
+  <div class="stat"><div class="stat-n" id="spct">0%</div><div class="stat-l">progress</div></div>
+</div>
+<div class="pbar"><div class="pfill" id="pf" style="width:0%"></div></div>
+<div class="tabs">
+  <div class="tab on" onclick="setD('all',this)">All 75</div>
+  <div class="tab" onclick="setD('d1',this)">D1 · FM Integration (31%)</div>
+  <div class="tab" onclick="setD('d2',this)">D2 · Implementation (26%)</div>
+  <div class="tab" onclick="setD('d3',this)">D3 · Safety &amp; Governance (20%)</div>
+  <div class="tab" onclick="setD('d4',this)">D4 · Efficiency (12%)</div>
+  <div class="tab" onclick="setD('d5',this)">D5 · Testing (11%)</div>
+</div>
+<div class="filters">
+  <span>Level:</span>
+  <div class="pill on" onclick="toggleDiff('easy',this)">Starter</div>
+  <div class="pill on" onclick="toggleDiff('med',this)">Intermediate</div>
+  <div class="pill on" onclick="toggleDiff('hard',this)">Advanced</div>
+</div>
+<div id="list"></div>
+</div>
+
+<script>
+const P=[
+{id:1,d:'d1',diff:'easy',title:'Bedrock model comparison — Claude vs Titan vs Mistral',task:'1.1,1.2',
+svc:['Amazon Bedrock','AWS Lambda','Amazon CloudWatch'],
+steps:['Enable model access for Claude 3, Titan Text, and Mistral in Bedrock console','Send identical prompts to all three via boto3 InvokeModel','Record latency, token count, and cost per response','Build a scoring rubric: relevance, accuracy, tone, length','Output a comparison table to S3 and visualize in QuickSight'],
+out:'Practical FM selection skills — picking the right model for cost, capability, and latency requirements.'},
+
+{id:2,d:'d1',diff:'easy',title:'Bedrock proof-of-concept — document Q&A app',task:'1.1',
+svc:['Amazon Bedrock','Amazon S3','AWS Lambda'],
+steps:['Upload a 10-page PDF to S3','Write a Lambda to extract text and call Bedrock Converse API','Implement a simple question-answering loop in Python','Measure baseline accuracy on 20 test questions','Document architecture decision record for the PoC'],
+out:'PoC methodology: feasibility testing before full deployment, a core exam design skill.'},
+
+{id:3,d:'d1',diff:'med',title:'Cross-region inference with circuit breaker fallback',task:'1.2',
+svc:['Amazon Bedrock','AWS Step Functions','Amazon CloudWatch'],
+steps:['Configure Bedrock Cross-Region Inference profile for us-east-1 and eu-west-1','Deploy a Step Functions workflow that catches Bedrock throttle errors','Implement exponential backoff and region fallback in the state machine','Simulate a throttle by setting low quota limits','Verify automatic failover to the secondary region'],
+out:'Resilient AI system design with cross-region fallback and graceful degradation patterns.'},
+
+{id:4,d:'d1',diff:'hard',title:'LoRA fine-tuning deployment with SageMaker and Model Registry',task:'1.2',
+svc:['Amazon SageMaker AI','SageMaker Model Registry','Amazon Bedrock'],
+steps:['Prepare a domain-specific JSONL dataset (customer support Q&A)','Run a fine-tuning job using SageMaker JumpStart with LoRA adapters','Register the fine-tuned model in SageMaker Model Registry with a model card','Create an automated deployment pipeline with rollback on evaluation failure','Compare fine-tuned vs base model on held-out test set'],
+out:'Full FM customization lifecycle: fine-tuning, versioning, automated rollback, and quality gates.'},
+
+{id:5,d:'d1',diff:'med',title:'Dynamic model router — Lambda + AppConfig',task:'1.2',
+svc:['AWS Lambda','AWS AppConfig','Amazon API Gateway','Amazon Bedrock'],
+steps:['Create an AppConfig feature flag with model routing rules (query type → model)','Build a Lambda that reads the flag and routes to Claude for complex, Titan for simple','Deploy behind API Gateway with request validation','Change the routing rule in AppConfig without redeploying code','Log routing decisions to CloudWatch for observability'],
+out:'Provider-switching architecture that requires zero code changes — a key exam design pattern.'},
+
+{id:6,d:'d1',diff:'easy',title:'Multimodal data pipeline — image + text for Bedrock',task:'1.3',
+svc:['Amazon Bedrock','Amazon Textract','AWS Lambda','Amazon S3'],
+steps:['Upload mixed documents (PDFs with embedded images) to S3','Use Textract to extract text and bounding boxes','Use Bedrock multimodal model to describe embedded images','Merge text and image descriptions into a unified document','Feed the enriched document to a Bedrock summarization call'],
+out:'Multimodal preprocessing pipeline — handling real-world documents that mix text and images.'},
+
+{id:7,d:'d1',diff:'med',title:'Data validation workflow with Glue Data Quality + Lambda',task:'1.3',
+svc:['AWS Glue Data Quality','AWS Lambda','Amazon CloudWatch','Amazon S3'],
+steps:['Define DQDL quality rules for FM training data (completeness, uniqueness, value ranges)','Run quality evaluation on a raw text corpus','Build a Lambda post-processor that reformats passing records to Bedrock JSON format','Add CloudWatch metrics for pass rate, fail count, and rule violations','Route failed records to a quarantine S3 prefix'],
+out:'End-to-end data validation and FM-ready formatting pipeline with quality gates.'},
+
+{id:8,d:'d1',diff:'med',title:'Comprehend entity extraction to enrich FM input',task:'1.3',
+svc:['Amazon Comprehend','AWS Lambda','Amazon Bedrock','Amazon S3'],
+steps:['Run Comprehend on a set of news articles to extract entities and key phrases','Build a Lambda that injects extracted entities as structured context into Bedrock prompts','Compare FM answer quality with and without entity enrichment','Track token usage difference between enriched vs raw prompts','Store enriched documents in S3 with metadata tags'],
+out:'Input data enrichment pattern that measurably improves FM response quality.'},
+
+{id:9,d:'d1',diff:'hard',title:'Vector store with OpenSearch — hierarchical indexing',task:'1.4',
+svc:['Amazon OpenSearch Service','AWS Lambda','Amazon Bedrock','Amazon S3'],
+steps:['Create an OpenSearch domain with k-NN plugin enabled','Define two indices: chapter-level and paragraph-level for a technical manual','Generate embeddings with Amazon Titan Embeddings and bulk-index both','Implement hierarchical retrieval: find chapter first, then drill into paragraphs','Compare retrieval precision with flat vs hierarchical indexing'],
+out:'Advanced vector store architecture with multi-level indexing for precision retrieval.'},
+
+{id:10,d:'d1',diff:'med',title:'Aurora pgvector — vector store for relational data',task:'1.4,1.5',
+svc:['Amazon Aurora','AWS Lambda','Amazon Bedrock','Amazon S3'],
+steps:['Enable pgvector extension on Aurora PostgreSQL cluster','Create a documents table with a vector column for embeddings','Write a Lambda to generate Titan embeddings and INSERT into Aurora','Implement cosine similarity search with a parameterized SQL query','Compare query latency vs OpenSearch for the same dataset size'],
+out:'Relational vector store pattern — embedding semantic search into an existing SQL database.'},
+
+{id:11,d:'d1',diff:'med',title:'Bedrock Knowledge Bases — managed RAG setup',task:'1.4,1.5',
+svc:['Amazon Bedrock Knowledge Bases','Amazon S3','Amazon OpenSearch Service'],
+steps:['Upload a document corpus to S3 (50+ PDFs)','Create a Bedrock Knowledge Base with OpenSearch as the vector store','Configure chunking strategy: fixed-size 512 tokens with 20% overlap','Sync the knowledge base and inspect the auto-generated embeddings','Query the knowledge base using the RetrieveAndGenerate API'],
+out:'Managed RAG setup from scratch — chunking, embedding, indexing, and retrieval in one workflow.'},
+
+{id:12,d:'d1',diff:'hard',title:'Hybrid search — keyword + vector with custom reranking',task:'1.5',
+svc:['Amazon OpenSearch Service','Amazon Bedrock','AWS Lambda'],
+steps:['Configure OpenSearch with both BM25 (keyword) and k-NN (vector) search','Implement a Lambda that sends both queries and merges scores with RRF fusion','Add a Bedrock reranker model to re-sort the merged results','Test with 50 queries and compare precision@5 across three strategies','Plot improvement curves: vector only, keyword only, hybrid + reranker'],
+out:'State-of-the-art RAG retrieval: hybrid search with neural reranking — a top exam topic.'},
+
+{id:13,d:'d1',diff:'med',title:'Bedrock Knowledge Base chunking strategies compared',task:'1.5',
+svc:['Amazon Bedrock Knowledge Bases','Amazon S3','Amazon CloudWatch'],
+steps:['Create three Knowledge Bases with identical data but different chunking: fixed, semantic, hierarchical','Run 30 identical test questions against each','Measure retrieval relevance scores and token usage per query','Log all metrics to CloudWatch and build a comparison dashboard','Choose the optimal strategy based on latency vs quality tradeoff'],
+out:'Deep understanding of chunking impact on RAG quality — critical for exam scenario questions.'},
+
+{id:14,d:'d1',diff:'med',title:'Query expansion and decomposition with Step Functions',task:'1.5',
+svc:['AWS Step Functions','Amazon Bedrock','Amazon OpenSearch Service','AWS Lambda'],
+steps:['Build a Step Functions workflow: receive user query → decompose into sub-queries via Bedrock → run parallel retrievals → synthesize answers','Use Bedrock to generate 3 query expansions for each input','Execute parallel retrieval tasks in the state machine','Merge and deduplicate retrieved chunks before the final generation call','Measure end-to-end latency and compare with single-query RAG'],
+out:'Advanced query handling: decomposition, parallel retrieval, and synthesis — a complex RAG pattern.'},
+
+{id:15,d:'d1',diff:'med',title:'Prompt Management — parameterized templates with approval workflow',task:'1.6',
+svc:['Amazon Bedrock Prompt Management','AWS Lambda','Amazon S3','AWS CloudTrail'],
+steps:['Create 5 parameterized prompt templates in Bedrock Prompt Management','Add a Lambda that validates prompt variables before submission','Set up a CloudTrail trail logging all prompt access events','Build an approval workflow using Step Functions before promoting prompts to production','Version-control templates in S3 alongside CloudTrail audit logs'],
+out:'Prompt governance system: versioning, parameterization, approval workflow, and audit trail.'},
+
+{id:16,d:'d1',diff:'hard',title:'Prompt Flows — conditional branching pipeline',task:'1.6',
+svc:['Amazon Bedrock Prompt Flows','Amazon Bedrock','AWS Lambda'],
+steps:['Design a Prompt Flow: classify intent → branch to specialist prompt (FAQ vs complaint vs escalation)','Add pre-processing node to sanitize input','Add post-processing node to format output as JSON','Test the flow with 20 diverse inputs covering all branches','Add a fallback branch for unclassified intent'],
+out:'Complex prompt orchestration with conditional logic — covers Skill 1.6.6 completely.'},
+
+{id:17,d:'d1',diff:'easy',title:'Chain-of-thought prompting with feedback loops',task:'1.6',
+svc:['Amazon Bedrock','AWS Lambda','Amazon DynamoDB'],
+steps:['Implement a zero-shot vs chain-of-thought prompt pair for a math reasoning task','Store prompt versions and outputs in DynamoDB','Run 50 test cases for each version and measure accuracy','Add a feedback loop: if confidence < 0.8, trigger a follow-up clarifying prompt','Iteratively refine the CoT template based on failure analysis'],
+out:'Practical prompt engineering: CoT patterns, iterative refinement, and feedback-driven improvement.'},
+
+{id:18,d:'d1',diff:'med',title:'Conversation history and context management with DynamoDB',task:'1.6',
+svc:['Amazon DynamoDB','AWS Lambda','Amazon Bedrock','Amazon Comprehend'],
+steps:['Design a DynamoDB schema for multi-turn conversation history (session_id, turn_id, role, content)','Build a Lambda that retrieves the last 10 turns and appends them to each Bedrock call','Use Comprehend to detect intent and decide whether to reset context','Implement context window pruning: summarize old turns when approaching token limit','Test coherence across 20-turn conversations with context management on and off'],
+out:'Production-grade conversation memory system — context management is a recurring exam topic.'},
+
+{id:19,d:'d2',diff:'med',title:'Bedrock Agents — build an autonomous research agent',task:'2.1',
+svc:['Amazon Bedrock','Amazon Bedrock AgentCore','AWS Lambda','Amazon S3'],
+steps:['Create a Bedrock Agent with three Lambda-backed action groups: search, summarize, write-to-S3','Define OpenAPI schemas for each action group','Test the agent with a multi-step task: find info, summarize, save output','Enable agent tracing and inspect the reasoning trace in CloudWatch','Add a stopping condition for loops exceeding 5 tool calls'],
+out:'Full Bedrock Agent development: action groups, tool schemas, tracing, and safety controls.'},
+
+{id:20,d:'d2',diff:'hard',title:'Multi-agent system with Strands Agents and AWS Agent Squad',task:'2.1',
+svc:['Amazon Bedrock','AWS Lambda','Amazon DynamoDB','AWS Step Functions'],
+steps:['Design a supervisor agent that routes tasks to specialist agents (coder, researcher, writer)','Implement inter-agent messaging via DynamoDB Streams','Add circuit breakers in Step Functions to halt runaway agent loops','Test with a complex multi-step task requiring all three specialists','Monitor agent coordination metrics and tool call counts in CloudWatch'],
+out:'Multi-agent coordination architecture — advanced agentic pattern covered in Skills 2.1.1 and 2.1.4.'},
+
+{id:21,d:'d2',diff:'hard',title:'MCP server implementation on Lambda and ECS',task:'2.1',
+svc:['AWS Lambda','Amazon ECS','Amazon Bedrock','IAM'],
+steps:['Implement a lightweight stateless MCP server on Lambda exposing a web-search tool','Implement a stateful MCP server on ECS for a database query tool','Build an MCP client that discovers and calls both servers','Test tool invocation with parameter validation and error handling','Compare cold-start latency Lambda vs ECS for tool response time'],
+out:'Model Context Protocol hands-on: stateless vs stateful MCP server patterns — Skills 2.1.6 and 2.1.7.'},
+
+{id:22,d:'d2',diff:'med',title:'ReAct pattern with Step Functions',task:'2.1',
+svc:['AWS Step Functions','Amazon Bedrock','AWS Lambda'],
+steps:['Implement the ReAct (Reason + Act) loop as a Step Functions state machine','Each iteration: Bedrock thinks → selects tool → Lambda executes tool → feed result back','Add a MaxIterations guard state to prevent infinite loops','Trace a 5-step problem-solving task through the execution history','Log thought/action/observation triples to CloudWatch Logs'],
+out:'Structured reasoning implementation using Step Functions — maps directly to Skill 2.1.2.'},
+
+{id:23,d:'d2',diff:'med',title:'Bedrock provisioned throughput — deployment for predictable latency',task:'2.2',
+svc:['Amazon Bedrock','Amazon CloudWatch','AWS Cost Explorer'],
+steps:['Deploy a model with Bedrock Provisioned Throughput (1 Model Unit)','Send concurrent requests at 50, 100, and 200 requests/min','Compare p50/p99 latency vs on-demand pricing','Calculate cost breakeven point between on-demand and provisioned','Set up CloudWatch alarm for throughput utilization > 80%'],
+out:'Provisioned throughput deployment strategy — when to use it, how to size it, and cost tradeoffs.'},
+
+{id:24,d:'d2',diff:'hard',title:'LLM container deployment with GPU optimization',task:'2.2',
+svc:['Amazon ECS','Amazon ECR','Amazon SageMaker AI','AWS Lambda'],
+steps:['Package an open-source LLM (7B parameters) in a Docker container optimized for GPU','Push to ECR and deploy on ECS with GPU task definition','Implement batching to maximize GPU utilization','Compare container-based vs SageMaker endpoint for the same model','Profile memory footprint and token throughput at different batch sizes'],
+out:'Container-optimized LLM deployment covering memory, GPU utilization, and token processing — Skill 2.2.2.'},
+
+{id:25,d:'d2',diff:'med',title:'Model cascading — route by query complexity',task:'2.2',
+svc:['Amazon Bedrock','AWS Lambda','Amazon API Gateway','Amazon CloudWatch'],
+steps:['Classify incoming queries as simple/medium/complex using a small fast model','Route simple → Titan Text Lite, medium → Claude Haiku, complex → Claude Sonnet','Implement the router in Lambda behind API Gateway','Measure cost savings vs always using the largest model','Track routing distribution and accuracy per tier in CloudWatch'],
+out:'API-based model cascading for cost optimization — tiered FM usage covered in Skill 4.1.2.'},
+
+{id:26,d:'d2',diff:'med',title:'Enterprise integration — event-driven FM pipeline with EventBridge',task:'2.3',
+svc:['Amazon EventBridge','AWS Lambda','Amazon Bedrock','Amazon SQS'],
+steps:['Create an EventBridge rule triggered by S3 object creation (new document uploaded)','Lambda consumer pulls the document, generates a Bedrock summary','Publish the summary to an SNS topic for downstream subscribers','Add a DLQ on SQS for failed summarization events','Test end-to-end with 50 documents and verify zero message loss'],
+out:'Event-driven enterprise integration pattern — loose coupling with EventBridge and Lambda.'},
+
+{id:27,d:'d2',diff:'hard',title:'CI/CD pipeline for GenAI components with quality gates',task:'2.3',
+svc:['AWS CodePipeline','AWS CodeBuild','Amazon Bedrock','AWS Lambda'],
+steps:['Create a CodePipeline: source → unit tests → prompt quality evaluation → deploy','Add a CodeBuild stage that runs automated FM evaluation on a golden dataset','Gate deployment on evaluation score > threshold','Add security scan stage checking for hardcoded credentials and prompt injection risks','Implement automatic rollback if post-deployment latency spikes'],
+out:'GenAI-specific CI/CD pipeline with quality gates, security scans, and automated rollback.'},
+
+{id:28,d:'d2',diff:'med',title:'GenAI gateway — centralized API abstraction layer',task:'2.3',
+svc:['Amazon API Gateway','AWS Lambda','Amazon Bedrock','Amazon CloudWatch'],
+steps:['Build an API Gateway with a unified /invoke endpoint abstracting multiple Bedrock models','Add request transformation Lambda to normalize input format across models','Implement rate limiting and API key management per consumer','Add observability: log every request, response, latency, and cost to CloudWatch','Test failover: disable one backend model and verify transparent routing to fallback'],
+out:'Centralized GenAI gateway pattern for enterprise consumption — covers Skills 2.3.5 and 2.4.1.'},
+
+{id:29,d:'d2',diff:'med',title:'Streaming responses with WebSockets and API Gateway',task:'2.4',
+svc:['Amazon API Gateway','AWS Lambda','Amazon Bedrock','Amazon DynamoDB'],
+steps:['Create an API Gateway WebSocket API for bidirectional communication','Lambda uses Bedrock streaming API and sends incremental tokens to the WebSocket connection','Store active connection IDs in DynamoDB','Implement reconnection logic on the client side','Measure time-to-first-token vs full response latency'],
+out:'Real-time streaming FM response delivery — WebSocket + Bedrock streaming API integration.'},
+
+{id:30,d:'d2',diff:'med',title:'Retry and fallback with exponential backoff — resilient FM calls',task:'2.4',
+svc:['Amazon Bedrock','AWS Lambda','Amazon CloudWatch','Amazon SQS'],
+steps:['Write a Python SDK wrapper with exponential backoff for Bedrock ThrottlingException','Add a fallback chain: primary model → smaller model → cached response → error message','Simulate throttling with low quota limits','Instrument with X-Ray to trace retry attempts across service boundaries','Set CloudWatch alarms on retry rate and fallback activation count'],
+out:'Resilient FM API integration pattern — retry, fallback, and observability across service boundaries.'},
+
+{id:31,d:'d2',diff:'hard',title:'Intelligent content-based routing with Step Functions',task:'2.4',
+svc:['AWS Step Functions','Amazon Bedrock','Amazon Comprehend','Amazon API Gateway'],
+steps:['Classify incoming message content (language, domain, sensitivity) using Comprehend','Step Functions routes based on classification: legal → compliance-tuned model, code → code model','Add dynamic routing rules stored in DynamoDB (change without redeployment)','Implement A/B testing by randomly splitting 10% traffic to a new model','Log routing decisions and model performance per route in CloudWatch'],
+out:'Dynamic content-based FM routing — covers Skills 2.4.4 and 2.4.1 together.'},
+
+{id:32,d:'d2',diff:'med',title:'Amazon Q Business — internal knowledge tool',task:'2.5',
+svc:['Amazon Q Business','Amazon S3','IAM Identity Center','Amazon CloudWatch'],
+steps:['Set up Q Business application with S3 data source (internal wikis and docs)','Configure IAM Identity Center for SSO authentication','Run a sync and verify document indexing in the Q Business console','Test 20 internal knowledge queries and score relevance','Configure response guardrails to block out-of-scope topics'],
+out:'Enterprise Q Business deployment for internal knowledge tools — Skill 2.5.3 end-to-end.'},
+
+{id:33,d:'d2',diff:'easy',title:'Amazon Q Developer — AI-assisted code generation and refactoring',task:'2.5',
+svc:['Amazon Q Developer','AWS Lambda','Amazon Bedrock'],
+steps:['Install Q Developer in VS Code and connect to AWS account','Generate a Lambda function from a natural language description','Ask Q Developer to refactor the function for performance and add error handling','Use Q Developer to write unit tests for the function','Ask Q to explain a complex Bedrock API response structure'],
+out:'Developer productivity with Q Developer — code generation, refactoring, and test creation.'},
+
+{id:34,d:'d2',diff:'hard',title:'Bedrock Data Automation — automated document processing workflow',task:'2.5',
+svc:['Amazon Bedrock','AWS Step Functions','Amazon S3','AWS Lambda'],
+steps:['Create a Bedrock Data Automation project for invoice processing','Upload 20 sample invoices in various formats (PDF, image, scanned)','Configure output schema: vendor, amount, date, line items','Build a Step Functions workflow: ingest → extract → validate → store to DynamoDB','Measure extraction accuracy vs manual labeling on 10 test invoices'],
+out:'Automated document processing with Bedrock Data Automation — covers Skill 2.5.3.'},
+
+{id:35,d:'d3',diff:'med',title:'Bedrock Guardrails — content filtering and topic blocking',task:'3.1',
+svc:['Amazon Bedrock','AWS Lambda','Amazon CloudWatch'],
+steps:['Create a Bedrock Guardrail with: harmful content filter, PII redaction, and topic denial','Test the guardrail with 30 adversarial prompts (jailbreak attempts, toxic content, PII inputs)','Verify each guardrail intervention is logged in CloudWatch','Apply the guardrail to both input and output of a deployed model','Tune sensitivity levels and measure false positive rate on legitimate queries'],
+out:'Complete guardrail implementation: content filtering, PII redaction, topic control, and tuning.'},
+
+{id:36,d:'d3',diff:'hard',title:'Defense-in-depth safety — Comprehend + Guardrails + Lambda post-processor',task:'3.1',
+svc:['Amazon Comprehend','Amazon Bedrock','AWS Lambda','Amazon API Gateway'],
+steps:['Layer 1: Comprehend pre-filter to detect toxic language and PII before the FM call','Layer 2: Bedrock Guardrail applied during model invocation','Layer 3: Lambda post-processor validates JSON schema and content policy compliance','Layer 4: API Gateway response filter as final safety net','Test the full pipeline: verify each layer catches different attack categories'],
+out:'Multi-layer AI safety architecture — defense-in-depth covering Skill 3.1.4 completely.'},
+
+{id:37,d:'d3',diff:'hard',title:'Prompt injection and jailbreak detection system',task:'3.1',
+svc:['Amazon Bedrock','AWS Lambda','Amazon Comprehend','Amazon CloudWatch'],
+steps:['Build a Lambda classifier that scores prompts for injection risk using a fine-tuned model','Create a test dataset of 100 known jailbreak attempts','Measure detection rate and false positive rate','Integrate the classifier as a pre-filter before every Bedrock call','Alert via SNS when injection attempts exceed a threshold in a 5-minute window'],
+out:'Adversarial input detection system — prompt injection defense covered in Skill 3.1.5.'},
+
+{id:38,d:'d3',diff:'med',title:'Hallucination reduction — Knowledge Base grounding with confidence scoring',task:'3.1',
+svc:['Amazon Bedrock Knowledge Bases','Amazon Bedrock','AWS Lambda','Amazon CloudWatch'],
+steps:['Deploy a RAG pipeline using Bedrock Knowledge Bases','Add a confidence scoring Lambda: compute semantic similarity between answer and retrieved chunks','Flag responses where max chunk similarity < 0.7 as potentially hallucinated','Implement a fallback: if confidence too low, return "I don\'t know" instead of the FM answer','Measure hallucination rate before and after grounding on a 50-question test set'],
+out:'Hallucination mitigation with grounding and confidence scoring — Skill 3.1.3.'},
+
+{id:39,d:'d3',diff:'med',title:'VPC-isolated Bedrock deployment with PrivateLink',task:'3.2',
+svc:['Amazon VPC','AWS PrivateLink','Amazon Bedrock','IAM'],
+steps:['Create a VPC with private subnets only (no internet gateway)','Add a PrivateLink endpoint for Bedrock API and Runtime','Deploy a Lambda inside the private subnet that calls Bedrock','Verify no traffic traverses the public internet using VPC Flow Logs','Add a VPC endpoint policy restricting access to specific IAM principals'],
+out:'Network-isolated GenAI deployment — VPC + PrivateLink security pattern for enterprise use.'},
+
+{id:40,d:'d3',diff:'med',title:'PII detection and masking pipeline — Macie + Comprehend + Guardrails',task:'3.2',
+svc:['Amazon Macie','Amazon Comprehend','Amazon Bedrock','AWS Lambda'],
+steps:['Run Macie on a training data S3 bucket to identify PII','Build a Lambda preprocessing pipeline using Comprehend PII detection to mask before FM calls','Configure a Bedrock Guardrail to redact any PII that slips through pre-processing','Implement S3 Lifecycle policy to delete raw PII data after 30 days','Test end-to-end: inject PII at each stage and verify masking at each layer'],
+out:'Complete PII lifecycle management: detect, mask, redact, and expire sensitive data.'},
+
+{id:41,d:'d3',diff:'hard',title:'AI governance framework — model cards, data lineage, decision logging',task:'3.3',
+svc:['Amazon SageMaker AI','AWS Glue','AWS CloudTrail','Amazon CloudWatch Logs'],
+steps:['Create a SageMaker model card with: intended use, limitations, evaluation results, bias analysis','Set up Glue Data Catalog to track data lineage from source to FM training','Enable CloudTrail logging for all Bedrock API calls','Build a CloudWatch Logs Insights query dashboard for compliance auditors','Create an automated compliance report Lambda that runs weekly'],
+out:'Full governance implementation: model cards, data lineage, audit logging — covers Task 3.3 entirely.'},
+
+{id:42,d:'d3',diff:'hard',title:'Bias drift monitoring with automated alerting',task:'3.3',
+svc:['Amazon SageMaker Clarify','Amazon Bedrock','Amazon CloudWatch','AWS Lambda'],
+steps:['Define fairness metrics for a text classification FM (demographic parity across groups)','Run baseline bias evaluation and store metrics in CloudWatch','Schedule a weekly Lambda to re-evaluate bias on new production traffic samples','Set CloudWatch alarms for bias metric degradation > 5% from baseline','Trigger an automated remediation workflow (pause model, alert team) on alarm'],
+out:'Continuous bias monitoring with automated detection and remediation — Skill 3.3.4.'},
+
+{id:43,d:'d3',diff:'med',title:'Responsible AI — transparent reasoning with agent tracing',task:'3.4',
+svc:['Amazon Bedrock','Amazon CloudWatch','AWS Lambda'],
+steps:['Enable Bedrock Agent tracing and capture full reasoning traces','Build a Lambda that parses traces and extracts the reasoning path for user display','Surface source citations alongside FM answers in the UI layer','Log confidence metrics to CloudWatch for uncertainty quantification','Create a "show my reasoning" toggle that exposes the trace to end users'],
+out:'Transparent AI implementation: source attribution, reasoning traces, and confidence metrics — Skill 3.4.1.'},
+
+{id:44,d:'d3',diff:'med',title:'LLM-as-a-judge fairness evaluation with A/B testing',task:'3.4',
+svc:['Amazon Bedrock','Amazon Bedrock Prompt Management','Amazon CloudWatch'],
+steps:['Create a judge prompt that evaluates FM responses for demographic fairness across 5 groups','Run systematic A/B test: prompt variant A vs B on 200 queries per demographic group','Use Bedrock Prompt Management to track both prompt versions','Score each response with the LLM-judge and aggregate fairness metrics','Identify which variant has better fairness and document the finding'],
+out:'Automated fairness evaluation using LLM-as-a-judge — Skill 3.4.2 hands-on.'},
+
+{id:45,d:'d4',diff:'med',title:'Token usage optimization — context pruning and compression',task:'4.1',
+svc:['Amazon Bedrock','AWS Lambda','Amazon CloudWatch','Amazon DynamoDB'],
+steps:['Instrument a Lambda to count tokens before every Bedrock call using the token counting API','Implement conversation summarization: compress old turns when context exceeds 3000 tokens','Add response length limits via max_tokens parameter','Measure average cost per conversation before and after optimization','Build a CloudWatch dashboard tracking tokens/request and cost/day'],
+out:'Token efficiency techniques: pruning, summarization, limits — concrete cost reduction skills.'},
+
+{id:46,d:'d4',diff:'hard',title:'Semantic caching with ElastiCache to reduce FM costs',task:'4.1',
+svc:['Amazon ElastiCache','Amazon Bedrock','AWS Lambda','Amazon CloudWatch'],
+steps:['Generate Titan embeddings for incoming queries and store in ElastiCache','On each new query: compute embedding, check cache for cosine similarity > 0.95','Return cached response if cache hit, else call Bedrock and store result','Measure cache hit rate and cost savings over 1000 test queries','Set TTL policies per query type (factual = 7 days, news = 1 hour)'],
+out:'Semantic caching implementation — one of the highest-ROI cost optimization patterns for GenAI.'},
+
+{id:47,d:'d4',diff:'med',title:'Provisioned throughput sizing and cost breakeven analysis',task:'4.1',
+svc:['Amazon Bedrock','AWS Cost Explorer','Amazon CloudWatch'],
+steps:['Model the traffic pattern for a production workload (requests/hour by time of day)','Calculate cost for on-demand vs 1 Model Unit provisioned throughput','Identify the break-even utilization percentage','Deploy provisioned throughput for peak hours, on-demand for off-peak','Create a Cost Explorer report tracking GenAI spending weekly'],
+out:'Cost-conscious FM deployment: provisioned vs on-demand analysis and capacity planning.'},
+
+{id:48,d:'d4',diff:'med',title:'Parallel FM invocations for complex workflow latency reduction',task:'4.2',
+svc:['Amazon Bedrock','AWS Step Functions','AWS Lambda','Amazon CloudWatch'],
+steps:['Redesign a sequential 4-step FM pipeline to run independent steps in parallel','Use Step Functions Parallel state to invoke 3 Bedrock calls simultaneously','Merge parallel outputs in a final Lambda aggregation step','Measure end-to-end latency reduction vs sequential execution','Add X-Ray tracing to visualize the parallel execution timeline'],
+out:'Latency optimization through parallelism — covers Skill 4.2.1 and 4.2.6 together.'},
+
+{id:49,d:'d4',diff:'hard',title:'Batch inference strategy for high-throughput GenAI workloads',task:'4.2',
+svc:['Amazon Bedrock','AWS Lambda','Amazon SQS','Amazon S3'],
+steps:['Build an SQS-triggered Lambda that batches 20 requests before invoking Bedrock','Implement concurrent invocation management with a semaphore in Lambda','Process a 10,000-document corpus overnight using the batch pipeline','Compare throughput (docs/min) vs real-time endpoint for the same corpus','Calculate cost per document for batch vs real-time processing'],
+out:'Batch inference for bulk workloads — throughput optimization and cost-per-unit calculation.'},
+
+{id:50,d:'d4',diff:'med',title:'Vector database query optimization — sharding and index tuning',task:'4.2',
+svc:['Amazon OpenSearch Service','AWS Lambda','Amazon CloudWatch'],
+steps:['Start with a single-shard OpenSearch index and benchmark query latency at 100k vectors','Add 3 shards and re-benchmark — measure throughput improvement','Experiment with HNSW parameters (ef_construction, m) for index quality vs speed tradeoff','Add a warmup query to pre-load the index into memory after deployment','Build a CloudWatch dashboard: query latency p50/p99, index size, indexing rate'],
+out:'Vector database performance tuning: sharding, HNSW parameters, and latency optimization.'},
+
+{id:51,d:'d4',diff:'hard',title:'GenAI observability dashboard — CloudWatch + X-Ray + Grafana',task:'4.3',
+svc:['Amazon CloudWatch','AWS X-Ray','Amazon Managed Grafana','Amazon Bedrock'],
+steps:['Instrument every Bedrock call with X-Ray trace segments including model ID and token counts','Create custom CloudWatch metrics: hallucination flags, prompt effectiveness scores, cost per session','Build a Managed Grafana dashboard with: token usage, latency heatmap, error rates, cost trends','Add business impact panel: user satisfaction score correlated with response quality','Set automated anomaly detection for token burst patterns'],
+out:'Production GenAI observability stack — operational, business, and compliance metrics in one dashboard.'},
+
+{id:52,d:'d4',diff:'med',title:'Tool performance monitoring for Bedrock Agents',task:'4.3',
+svc:['Amazon Bedrock','Amazon CloudWatch','AWS Lambda','AWS X-Ray'],
+steps:['Instrument each agent tool Lambda with custom CloudWatch metrics: call count, latency, error rate','Add X-Ray subsegments for each tool invocation','Build a CloudWatch dashboard showing tool usage patterns per agent session','Set usage baselines and enable anomaly detection for unusual tool call patterns','Alert when any tool error rate exceeds 5% in a 10-minute window'],
+out:'Agent tool observability system — tracking and optimizing individual tool performance.'},
+
+{id:53,d:'d4',diff:'med',title:'Cost Anomaly Detection for GenAI spend',task:'4.3',
+svc:['AWS Cost Anomaly Detection','Amazon CloudWatch','Amazon Bedrock','Amazon SNS'],
+steps:['Enable AWS Cost Anomaly Detection with a monitor for Amazon Bedrock service spend','Set anomaly threshold at 20% above weekly average baseline','Configure SNS notification to alert on-call when anomaly fires','Simulate a cost spike by sending 10x normal request volume','Review anomaly findings and trace root cause to the offending Lambda function'],
+out:'Automated cost anomaly detection for GenAI workloads — proactive financial governance.'},
+
+{id:54,d:'d5',diff:'med',title:'Bedrock Model Evaluations — automated quality assessment',task:'5.1',
+svc:['Amazon Bedrock','Amazon S3','Amazon CloudWatch'],
+steps:['Create a human-based evaluation job in Bedrock Model Evaluations with 100 prompt-response pairs','Set up an automatic evaluation using built-in metrics: accuracy, robustness, toxicity','Run evaluations for two candidate models on the same dataset','Compare scores across: relevance, factual accuracy, fluency, and safety','Export evaluation report and build a stakeholder-readable comparison document'],
+out:'Systematic model evaluation using Bedrock native tools — covers Skill 5.1.2 comprehensively.'},
+
+{id:55,d:'d5',diff:'hard',title:'LLM-as-a-judge evaluation pipeline',task:'5.1',
+svc:['Amazon Bedrock','Amazon Bedrock Prompt Management','Amazon S3','Amazon CloudWatch'],
+steps:['Design a judge prompt scoring responses on: accuracy 1-5, helpfulness 1-5, safety pass/fail','Build a Lambda pipeline: run model → send to judge model → store score in DynamoDB','Validate judge reliability: check inter-rater agreement with human labels on 50 samples','Run evaluation on 200 production queries weekly','Create a regression alert: fail CI/CD deployment if mean score drops > 0.3 points'],
+out:'Automated LLM-as-a-judge quality pipeline with regression gating — Skill 5.1.5.'},
+
+{id:56,d:'d5',diff:'med',title:'RAG evaluation — retrieval quality testing',task:'5.1',
+svc:['Amazon Bedrock Knowledge Bases','AWS Lambda','Amazon CloudWatch','Amazon S3'],
+steps:['Create a golden dataset of 50 queries with ground-truth relevant documents','Measure retrieval metrics: recall@5, precision@5, MRR for each query','Test with three different chunking strategies and compare metrics','Measure context matching: does the retrieved chunk actually contain the answer?','Track retrieval latency p50 and p99 and set SLO thresholds'],
+out:'Systematic RAG quality evaluation: retrieval metrics, context matching, and latency SLOs.'},
+
+{id:57,d:'d5',diff:'med',title:'Agent evaluation — task completion and tool usage effectiveness',task:'5.1',
+svc:['Amazon Bedrock','Amazon CloudWatch','AWS Lambda','Amazon DynamoDB'],
+steps:['Define 30 test tasks for the Bedrock Agent with expected outcomes','Run each task and record: completed/failed, number of tool calls, total tokens used','Score reasoning quality: did the agent take the optimal tool path?','Use Bedrock Agent Evaluations API to generate automated performance metrics','Build a dashboard showing task completion rate by task category'],
+out:'Comprehensive agent evaluation: task completion, tool efficiency, and reasoning quality — Skill 5.1.7.'},
+
+{id:58,d:'d5',diff:'easy',title:'User feedback collection and rating system',task:'5.1',
+svc:['Amazon API Gateway','AWS Lambda','Amazon DynamoDB','Amazon QuickSight'],
+steps:['Add thumbs up/down + 1-5 star rating to every FM response in your app','Store feedback in DynamoDB with session context and response metadata','Build a Lambda to aggregate daily feedback metrics','Create a QuickSight dashboard showing satisfaction trends over time','Trigger a re-evaluation workflow when satisfaction drops below 3.5/5'],
+out:'User-centered evaluation mechanism — continuous quality improvement from real user signals.'},
+
+{id:59,d:'d5',diff:'hard',title:'Continuous evaluation workflow with regression testing',task:'5.1',
+svc:['AWS CodePipeline','Amazon Bedrock','Amazon S3','Amazon CloudWatch'],
+steps:['Maintain a golden dataset of 100 prompt-expected-output pairs in S3','Add a CodePipeline stage that runs the evaluation suite on every model update','Gate deployment on evaluation score >= baseline minus tolerance','Track score history in CloudWatch and alert on degradation trends','Automatically roll back if post-deployment evaluation score falls below threshold'],
+out:'Quality gate in CI/CD pipeline — preventing regression when updating FM prompts or models.'},
+
+{id:60,d:'d5',diff:'med',title:'Context window overflow diagnostics and dynamic chunking',task:'5.2',
+svc:['Amazon Bedrock','AWS Lambda','Amazon CloudWatch','Amazon S3'],
+steps:['Build a Lambda that tracks token count before each Bedrock call and logs overflow events','Implement dynamic chunking: split large documents based on available context window','Add CloudWatch metric for overflow rate per document type','Test with documents ranging from 1k to 100k tokens','Measure answer quality degradation as document size approaches context limit'],
+out:'Context window overflow troubleshooting and adaptive chunking — Skill 5.2.1.'},
+
+{id:61,d:'d5',diff:'med',title:'Prompt engineering debugging — version comparison framework',task:'5.2',
+svc:['Amazon Bedrock','Amazon Bedrock Prompt Management','Amazon DynamoDB','Amazon CloudWatch'],
+steps:['Create a prompt testing framework: A/B test prompt variants on 50 identical inputs','Store all versions, inputs, outputs, and scores in DynamoDB for comparison','Use CloudWatch Logs Insights to query for patterns in failing responses','Identify failure categories: format errors, factual errors, refusals, hallucinations','Systematically fix the top 3 failure categories and re-measure'],
+out:'Systematic prompt debugging methodology — version comparison, failure analysis, and refinement.'},
+
+{id:62,d:'d5',diff:'hard',title:'Retrieval system troubleshooting — embedding drift and quality diagnostics',task:'5.2',
+svc:['Amazon OpenSearch Service','Amazon Bedrock','AWS Lambda','Amazon CloudWatch'],
+steps:['Simulate embedding model drift by switching embedding model mid-deployment','Detect drift by monitoring cosine similarity distribution of new vs old embeddings','Build a diagnostic Lambda that computes embedding quality scores for the index','Implement an automated re-indexing pipeline triggered when drift is detected','Verify retrieval quality is restored after re-indexing with new embeddings'],
+out:'Embedding drift detection and automated re-indexing — covers Skill 5.2.4 completely.'},
+
+{id:63,d:'d5',diff:'med',title:'X-Ray tracing for FM API call observability',task:'5.2',
+svc:['AWS X-Ray','Amazon Bedrock','AWS Lambda','Amazon API Gateway'],
+steps:['Instrument Lambda functions with X-Ray SDK and create subsegments for each Bedrock call','Add custom annotations: model_id, prompt_length, response_length, latency','Deploy and send 1000 requests, then analyze the X-Ray service map','Identify the slowest component in the request path using the latency histogram','Use X-Ray Insights to auto-detect anomalies in the trace data'],
+out:'End-to-end distributed tracing for GenAI applications — Skill 5.2.5 and 2.4.3.'},
+
+{id:64,d:'d5',diff:'med',title:'Synthetic user workflow testing with CloudWatch Synthetics',task:'5.1',
+svc:['Amazon CloudWatch Synthetics','Amazon API Gateway','Amazon Bedrock','Amazon SNS'],
+steps:['Write a Canary script that simulates a full user interaction: ask question, verify response format, check latency','Schedule the canary to run every 5 minutes','Add assertions: response must contain expected keywords, latency < 3s, no error codes','Alert via SNS when canary failure rate exceeds 5%','Use canary results as a deployment gate in CodePipeline'],
+out:'Synthetic monitoring for GenAI APIs — continuous availability and quality validation.'},
+
+{id:65,d:'d5',diff:'hard',title:'Hallucination detection with golden dataset and output diffing',task:'5.2',
+svc:['Amazon Bedrock','AWS Lambda','Amazon DynamoDB','Amazon CloudWatch'],
+steps:['Create a golden dataset of 50 factual questions with verified correct answers','For each production model update, run all 50 questions and compare outputs to ground truth','Implement output diffing: flag responses where key facts changed between versions','Track hallucination rate over time as a CloudWatch metric','Set regression threshold: deployment blocked if hallucination rate increases > 2%'],
+out:'Hallucination tracking with golden datasets and output diffing — unique GenAI failure mode detection.'},
+
+{id:66,d:'d1',diff:'hard',title:'Bedrock Knowledge Base with real-time sync pipeline',task:'1.4',
+svc:['Amazon Bedrock Knowledge Bases','AWS Lambda','Amazon DynamoDB Streams','Amazon S3'],
+steps:['Set up Bedrock Knowledge Base backed by OpenSearch','Create a Lambda triggered by DynamoDB Streams when source documents change','Lambda updates S3 and triggers a KB sync job automatically','Test: update a document in DynamoDB and verify KB reflects the change within 60s','Monitor sync latency and indexing success rate in CloudWatch'],
+out:'Real-time vector store synchronization — keeping FM knowledge current with automated change detection.'},
+
+{id:67,d:'d2',diff:'med',title:'Human-in-the-loop workflow with Step Functions and Amazon A2I',task:'2.1',
+svc:['Amazon Augmented AI','AWS Step Functions','AWS Lambda','Amazon S3'],
+steps:['Build a document classification pipeline using Bedrock for initial prediction','When confidence < 0.8, route to Amazon A2I for human review','Step Functions orchestrates the full flow: predict → conditional → human review → update','Store all human decisions in S3 for future fine-tuning','Measure the percentage of cases requiring human review and average review latency'],
+out:'Human-augmented AI system: confidence-gated human review workflow — Skill 2.1.5.'},
+
+{id:68,d:'d3',diff:'med',title:'IAM least-privilege for Bedrock — role design and testing',task:'3.2',
+svc:['IAM','Amazon Bedrock','AWS CloudTrail','Amazon S3'],
+steps:['Create a minimal IAM role for a Bedrock-calling Lambda: only InvokeModel on specific model ARNs','Add S3 access scoped to specific bucket prefixes only','Use IAM Access Analyzer to validate no unintended public or cross-account access','Test the role by attempting actions it should not have (verify denies)','Enable CloudTrail and generate an access report for compliance review'],
+out:'Least-privilege IAM design for GenAI workloads — scoped access to models, data, and services.'},
+
+{id:69,d:'d3',diff:'hard',title:'AWS Outposts — on-premises FM deployment for data residency',task:'2.3',
+svc:['AWS Outposts','Amazon SageMaker AI','IAM','Amazon CloudWatch'],
+steps:['Configure SageMaker on Outposts to deploy an FM endpoint locally','Implement secure routing between on-premises workloads and the Outposts SageMaker endpoint','Verify data never leaves the on-premises environment using VPC Flow Logs','Test latency for local inference vs cloud endpoint from the same network','Document data residency compliance controls for regulatory requirements'],
+out:'On-premises FM deployment for data sovereignty requirements — Skill 2.3.4.'},
+
+{id:70,d:'d4',diff:'med',title:'Auto-scaling GenAI API with Lambda concurrency controls',task:'4.1',
+svc:['AWS Lambda','Amazon API Gateway','Amazon CloudWatch','Amazon Bedrock'],
+steps:['Deploy a Lambda-based Bedrock proxy with reserved concurrency = 50','Add a CloudWatch alarm at 80% concurrency utilization','Configure Lambda provisioned concurrency for predictable latency during peak hours','Implement an SQS buffer queue to absorb request spikes beyond concurrency limit','Test: send 200 concurrent requests and verify queue absorbs overflow without errors'],
+out:'Auto-scaling GenAI API: concurrency, provisioned warmth, and queue buffering — Skill 4.1.3.'},
+
+{id:71,d:'d1',diff:'med',title:'Prompt regression testing with CloudWatch dashboards',task:'1.6',
+svc:['Amazon Bedrock','Amazon CloudWatch','AWS Lambda','Amazon S3'],
+steps:['Create a suite of 30 regression test prompts covering all use cases','Run the suite automatically on every prompt template update','Store pass/fail results and scores in CloudWatch custom metrics','Build a dashboard showing prompt health trends over time','Alert when any test case regresses by more than 10% from baseline'],
+out:'Prompt quality assurance with automated regression testing — Skill 1.6.4.'},
+
+{id:72,d:'d2',diff:'easy',title:'Bedrock Prompt Flows — no-code workflow builder',task:'2.5',
+svc:['Amazon Bedrock Prompt Flows','Amazon Bedrock','Amazon S3'],
+steps:['Design a Prompt Flow for a multi-step research task: search → summarize → format','Add an input node, two FM nodes, and an output node','Test the flow with 10 diverse research questions','Add a conditional node: if summary is too short, trigger a re-generation step','Export the flow definition and version-control it in S3'],
+out:'No-code GenAI workflow building with Prompt Flows — covers Skills 2.5.2 and 1.6.6.'},
+
+{id:73,d:'d3',diff:'med',title:'Secrets Manager — secure API key management for FM integrations',task:'3.2',
+svc:['AWS Secrets Manager','AWS Lambda','Amazon Bedrock','AWS CloudTrail'],
+steps:['Store third-party FM API keys and database credentials in Secrets Manager','Update Lambda functions to retrieve secrets at runtime (not from environment variables)','Enable automatic secret rotation for a database credential','Add resource-based policies restricting each secret to specific Lambda ARNs','Verify all secret access events appear in CloudTrail'],
+out:'Secure credential management for FM integrations — no hardcoded secrets in GenAI pipelines.'},
+
+{id:74,d:'d4',diff:'hard',title:'Prompt caching implementation — cost reduction at scale',task:'4.1',
+svc:['Amazon Bedrock','Amazon ElastiCache','AWS Lambda','Amazon CloudWatch'],
+steps:['Implement deterministic request hashing: hash system prompt + user message to a cache key','Store cached FM responses in ElastiCache with appropriate TTL per query category','Add a fingerprinting layer to handle near-duplicate queries using MinHash','Measure cache hit rate across 10,000 production requests','Build a cost savings calculator: (cache hits × avg token cost) saved per day'],
+out:'Prompt caching with deterministic hashing and near-duplicate detection — Skill 4.1.4.'},
+
+{id:75,d:'d5',diff:'hard',title:'End-to-end GenAI application — full-stack capstone',task:'All domains',
+svc:['Amazon Bedrock','Bedrock Knowledge Bases','Bedrock Agents','Step Functions','CodePipeline','CloudWatch','Guardrails','OpenSearch','Lambda','IAM','VPC'],
+steps:['Build a production-grade document intelligence app: upload doc → extract → index → answer questions','Layer: Bedrock Guardrails (safety) + PrivateLink VPC (security) + ElastiCache (caching)','Add: Bedrock Agent with 3 tools + Knowledge Base RAG + Prompt Management templates','Pipeline: CodePipeline CI/CD with LLM-as-judge quality gate + canary deployment','Monitor: CloudWatch dashboard + X-Ray traces + Cost Anomaly Detection + bias monitoring'],
+out:'Capstone integrating all 5 domains. Every skill from the exam guide is exercised in one production-grade application.'}
+];
+
+const DMAP={d1:'d1l',d2:'d2l',d3:'d3l',d4:'d4l',d5:'d5l'};
+const DNAMES={d1:'Domain 1 · FM Integration, Data & Compliance (31%)',d2:'Domain 2 · Implementation & Integration (26%)',d3:'Domain 3 · Safety, Security & Governance (20%)',d4:'Domain 4 · Operational Efficiency (12%)',d5:'Domain 5 · Testing & Troubleshooting (11%)'};
+const DL={easy:'Starter',med:'Intermediate',hard:'Advanced'};
+
+let curD='all', diffs={easy:true,med:true,hard:true}, expanded=new Set();
+let done=new Set();
+try{done=new Set(JSON.parse(localStorage.getItem('aip_done')||'[]'))}catch(e){}
+
+function saveDone(){try{localStorage.setItem('aip_done',JSON.stringify([...done]))}catch(e){}}
+
+function updateStats(){
+  const n=done.size,pct=Math.round(n/75*100);
+  document.getElementById('sdone').textContent=n;
+  document.getElementById('spct').textContent=pct+'%';
+  document.getElementById('pf').style.width=pct+'%';
+}
+
+function setD(d,el){
+  curD=d;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+  render();
+}
+
+function toggleDiff(d,el){
+  diffs[d]=!diffs[d];
+  el.classList.toggle('on',diffs[d]);
+  render();
+}
+
+function render(){
+  const list=document.getElementById('list');
+  let filtered=P.filter(p=>(curD==='all'||p.d===curD)&&diffs[p.diff]);
+  if(!filtered.length){list.innerHTML='<div class="empty">No projects match current filters.</div>';updateStats();return;}
+  let html='',lastD='';
+  filtered.forEach(p=>{
+    if(curD==='all'&&p.d!==lastD){
+      html+=`<div class="dlabel ${DMAP[p.d]}">${DNAMES[p.d]}</div>`;
+      lastD=p.d;
+    }
+    const isOpen=expanded.has(p.id),isDone=done.has(p.id);
+    html+=`<div class="card ${isOpen?'open':''}" id="c${p.id}">
+      <div class="ch" onclick="tog(${p.id})">
+        <span class="cnum">#${String(p.id).padStart(2,'0')}</span>
+        <span class="ctitle ${isDone?'done':''}">${p.title}</span>
+        <span class="dbadge ${p.diff}">${DL[p.diff]}</span>
+      </div>
+      <div class="cbody ${isOpen?'open':''}">
+        <div class="sub">AWS services</div>
+        <div class="tags">${p.svc.map(s=>`<span class="tag">${s}</span>`).join('')}</div>
+        <div class="sub">Skills covered</div>
+        <div class="tags"><span class="tag">${p.task}</span></div>
+        <div class="sub">Steps</div>
+        <ul class="steps">${p.steps.map(s=>`<li>${s}</li>`).join('')}</ul>
+        <div class="sub">What you will gain</div>
+        <div class="outcome">${p.out}</div>
+        <button class="donebtn ${isDone?'ck':''}" onclick="markD(event,${p.id})">
+          <i class="ti ${isDone?'ti-check':'ti-circle'}" aria-hidden="true"></i>${isDone?'Completed':'Mark as done'}
+        </button>
+      </div>
+    </div>`;
+  });
+  list.innerHTML=html;
+  updateStats();
+}
+
+function tog(id){if(expanded.has(id))expanded.delete(id);else expanded.add(id);render();}
+function markD(e,id){e.stopPropagation();if(done.has(id))done.delete(id);else done.add(id);saveDone();render();}
+
+render();
+</script>

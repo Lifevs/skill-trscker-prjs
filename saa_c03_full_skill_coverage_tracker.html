@@ -1,0 +1,299 @@
+
+<h2 class="sr-only">SAA-C03 Full Skill Coverage Tracker — every exam knowledge and skill mapped to a hands-on micro project</h2>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.wrap{padding:1rem 0;font-family:var(--font-sans)}
+.topbar{margin-bottom:1.25rem}
+.topbar h1{font-size:19px;font-weight:500;color:var(--color-text-primary)}
+.topbar p{font-size:12px;color:var(--color-text-secondary);margin-top:3px}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:1.25rem}
+.stat{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px;text-align:center}
+.stat-n{font-size:20px;font-weight:500;color:var(--color-text-primary)}
+.stat-l{font-size:10px;color:var(--color-text-secondary);margin-top:2px;text-transform:uppercase;letter-spacing:.4px}
+.controls{display:flex;gap:6px;margin-bottom:1rem;flex-wrap:wrap;align-items:center}
+.fb{font-size:12px;padding:4px 10px;border-radius:20px;border:0.5px solid var(--color-border-secondary);background:transparent;cursor:pointer;color:var(--color-text-secondary)}
+.fb.on{background:var(--color-background-secondary);color:var(--color-text-primary);font-weight:500}
+.rst{margin-left:auto;font-size:12px;padding:4px 10px;border-radius:20px;border:0.5px solid var(--color-border-secondary);background:transparent;cursor:pointer;color:var(--color-text-secondary)}
+.domain{margin-bottom:1.25rem;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden}
+.dhead{padding:11px 14px;display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none}
+.dhead:hover{background:var(--color-background-secondary)}
+.dtag{font-size:10px;font-weight:500;padding:3px 7px;border-radius:12px;white-space:nowrap}
+.dtitle{font-size:13px;font-weight:500;color:var(--color-text-primary);flex:1}
+.dprog{font-size:11px;color:var(--color-text-secondary);white-space:nowrap}
+.dchev{font-size:13px;color:var(--color-text-secondary);transition:transform .2s}
+.dchev.open{transform:rotate(180deg)}
+.pbar-wrap{height:3px;background:var(--color-background-secondary)}
+.pbar{height:3px;transition:width .3s}
+.task-group{border-top:0.5px solid var(--color-border-tertiary)}
+.tg-header{padding:8px 14px;background:var(--color-background-secondary);font-size:11px;font-weight:500;color:var(--color-text-secondary);letter-spacing:.3px;text-transform:uppercase;border-bottom:0.5px solid var(--color-border-tertiary)}
+.proj{padding:9px 14px;border-bottom:0.5px solid var(--color-border-tertiary);display:flex;align-items:flex-start;gap:9px;transition:background .12s}
+.proj:last-child{border-bottom:none}
+.proj:hover{background:var(--color-background-secondary)}
+.proj.done{opacity:.55}
+.proj.done .ptitle{text-decoration:line-through}
+.cb{width:17px;height:17px;min-width:17px;border-radius:4px;border:1.5px solid var(--color-border-secondary);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.cb i{font-size:10px;display:none}
+.cb.on i{display:block}
+.pbody{flex:1;min-width:0}
+.prow{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-bottom:3px}
+.ptitle{font-size:12px;font-weight:500;color:var(--color-text-primary)}
+.skill-tag{font-size:10px;padding:1px 5px;border-radius:8px;background:var(--color-background-secondary);color:var(--color-text-secondary);border:0.5px solid var(--color-border-tertiary)}
+.diff{font-size:10px;padding:2px 6px;border-radius:8px;font-weight:500}
+.e{background:#EAF3DE;color:#3B6D11}.m{background:#FAEEDA;color:#854F0B}.h{background:#FCEBEB;color:#A32D2D}
+.pdesc{font-size:11px;color:var(--color-text-secondary);line-height:1.5;margin-bottom:3px}
+.psvc{font-size:10px;color:var(--color-text-tertiary)}
+.psvc i{font-size:11px;vertical-align:-1px;margin-right:2px}
+.empty{padding:12px 14px;font-size:12px;color:var(--color-text-secondary)}
+.d1 .dtag{background:#E6F1FB;color:#185FA5}.d1 .pbar,.d1 .cb.on{background:#378ADD}.d1 .cb.on{border-color:#378ADD}
+.d2 .dtag{background:#EAF3DE;color:#3B6D11}.d2 .pbar,.d2 .cb.on{background:#639922}.d2 .cb.on{border-color:#639922}
+.d3 .dtag{background:#FAEEDA;color:#854F0B}.d3 .pbar,.d3 .cb.on{background:#BA7517}.d3 .cb.on{border-color:#BA7517}
+.d4 .dtag{background:#FCEBEB;color:#A32D2D}.d4 .pbar,.d4 .cb.on{background:#E24B4A}.d4 .cb.on{border-color:#E24B4A}
+</style>
+<div class="wrap">
+<div class="topbar">
+  <h1><i class="ti ti-building-arch" aria-hidden="true"></i> SAA-C03 full skill coverage tracker</h1>
+  <p>Every SAA-C03 knowledge area and skill mapped to a hands-on architect project · check off as you build</p>
+</div>
+<div class="stats">
+  <div class="stat"><div class="stat-n" id="sT">0</div><div class="stat-l">projects</div></div>
+  <div class="stat"><div class="stat-n" id="sD">0</div><div class="stat-l">done</div></div>
+  <div class="stat"><div class="stat-n" id="sP">0%</div><div class="stat-l">complete</div></div>
+  <div class="stat"><div class="stat-n" id="sH">0</div><div class="stat-l">hard left</div></div>
+  <div class="stat"><div class="stat-n" id="sK">0</div><div class="stat-l">skills hit</div></div>
+</div>
+<div class="controls">
+  <span style="font-size:11px;color:var(--color-text-secondary)">Show:</span>
+  <button class="fb on" onclick="filt('all',this)">All</button>
+  <button class="fb" onclick="filt('todo',this)">To-do</button>
+  <button class="fb" onclick="filt('done',this)">Done</button>
+  <button class="fb" onclick="filt('hard',this)">Hard only</button>
+  <button class="rst" onclick="resetAll()"><i class="ti ti-refresh" aria-hidden="true"></i> Reset</button>
+</div>
+<div id="root"></div>
+</div>
+<script>
+const DATA=[
+{id:'d1',cls:'d1',tag:'Domain 1 · 30%',title:'Design Secure Architectures',tasks:[
+  {name:'Task 1.1 · Design secure access to AWS resources',projects:[
+    {id:'s101',sk:'1.1-K1',title:'Multi-account IAM access control map',diff:'h',desc:'Create 3 AWS accounts (dev/staging/prod). Set up AWS Organizations with SCPs that deny resource creation outside approved regions. Test policy inheritance from root → OU → account.',svc:'AWS Organizations · IAM · SCPs · Control Tower'},
+    {id:'s102',sk:'1.1-K2',title:'Federated SSO with IAM Identity Center',diff:'h',desc:'Connect IAM Identity Center to an existing directory (or built-in store). Create permission sets for Dev, Ops, ReadOnly. Assign groups to accounts. Login via SSO portal and verify scoped access.',svc:'IAM Identity Center · AWS Organizations · IAM'},
+    {id:'s103',sk:'1.1-K3',title:'AWS global infrastructure access zones',diff:'e',desc:'Create resources in 3 regions. Write IAM policy with aws:RequestedRegion condition to restrict actions to approved regions only. Test denial from disallowed region via CLI.',svc:'IAM · EC2 · S3 · CloudTrail'},
+    {id:'s104',sk:'1.1-S1',title:'IAM users, groups, roles, and MFA hardening',diff:'m',desc:'Build a full IAM authorization model: users in groups, group-attached policies, role for EC2 instance, role for cross-service. Enforce MFA for console access via IAM condition. Test root user lockdown.',svc:'IAM · AWS Config · CloudTrail'},
+    {id:'s105',sk:'1.1-S2',title:'Flexible authorization with roles and policies',diff:'m',desc:'Design policies for: S3 bucket owner, DynamoDB read-only, EC2 start/stop, and a combined DevOps role. Use managed + inline policies. Validate with IAM Policy Simulator for all cases.',svc:'IAM · S3 · DynamoDB · EC2 · Policy Simulator'},
+    {id:'s106',sk:'1.1-S3',title:'Cross-account role switching with STS',diff:'h',desc:'Account A user assumes a role in Account B using STS:AssumeRole. Role in B has S3 read-only. Test switch from Console and CLI. Add external ID condition. Verify session duration limits.',svc:'IAM · STS · S3 · CloudTrail'},
+    {id:'s107',sk:'1.1-S4',title:'Control Tower multi-account governance',diff:'h',desc:'Set up AWS Control Tower with a landing zone. Create OUs for dev and prod. Apply guardrails (preventive SCPs + detective Config rules). Enroll a new account and verify guardrails apply.',svc:'Control Tower · Organizations · Config · IAM'},
+    {id:'s108',sk:'1.1-S5',title:'Resource-based policies across services',diff:'m',desc:'Apply resource policies on: S3 bucket (cross-account access), SQS queue (SNS publish permission), Lambda (API Gateway invoke), KMS key (cross-account encrypt). Test each policy boundary.',svc:'S3 · SQS · Lambda · KMS · IAM'},
+    {id:'s109',sk:'1.1-S6',title:'Directory federation with IAM roles',diff:'h',desc:'Set up AWS Directory Service (Simple AD). Configure SAML federation so directory users can assume IAM roles. Test login flow and verify role assumption generates short-lived credentials.',svc:'Directory Service · IAM · STS · SAML'},
+  ]},
+  {name:'Task 1.2 · Design secure workloads and applications',projects:[
+    {id:'s201',sk:'1.2-K1',title:'Application credentials security with Secrets Manager',diff:'m',desc:'Store RDS credentials and API keys in Secrets Manager. Rotate the DB password on a 30-day schedule using Lambda rotator. Compare vs environment variable approach. Audit access with CloudTrail.',svc:'Secrets Manager · Lambda · RDS · CloudTrail'},
+    {id:'s202',sk:'1.2-K2',title:'VPC endpoints for private service access',diff:'m',desc:'Create Gateway endpoints (S3, DynamoDB) and Interface endpoints (Secrets Manager, SSM) in a VPC. Remove all internet access from private subnets. Verify Lambda and EC2 can still reach all services privately.',svc:'VPC · VPC Endpoints · S3 · DynamoDB · SSM'},
+    {id:'s203',sk:'1.2-K3',title:'VPC network traffic control deep-dive',diff:'h',desc:'Design a 3-tier VPC: public (ALB), private app (EC2), private data (RDS). Apply security groups (stateful) and NACLs (stateless) at each layer. Test port-level traffic blocking. Verify NACL vs SG precedence.',svc:'VPC · Security Groups · NACLs · EC2 · RDS · ALB'},
+    {id:'s204',sk:'1.2-K4',title:'Secure application access patterns',diff:'m',desc:'Implement: API Gateway with Cognito authorizer, ALB with Cognito authentication, S3 presigned URL for object access, CloudFront signed URL/cookie for content protection. Test each pattern.',svc:'Cognito · API Gateway · ALB · S3 · CloudFront'},
+    {id:'s205',sk:'1.2-K5',title:'GuardDuty + Macie threat detection lab',diff:'m',desc:'Enable GuardDuty in a region. Trigger sample findings (port scan, IAM anomaly). Enable Macie on an S3 bucket with fake PII CSV files. Verify findings. Set up EventBridge rule to auto-remediate.',svc:'GuardDuty · Macie · EventBridge · SNS · IAM'},
+    {id:'s206',sk:'1.2-K6',title:'DDoS and SQL injection protection',diff:'m',desc:'Deploy Shield Standard on CloudFront. Add WAF web ACL with SQL injection and XSS managed rules. Rate-limit rule (100 req/5min per IP). Test with simulated attack payloads via curl.',svc:'Shield · WAF · CloudFront · API Gateway'},
+    {id:'s207',sk:'1.2-S1',title:'Full secure VPC architecture build',diff:'h',desc:'Build production-grade VPC: 3 AZs, public/private/data subnets, NAT Gateways per AZ, IGW, bastion host, NACLs, security groups per tier. Deploy sample app and verify full network isolation.',svc:'VPC · NAT Gateway · IGW · EC2 · RDS · ALB'},
+    {id:'s208',sk:'1.2-S2',title:'Network segmentation strategy',diff:'m',desc:'Design network segmentation: public DMZ, private app tier, isolated data tier. Use Transit Gateway to connect 3 VPCs. Use PrivateLink to expose a service to another VPC without full peering.',svc:'VPC · Transit Gateway · PrivateLink · Security Groups'},
+    {id:'s209',sk:'1.2-S3',title:'Security service integration architecture',diff:'h',desc:'Integrate: WAF (edge), Shield Advanced (DDoS), IAM Identity Center (access), Secrets Manager (credentials), GuardDuty (threat detection) into one coherent architecture. Draw service map and validate each layer.',svc:'WAF · Shield · IAM Identity Center · Secrets Manager · GuardDuty'},
+    {id:'s210',sk:'1.2-S4',title:'Hybrid network security: VPN and Direct Connect',diff:'h',desc:'Set up Site-to-Site VPN between VPC and simulated on-premises (another VPC). Configure BGP routing. Compare with Direct Connect model. Implement Transit Gateway for multiple VPC connections.',svc:'Site-to-Site VPN · Transit Gateway · Direct Connect · VPC'},
+  ]},
+  {name:'Task 1.3 · Determine appropriate data security controls',projects:[
+    {id:'s301',sk:'1.3-K1',title:'Data governance and access control framework',diff:'m',desc:'Tag S3 buckets and objects by data classification (public/internal/confidential). Create bucket policies that restrict confidential data to specific IAM roles only. Enable S3 Access Analyzer to find public exposure.',svc:'S3 · IAM · S3 Access Analyzer · Macie · Config'},
+    {id:'s302',sk:'1.3-K2',title:'Backup and recovery implementation',diff:'m',desc:'Set up AWS Backup with a backup plan covering: EC2, RDS, EFS, and DynamoDB. Configure daily backups with 30-day retention and cross-region copy. Test restore from backup for each service.',svc:'AWS Backup · EC2 · RDS · EFS · DynamoDB · S3'},
+    {id:'s303',sk:'1.3-K3',title:'Data retention and classification pipeline',diff:'m',desc:'Implement S3 lifecycle rules: Standard→IA (30d)→Glacier (90d)→Delete (365d). Use S3 Object Lock (WORM) for compliance. Tag objects with retention class. Verify rule execution via S3 inventory.',svc:'S3 · S3 Glacier · S3 Object Lock · S3 Lifecycle'},
+    {id:'s304',sk:'1.3-K4',title:'KMS full key management strategy',diff:'h',desc:'Create CMKs for: S3 SSE-KMS, EBS encryption, RDS encryption, and DynamoDB encryption. Implement key policy with separation of duties (admin vs usage). Enable CloudHSM for hardware-backed key storage.',svc:'KMS · CloudHSM · S3 · EBS · RDS · DynamoDB'},
+    {id:'s305',sk:'1.3-S1',title:'Compliance controls alignment',diff:'h',desc:'Use AWS Config to check: encryption-at-rest on S3, RDS, EBS. Use Security Hub with AWS Foundational Security Best Practices standard. Audit Manager framework for SOC2. Remediate all findings.',svc:'Config · Security Hub · Audit Manager · IAM · KMS'},
+    {id:'s306',sk:'1.3-S2',title:'Encryption at rest across all storage services',diff:'m',desc:'Enable and verify encryption at rest on: S3 (SSE-KMS), EBS volumes (CMK), RDS (KMS), DynamoDB (CMK), EFS (KMS), ElastiCache (in-transit + at-rest). Document key ARNs for each.',svc:'KMS · S3 · EBS · RDS · DynamoDB · EFS · ElastiCache'},
+    {id:'s307',sk:'1.3-S3',title:'TLS encryption in transit with ACM',diff:'m',desc:'Request ACM certificate with DNS validation. Attach to ALB (HTTPS listener). Configure API Gateway custom domain with ACM cert. Force HTTPS redirect on ALB. Test TLS 1.2+ enforcement policy.',svc:'ACM · ALB · API Gateway · Route 53 · CloudFront'},
+    {id:'s308',sk:'1.3-S4',title:'KMS key policy and access control',diff:'h',desc:'Create KMS CMK with custom key policy: separate key admin and key user roles. Add grant for a specific Lambda. Test: user can encrypt but not delete. Verify CloudTrail logs all key usage.',svc:'KMS · IAM · Lambda · CloudTrail'},
+    {id:'s309',sk:'1.3-S5',title:'Cross-region backup and replication',diff:'m',desc:'Enable S3 Cross-Region Replication from us-east-1 to ap-south-1. Set up RDS automated backup with cross-region copy. Configure DynamoDB global table in 2 regions. Test failover read from replica region.',svc:'S3 CRR · RDS · DynamoDB Global Tables'},
+    {id:'s310',sk:'1.3-S6',title:'Data lifecycle and protection policies',diff:'m',desc:'Implement S3 intelligent tiering for unknown access patterns. Enable S3 Versioning with MFA Delete. Set up DynamoDB TTL for auto-expiry. Use AWS Backup Vault Lock for immutable backups.',svc:'S3 · DynamoDB · AWS Backup · S3 Glacier'},
+    {id:'s311',sk:'1.3-S7',title:'Key rotation and certificate renewal automation',diff:'m',desc:'Enable automatic KMS key rotation (annual). Set CloudWatch alarm for ACM cert expiry (45 days). Build Lambda that auto-renews ACM cert via DNS. Verify rotation does not break existing encrypted data.',svc:'KMS · ACM · CloudWatch · Lambda · Route 53'},
+  ]}
+]},
+{id:'d2',cls:'d2',tag:'Domain 2 · 26%',title:'Design Resilient Architectures',tasks:[
+  {name:'Task 2.1 · Design scalable and loosely coupled architectures',projects:[
+    {id:'s401',sk:'2.1-K1',title:'REST API creation and lifecycle management',diff:'m',desc:'Build REST API with API Gateway: resources, methods, models, request validation, usage plans, API keys, throttling, and caching. Deploy to dev/prod stages. Test rate limiting and quota enforcement.',svc:'API Gateway · Lambda · CloudWatch · WAF'},
+    {id:'s402',sk:'2.1-K2',title:'AWS managed services for loose coupling',diff:'m',desc:'Refactor a monolithic Lambda into 3 services communicating via: SQS (async commands), SNS (events/notifications), and Transfer Family (file intake). Compare tightly vs loosely coupled versions.',svc:'SQS · SNS · Transfer Family · Lambda · Secrets Manager'},
+    {id:'s403',sk:'2.1-K3',title:'Caching strategy implementation lab',diff:'h',desc:'Implement 4 caching layers: CloudFront (CDN), API Gateway response cache, ElastiCache Redis (app cache with TTL), and DAX (DynamoDB accelerator). Measure latency reduction at each layer.',svc:'CloudFront · API Gateway · ElastiCache · DAX · DynamoDB'},
+    {id:'s404',sk:'2.1-K4',title:'Stateless microservices architecture',diff:'h',desc:'Build 3 microservices (user, order, payment). Each is stateless (session in ElastiCache, state in DynamoDB). Deploy behind ALB with path-based routing. Scale each independently using Auto Scaling.',svc:'EC2 · ALB · Auto Scaling · ElastiCache · DynamoDB'},
+    {id:'s405',sk:'2.1-K5',title:'Event-driven order processing system',diff:'h',desc:'Order placed → SQS → Lambda processor → EventBridge event → 3 parallel handlers (email via SNS, inventory update, analytics). Add Step Functions for multi-step order approval workflow.',svc:'SQS · Lambda · EventBridge · SNS · Step Functions'},
+    {id:'s406',sk:'2.1-K6',title:'Horizontal vs vertical scaling comparison',diff:'m',desc:'Deploy an app on a single large EC2 (vertical). Redeploy on Auto Scaling group of small EC2 behind ALB (horizontal). Load test both. Compare cost, availability, and scaling time.',svc:'EC2 · Auto Scaling · ALB · CloudWatch'},
+    {id:'s407',sk:'2.1-K7',title:'CloudFront edge acceleration',diff:'m',desc:'Put CloudFront in front of: S3 static site, ALB (dynamic API), and API Gateway. Configure behaviors, origins, TTLs, and geo-restriction. Measure latency from multiple regions using Route 53 health checks.',svc:'CloudFront · S3 · ALB · API Gateway · Route 53'},
+    {id:'s408',sk:'2.1-K8',title:'Containerize and migrate a monolith',diff:'h',desc:'Take a simple Express/Flask app. Containerize it. Push to ECR. Deploy to ECS Fargate. Add ALB. Set up ECS Service Auto Scaling. Compare deployment lifecycle with EC2-based approach.',svc:'ECR · ECS Fargate · ALB · Auto Scaling · CloudWatch'},
+    {id:'s409',sk:'2.1-K9',title:'Multi-tier architecture with all load balancer types',diff:'h',desc:'Build: internet-facing ALB (Layer 7, path routing) → app tier EC2, NLB (Layer 4, static IP) → backend service, GWLB → network appliance (simulated). Test each routing capability.',svc:'ALB · NLB · GWLB · EC2 · Auto Scaling · VPC'},
+    {id:'s410',sk:'2.1-K10',title:'Pub/sub messaging patterns',diff:'m',desc:'SNS topic with 4 subscribers: SQS queue (buffered), Lambda (immediate), HTTP endpoint (webhook), email. Add SQS FIFO for ordered processing. Add filter policies per subscriber.',svc:'SNS · SQS · SQS FIFO · Lambda'},
+    {id:'s411',sk:'2.1-K11',title:'Serverless vs container vs EC2 decision matrix',diff:'m',desc:'Deploy the same workload 3 ways: Lambda (serverless), ECS Fargate (container), EC2 Auto Scaling. Measure: cold start, cost, scale time, max throughput. Document when each is best.',svc:'Lambda · ECS Fargate · EC2 · CloudWatch · Cost Explorer'},
+    {id:'s412',sk:'2.1-K12',title:'ECS and EKS container orchestration',diff:'h',desc:'Deploy a 2-service app on ECS (task definitions, services, ALB). Then deploy same app on EKS (Deployments, Services, Ingress). Compare operational complexity, scaling, and networking model.',svc:'ECS · EKS · ECR · ALB · Auto Scaling · CloudWatch'},
+    {id:'s413',sk:'2.1-K13',title:'DynamoDB read replica and caching patterns',diff:'m',desc:'Create a DynamoDB table. Add DAX cluster. Enable DynamoDB Streams. Add ElastiCache as application-level read cache. Measure read latency at each layer. Test cache invalidation strategy.',svc:'DynamoDB · DAX · ElastiCache · Lambda · Streams'},
+    {id:'s414',sk:'2.1-K14',title:'Step Functions workflow orchestration',diff:'h',desc:'Build Step Functions state machine with: parallel states (fan-out), choice state (conditional routing), wait state (human approval via SQS callback), error catch and retry. Test each state type.',svc:'Step Functions · Lambda · SQS · SNS · DynamoDB'},
+    {id:'s415',sk:'2.1-S1',title:'Purpose-built service selection architecture',diff:'h',desc:'Design a data platform using purpose-built services: Kinesis (streaming), DynamoDB (operational), Aurora (relational), ElastiCache (caching), OpenSearch (search), Redshift (analytics). Route data to right store.',svc:'Kinesis · DynamoDB · Aurora · ElastiCache · OpenSearch · Redshift'},
+  ]},
+  {name:'Task 2.2 · Design highly available and fault-tolerant architectures',projects:[
+    {id:'s501',sk:'2.2-K1',title:'Multi-AZ and multi-region resilience patterns',diff:'h',desc:'Deploy an app across 3 AZs with ALB. Enable RDS Multi-AZ. Enable ElastiCache Multi-AZ with automatic failover. Test AZ failure by stopping instances in one AZ. Measure RTO.',svc:'EC2 · ALB · RDS Multi-AZ · ElastiCache · Route 53'},
+    {id:'s502',sk:'2.2-K2',title:'Disaster recovery strategies lab',diff:'h',desc:'Implement all 4 DR strategies for the same app: backup/restore (hours RTO), pilot light (pre-provisioned DB), warm standby (scaled-down replica running), active-active (Route 53 latency routing). Document RPO/RTO for each.',svc:'Route 53 · RDS · EC2 · CloudFormation · AWS Backup'},
+    {id:'s503',sk:'2.2-K3',title:'Route 53 advanced routing and health checks',diff:'m',desc:'Configure Route 53 routing policies: simple, weighted (A/B), latency-based, failover (primary/secondary), geolocation, and multivalue. Add health checks to failover endpoints. Simulate failure and verify cutover.',svc:'Route 53 · EC2 · ALB · CloudWatch'},
+    {id:'s504',sk:'2.2-K4',title:'Immutable infrastructure with CloudFormation',diff:'m',desc:'Deploy app with CloudFormation. Never modify running instances — instead update the stack with new AMI. Practice replace-on-change. Use SSM Parameter Store for AMI IDs. Test rollback on failed update.',svc:'CloudFormation · EC2 · AMI · SSM · Auto Scaling'},
+    {id:'s505',sk:'2.2-K5',title:'Failover strategy with RDS Proxy',diff:'m',desc:'Deploy RDS Aurora with RDS Proxy. Simulate Aurora instance failover. Measure connection recovery time with and without Proxy. Test connection pooling under 100 concurrent Lambda connections.',svc:'RDS Aurora · RDS Proxy · Lambda · CloudWatch'},
+    {id:'s506',sk:'2.2-K6',title:'Service quota management for HA',diff:'m',desc:'Review EC2, Lambda, and RDS service quotas in your account. Request quota increases for a standby environment. Build a CloudWatch alarm that fires when Lambda concurrency approaches limit.',svc:'Service Quotas · CloudWatch · Lambda · EC2 · Trusted Advisor'},
+    {id:'s507',sk:'2.2-K7',title:'Distributed storage durability test',diff:'m',desc:'Compare storage durability: S3 (11 nines), EBS (99.8-99.9% per AZ), EFS (multi-AZ). Enable S3 Versioning and MFA Delete. Test EBS snapshot restore across AZs. Replicate EFS to another region.',svc:'S3 · EBS · EFS · AWS Backup · CloudWatch'},
+    {id:'s508',sk:'2.2-K8',title:'X-Ray workload visibility for resilience',diff:'m',desc:'Enable X-Ray across API Gateway, Lambda, and DynamoDB. Intentionally inject latency and errors. Use X-Ray Service Map to identify the degraded component. Set up CloudWatch alarms on X-Ray metrics.',svc:'X-Ray · API Gateway · Lambda · DynamoDB · CloudWatch'},
+    {id:'s509',sk:'2.2-S1',title:'Single point of failure elimination audit',diff:'h',desc:'Deploy a single-AZ monolith. Systematically identify every SPOF (single EC2, single NAT, single DB). Eliminate each: Multi-AZ EC2 Auto Scaling, NAT per AZ, RDS Multi-AZ. Verify each change improves availability.',svc:'EC2 · Auto Scaling · NAT Gateway · RDS · ALB · VPC'},
+    {id:'s510',sk:'2.2-S2',title:'Automated infrastructure integrity with CloudFormation drift detection',diff:'m',desc:'Deploy CloudFormation stack. Manually modify a resource (drift). Run drift detection. Set up Config rule to detect drift. Build Lambda auto-remediation that reverts drifted resources.',svc:'CloudFormation · Config · Lambda · EventBridge · SNS'},
+  ]}
+]},
+{id:'d3',cls:'d3',tag:'Domain 3 · 24%',title:'Design High-Performing Architectures',tasks:[
+  {name:'Task 3.1 · High-performing and scalable storage solutions',projects:[
+    {id:'s601',sk:'3.1-K1',title:'Hybrid storage with Storage Gateway',diff:'h',desc:'Deploy Storage Gateway (File Gateway) on a simulated on-premises server. Mount as NFS/SMB share. Files sync to S3. Set up Tape Gateway for archival to Glacier. Test bandwidth throttling.',svc:'Storage Gateway · S3 · S3 Glacier · DataSync'},
+    {id:'s602',sk:'3.1-K2',title:'Storage service selection lab',diff:'m',desc:'Deploy the same workload using S3 (object), EFS (shared file), and EBS (block). Measure: IOPS, throughput, latency, cost per GB. Document the right choice for: web assets, database files, shared config, logs.',svc:'S3 · EFS · EBS · EC2 · CloudWatch'},
+    {id:'s603',sk:'3.1-K3',title:'Storage type performance benchmarking',diff:'m',desc:'Benchmark EBS volume types: gp2 vs gp3 vs io2 vs st1 vs sc1. Use fio tool to measure sequential/random read/write IOPS and throughput. Document when to use each type.',svc:'EBS · EC2 · CloudWatch'},
+    {id:'s604',sk:'3.1-S1',title:'Storage auto-scaling and future capacity',diff:'m',desc:'Configure S3 Intelligent-Tiering for unknown access patterns. Set EFS to burst mode and provision mode. Use EBS volume auto-scaling with CloudWatch alarm. Forecast storage needs using Cost Explorer.',svc:'S3 · EFS · EBS · CloudWatch · Cost Explorer'},
+  ]},
+  {name:'Task 3.2 · Design high-performing and elastic compute solutions',projects:[
+    {id:'s701',sk:'3.2-K1',title:'Purpose-built compute selection: Batch vs EMR vs Fargate',diff:'h',desc:'Run the same data processing job on: AWS Batch (managed containers for batch), EMR (Spark/Hadoop), and Fargate (serverless containers). Compare cost, setup time, and performance for each use case.',svc:'AWS Batch · EMR · Fargate · S3 · CloudWatch'},
+    {id:'s702',sk:'3.2-K2',title:'Edge computing with CloudFront and Lambda@Edge',diff:'h',desc:'Deploy Lambda@Edge functions at CloudFront: viewer request (auth check), origin request (URL rewrite), origin response (cache key manipulation), viewer response (add security headers). Test from multiple regions.',svc:'CloudFront · Lambda@Edge · API Gateway · S3'},
+    {id:'s703',sk:'3.2-K3',title:'EC2 Auto Scaling policies comparison',diff:'m',desc:'Implement 4 scaling policies: simple (CloudWatch alarm threshold), step (tiered based on metric), target tracking (CPU at 50%), and scheduled (scale up at 9am). Load test each. Compare scaling speed.',svc:'EC2 Auto Scaling · CloudWatch · ALB'},
+    {id:'s704',sk:'3.2-K4',title:'Lambda + Fargate serverless patterns',diff:'m',desc:'Deploy an API using Lambda. Deploy the same API using Fargate. Compare: cold start, max execution time, memory limits, persistent connections, and VPC integration. Document when to choose each.',svc:'Lambda · Fargate · API Gateway · ALB · CloudWatch'},
+    {id:'s705',sk:'3.2-K5',title:'EC2 instance type family deep-dive',diff:'m',desc:'Deploy the same workload on: t3 (burstable), m6i (general), c6i (compute-optimized), r6i (memory-optimized), g4dn (GPU). Benchmark each. Use Compute Optimizer to get right-sizing recommendations.',svc:'EC2 · Compute Optimizer · CloudWatch · Cost Explorer'},
+    {id:'s706',sk:'3.2-S1',title:'Decoupled auto-scaling with SQS target tracking',diff:'h',desc:'Producer Lambda sends messages to SQS. Consumer EC2 Auto Scaling group scales based on SQS queue depth (target tracking: 10 messages per instance). Load test. Verify independent scaling.',svc:'SQS · EC2 · Auto Scaling · CloudWatch · Lambda'},
+  ]},
+  {name:'Task 3.3 · High-performing database solutions',projects:[
+    {id:'s801',sk:'3.3-K1',title:'Multi-AZ and multi-region database architecture',diff:'h',desc:'Deploy Aurora Global Database (primary + 2 secondary regions). Test cross-region read latency. Promote secondary to primary (DR failover). Compare with RDS Multi-AZ failover time.',svc:'Aurora Global · RDS Multi-AZ · Route 53 · CloudWatch'},
+    {id:'s802',sk:'3.3-K2',title:'ElastiCache caching strategies',diff:'h',desc:'Implement cache-aside with Redis for read-heavy API. Implement write-through for write-heavy user profile service. Test TTL expiry and cache stampede protection. Compare Redis vs Memcached for session storage.',svc:'ElastiCache Redis · ElastiCache Memcached · Lambda · DynamoDB · RDS'},
+    {id:'s803',sk:'3.3-K3',title:'Read vs write intensive workload design',diff:'m',desc:'Design a read-heavy blog platform: Aurora read replicas + ElastiCache. Design a write-heavy IoT ingestion: DynamoDB with high write capacity. Load test both. Observe throttling and tune capacity.',svc:'Aurora · RDS Read Replicas · ElastiCache · DynamoDB · CloudWatch'},
+    {id:'s804',sk:'3.3-K4',title:'Database capacity planning',diff:'m',desc:'Plan DynamoDB capacity: measure RCU/WCU for your workload. Switch between provisioned and on-demand. Enable DynamoDB auto-scaling. Plan RDS instance sizing using Performance Insights.',svc:'DynamoDB · RDS · Performance Insights · CloudWatch · Cost Explorer'},
+    {id:'s805',sk:'3.3-K5',title:'RDS Proxy for connection management',diff:'m',desc:'Deploy RDS with many Lambda functions connecting directly (connection exhaustion demo). Add RDS Proxy. Measure: connection count before/after, failover time, and throughput under load.',svc:'RDS · RDS Proxy · Lambda · CloudWatch · Secrets Manager'},
+    {id:'s806',sk:'3.3-K6',title:'Database engine selection and migration',diff:'h',desc:'Migrate a MySQL RDS to Aurora MySQL (homogeneous). Migrate MySQL to PostgreSQL using DMS with schema conversion tool (heterogeneous). Compare: performance, cost, compatibility issues.',svc:'RDS · Aurora · DMS · Schema Conversion Tool'},
+    {id:'s807',sk:'3.3-K7',title:'Serverless and non-relational database comparison',diff:'m',desc:'Deploy: Aurora Serverless v2 (auto-scales compute), DynamoDB (key-value/document, serverless), Keyspaces (Cassandra-compatible), Neptune (graph), DocumentDB (MongoDB-compatible). Match each to a use case.',svc:'Aurora Serverless · DynamoDB · Keyspaces · Neptune · DocumentDB'},
+    {id:'s808',sk:'3.3-S1',title:'Aurora read replica routing with RDS Proxy',diff:'m',desc:'Aurora cluster with 2 read replicas. Use RDS Proxy reader endpoint to distribute reads. Write to writer endpoint. Enable Performance Insights. Observe query latency and connection pooling efficiency.',svc:'Aurora · RDS Proxy · Performance Insights · CloudWatch'},
+  ]},
+  {name:'Task 3.4 · High-performing and scalable network architectures',projects:[
+    {id:'s901',sk:'3.4-K1',title:'CloudFront vs Global Accelerator comparison',diff:'m',desc:'Deploy same API behind CloudFront and behind Global Accelerator. Test latency from multiple regions for: static content (CloudFront wins) vs dynamic API (Global Accelerator wins). Document the difference.',svc:'CloudFront · Global Accelerator · ALB · API Gateway'},
+    {id:'s902',sk:'3.4-K2',title:'Multi-tier VPC network design',diff:'h',desc:'Design: global (multi-region), hybrid (VPN-connected on-prem), and multi-tier (3-layer subnet) VPC topologies. Use Transit Gateway to connect multiple VPCs. Implement route table optimization.',svc:'VPC · Transit Gateway · Site-to-Site VPN · Route 53 · Direct Connect'},
+    {id:'s903',sk:'3.4-K3',title:'Load balancing strategy selection',diff:'m',desc:'Deploy ALB (HTTP/HTTPS, path/host routing), NLB (TCP/UDP, static IP, ultra-low latency), and GWLB (third-party appliance). Route the same traffic through each. Benchmark latency and connection handling.',svc:'ALB · NLB · GWLB · EC2 · VPC'},
+    {id:'s904',sk:'3.4-K4',title:'Network connectivity options for hybrid cloud',diff:'h',desc:'Compare: Site-to-Site VPN (IPsec, up to 1.25 Gbps), Client VPN (remote user access), Direct Connect (dedicated, 1-100 Gbps), PrivateLink (service exposure). Build each and measure throughput and cost.',svc:'Site-to-Site VPN · Client VPN · Direct Connect · PrivateLink'},
+    {id:'s905',sk:'3.4-S1',title:'Scalable network topology for global app',diff:'h',desc:'Build: Route 53 latency routing → CloudFront (edge) → ALB (regional) → EC2 Auto Scaling (compute) → RDS Multi-AZ (data). Enable Global Accelerator for non-HTTP traffic. Test global failover.',svc:'Route 53 · CloudFront · Global Accelerator · ALB · Auto Scaling · RDS'},
+  ]},
+  {name:'Task 3.5 · High-performing data ingestion and transformation',projects:[
+    {id:'s1001',sk:'3.5-K1',title:'Data analytics stack: Athena + QuickSight + Lake Formation',diff:'h',desc:'Build a data lake on S3. Catalog with Glue Crawler. Query with Athena. Visualize in QuickSight. Govern access with Lake Formation (row/column-level security). Convert CSV to Parquet for performance.',svc:'S3 · Glue · Athena · QuickSight · Lake Formation'},
+    {id:'s1002',sk:'3.5-K2',title:'Data ingestion patterns: batch vs streaming',diff:'h',desc:'Batch: CSV files uploaded to S3 → Glue ETL job → Redshift. Streaming: IoT data → Kinesis Data Streams → Lambda → DynamoDB. Compare latency, cost, and complexity for each pattern.',svc:'S3 · Glue · Redshift · Kinesis · Lambda · DynamoDB'},
+    {id:'s1003',sk:'3.5-K3',title:'DataSync and Storage Gateway for migration',diff:'m',desc:'Use DataSync to migrate 10GB from local NFS (simulated EC2) to S3. Use Transfer Family (SFTP) for file ingestion. Compare DataSync vs cp command for transfer speed and integrity.',svc:'DataSync · Transfer Family · S3 · CloudWatch'},
+    {id:'s1004',sk:'3.5-K4',title:'Glue ETL: CSV to Parquet transformation',diff:'m',desc:'Upload CSV dataset to S3. Write Glue ETL job (PySpark) that: reads CSV, cleans nulls, converts to Parquet with partitioning by date. Query both in Athena and compare scan bytes and cost.',svc:'Glue · S3 · Athena · CloudWatch'},
+    {id:'s1005',sk:'3.5-K5',title:'Kinesis streaming architecture for real-time analytics',diff:'h',desc:'Build: producers → Kinesis Data Streams (shards) → Lambda consumer (real-time alerts) + Data Firehose (batch to S3) → Athena (historical queries). Handle shard scaling and re-sharding.',svc:'Kinesis Data Streams · Data Firehose · Lambda · S3 · Athena'},
+    {id:'s1006',sk:'3.5-K6',title:'EMR for large-scale data processing',diff:'h',desc:'Launch EMR cluster with Spark. Process a large dataset (10M rows): join, aggregate, filter. Store output to S3. Compare EMR vs Glue ETL for the same job. Use EMR Serverless for cost comparison.',svc:'EMR · EMR Serverless · S3 · Glue · Athena'},
+    {id:'s1007',sk:'3.5-S1',title:'Secure data lake with Lake Formation',diff:'h',desc:'Build S3 data lake with Lake Formation. Grant column-level and row-level access to different IAM roles. Use Glue to catalog. Verify Athena query returns only permitted columns per role.',svc:'Lake Formation · S3 · Glue · Athena · IAM'},
+  ]}
+]},
+{id:'d4',cls:'d4',tag:'Domain 4 · 20%',title:'Design Cost-Optimized Architectures',tasks:[
+  {name:'Task 4.1 · Design cost-optimized storage solutions',projects:[
+    {id:'s1101',sk:'4.1-K1',title:'S3 storage cost optimization',diff:'m',desc:'Analyze S3 bucket with mixed access patterns. Enable S3 Intelligent-Tiering. Add lifecycle rules for Standard→IA→Glacier→Deep Archive. Enable Requester Pays. Use S3 Storage Lens to find waste.',svc:'S3 · S3 Intelligent-Tiering · S3 Glacier · Cost Explorer · Storage Lens'},
+    {id:'s1102',sk:'4.1-K2',title:'Cost allocation tags and multi-account billing',diff:'m',desc:'Apply cost allocation tags (project, env, team) to all resources. Enable tag-based cost allocation in billing. Set up AWS Budgets per tag. View per-project cost in Cost Explorer. Create CUR report.',svc:'Cost Explorer · AWS Budgets · CUR · Cost Allocation Tags'},
+    {id:'s1103',sk:'4.1-K3',title:'Block storage cost optimization: EBS volume types',diff:'m',desc:'Audit EBS volumes: identify over-provisioned gp2 volumes. Migrate to gp3 (same performance, 20% cheaper). Identify unattached volumes. Set up Config rule to alert on unattached EBS. Calculate savings.',svc:'EBS · AWS Config · Cost Explorer · Compute Optimizer'},
+    {id:'s1104',sk:'4.1-K4',title:'Hybrid storage cost comparison',diff:'m',desc:'Compare cost per GB for: S3 Standard, EFS, EBS gp3, FSx for Windows, FSx for Lustre, Storage Gateway cached vs stored mode. Build a cost model for a 10TB workload over 1 year.',svc:'S3 · EFS · EBS · FSx · Storage Gateway · Cost Explorer'},
+    {id:'s1105',sk:'4.1-S1',title:'Backup cost optimization strategy',diff:'m',desc:'Audit backup costs: move old RDS snapshots to S3 (cheaper). Use Glacier for long-term backup. Delete redundant snapshots with Lambda. Set backup retention policies. Compare cost before/after.',svc:'AWS Backup · RDS · S3 · S3 Glacier · Lambda · Cost Explorer'},
+    {id:'s1106',sk:'4.1-S2',title:'Data lifecycle and tiering automation',diff:'m',desc:'Build S3 lifecycle automation: objects accessed > 30 days ago move to IA, >90 days to Glacier, >365 days delete. Use S3 analytics to identify optimal transition days based on access patterns.',svc:'S3 · S3 Analytics · S3 Lifecycle · Cost Explorer'},
+    {id:'s1107',sk:'4.1-S3',title:'Lowest-cost data transfer strategy',diff:'m',desc:'Compare data transfer costs: S3 Transfer Acceleration vs multipart upload vs Snow Family vs DataSync. For 1TB, 10TB, 100TB workloads, model total cost and transfer time for each method.',svc:'S3 · S3 Transfer Acceleration · Snow Family · DataSync · Cost Calculator'},
+  ]},
+  {name:'Task 4.2 · Design cost-optimized compute solutions',projects:[
+    {id:'s1201',sk:'4.2-K1',title:'EC2 purchasing options: Spot, Reserved, Savings Plans',diff:'h',desc:'Run the same workload using: On-Demand, 1-year Reserved, 3-year Reserved, Compute Savings Plans, and Spot (with interruption handling). Calculate cost per hour for each. Document when each is appropriate.',svc:'EC2 · Savings Plans · Spot · Cost Explorer · Auto Scaling'},
+    {id:'s1202',sk:'4.2-K2',title:'Spot Instance fleet with interruption handling',diff:'h',desc:'Build Spot Fleet with multiple instance types and AZs. Add interruption handler (Lambda on EC2 Spot interruption notice) that drains connections and saves state to S3. Test graceful interruption.',svc:'EC2 Spot · Auto Scaling · Lambda · S3 · SQS'},
+    {id:'s1203',sk:'4.2-K3',title:'Lambda vs EC2 vs Fargate cost modeling',diff:'m',desc:'Model costs for 3 workload types: API with 1M requests/day (Lambda wins), long-running batch job (Fargate wins), always-on app (Reserved EC2 wins). Build Cost Calculator models for each.',svc:'Lambda · EC2 · Fargate · Cost Explorer · Cost Calculator'},
+    {id:'s1204',sk:'4.2-K4',title:'EC2 right-sizing with Compute Optimizer',diff:'m',desc:'Launch over-provisioned EC2 instances (r5.4xlarge for a small workload). Install CloudWatch agent. After 7 days, review Compute Optimizer recommendations. Right-size to correct instance. Calculate savings.',svc:'EC2 · Compute Optimizer · CloudWatch · Cost Explorer'},
+    {id:'s1205',sk:'4.2-K5',title:'Auto Scaling cost optimization with scheduled scaling',diff:'m',desc:'Production app with predictable traffic (peak 9am-6pm weekdays). Implement scheduled scaling (scale down nights/weekends). Add target tracking for unexpected peaks. Calculate savings vs always-on.',svc:'EC2 Auto Scaling · CloudWatch · Cost Explorer'},
+    {id:'s1206',sk:'4.2-K6',title:'Microservices cost optimization with serverless',diff:'m',desc:'Migrate an EC2-hosted microservice to Lambda + API Gateway. Compare: cost at 100k, 1M, 10M requests/day. Find the break-even point where EC2 becomes cheaper than Lambda.',svc:'Lambda · API Gateway · EC2 · Cost Explorer'},
+    {id:'s1207',sk:'4.2-S1',title:'Load balancer selection for cost efficiency',diff:'m',desc:'Compare: ALB ($/LCU) vs NLB ($/NLCU) vs CLB (deprecated). Measure LCU consumption for: REST API traffic, WebSocket connections, and TCP pass-through. Determine cheapest option per workload type.',svc:'ALB · NLB · Cost Explorer · CloudWatch'},
+  ]},
+  {name:'Task 4.3 · Design cost-optimized database solutions',projects:[
+    {id:'s1301',sk:'4.3-K1',title:'Database cost allocation and tagging',diff:'e',desc:'Tag all RDS, DynamoDB, Aurora, and ElastiCache resources with project and environment tags. View database costs in Cost Explorer by tag. Create database-specific budget with alert at 80%.',svc:'RDS · DynamoDB · Aurora · ElastiCache · Cost Explorer · Budgets'},
+    {id:'s1302',sk:'4.3-K2',title:'Caching to reduce database costs',diff:'m',desc:'Measure RDS query cost without cache. Add ElastiCache Redis (cache-aside pattern). Measure hit rate and RDS CPU reduction. Calculate cost saving from reduced RDS instance size enabled by caching.',svc:'RDS · ElastiCache · CloudWatch · Cost Explorer'},
+    {id:'s1303',sk:'4.3-K3',title:'DynamoDB on-demand vs provisioned cost model',diff:'m',desc:'Run a workload with variable traffic (peaks 10x normal) on DynamoDB provisioned (auto-scaling) and on-demand. Compare costs at low, medium, and high traffic levels. Find break-even point.',svc:'DynamoDB · Auto Scaling · CloudWatch · Cost Explorer'},
+    {id:'s1304',sk:'4.3-K4',title:'Aurora Serverless v2 cost optimization',diff:'m',desc:'Deploy Aurora Serverless v2 for a dev/test environment. Compare vs always-on Aurora instance. Measure ACU scaling behavior. Calculate cost savings for intermittent workloads.',svc:'Aurora Serverless v2 · Cost Explorer · CloudWatch'},
+    {id:'s1305',sk:'4.3-K5',title:'Database engine cost comparison',diff:'m',desc:'Compare monthly cost: RDS MySQL vs RDS PostgreSQL vs Aurora MySQL vs Aurora Serverless vs DynamoDB for the same data workload. Include: compute, storage, I/O, backup costs in each model.',svc:'RDS · Aurora · DynamoDB · Cost Calculator · Cost Explorer'},
+    {id:'s1306',sk:'4.3-S1',title:'Database migration for cost reduction',diff:'h',desc:'Migrate from expensive Oracle RDS to Aurora PostgreSQL using DMS + Schema Conversion Tool. Calculate licensing cost savings. Measure performance parity. Use DMS continuous replication for zero-downtime cutover.',svc:'RDS Oracle · Aurora PostgreSQL · DMS · Schema Conversion Tool'},
+  ]},
+  {name:'Task 4.4 · Design cost-optimized network architectures',projects:[
+    {id:'s1401',sk:'4.4-K1',title:'NAT Gateway cost optimization',diff:'m',desc:'Audit NAT Gateway costs: data processing charges per GB. Compare: single shared NAT Gateway (cheaper) vs NAT per AZ (HA but costly). Replace NAT with VPC Endpoints for S3/DynamoDB (free). Calculate savings.',svc:'NAT Gateway · VPC Endpoints · Cost Explorer · CloudWatch'},
+    {id:'s1402',sk:'4.4-K2',title:'Network connection cost comparison',diff:'h',desc:'Compare data transfer costs: public internet, VPN (Site-to-Site), Direct Connect (1Gbps dedicated), PrivateLink. Model costs for 1TB/month and 10TB/month transfer. Factor in setup and hourly charges.',svc:'Direct Connect · Site-to-Site VPN · PrivateLink · VPC · Cost Calculator'},
+    {id:'s1403',sk:'4.4-K3',title:'Minimize cross-AZ and cross-region transfer costs',diff:'h',desc:'Identify cross-AZ traffic (costs $0.01/GB each way). Place resources in same AZ where possible. Use VPC endpoints to eliminate NAT cost. Use private IPs instead of public IPs for same-region traffic.',svc:'VPC · VPC Endpoints · EC2 · Cost Explorer · Transit Gateway'},
+    {id:'s1404',sk:'4.4-K4',title:'CDN strategy for bandwidth cost reduction',diff:'m',desc:'Serve a media-heavy website directly from S3 vs via CloudFront. Compare: S3 data transfer cost ($0.09/GB) vs CloudFront ($0.008/GB). Calculate break-even at various traffic levels.',svc:'CloudFront · S3 · Cost Explorer · Cost Calculator'},
+    {id:'s1405',sk:'4.4-K5',title:'Transit Gateway vs VPC peering cost analysis',diff:'m',desc:'Connect 5 VPCs using VPC Peering (n*(n-1)/2 connections). Connect same 5 VPCs via Transit Gateway (hub-and-spoke). Compare: setup complexity, data transfer costs, and routing management.',svc:'Transit Gateway · VPC Peering · Cost Explorer'},
+    {id:'s1406',sk:'4.4-S1',title:'Full network cost optimization audit',diff:'h',desc:'Audit a live (or simulated) architecture for network cost waste: unused EIPs, cross-AZ traffic, high NAT data processing, expensive Direct Connect vs VPN alternative. Present savings recommendations.',svc:'Cost Explorer · VPC · NAT Gateway · Direct Connect · Trusted Advisor'},
+  ]}
+]}
+];
+
+const SK='saa_c03_full_v1';
+function load(){try{return JSON.parse(localStorage.getItem(SK)||'{}')}catch{return{}}}
+function save(s){try{localStorage.setItem(SK,JSON.stringify(s))}catch{}}
+let ST=load();
+let CF='all';
+
+function toggle(id){ST[id]=!ST[id];save(ST);render()}
+function filt(f,el){CF=f;document.querySelectorAll('.fb').forEach(b=>b.classList.remove('on'));el.classList.add('on');render()}
+function resetAll(){if(confirm('Reset all progress?')){ST={};save(ST);render();}}
+function toggleDomain(id){
+  const l=document.getElementById('dl-'+id);
+  const c=document.getElementById('dc-'+id);
+  const open=l.style.display!=='none';
+  l.style.display=open?'none':'';
+  c.classList.toggle('open',!open);
+}
+
+function render(){
+  const all=DATA.flatMap(d=>d.tasks.flatMap(t=>t.projects));
+  const total=all.length;
+  const done=all.filter(p=>ST[p.id]).length;
+  const hardLeft=all.filter(p=>p.diff==='h'&&!ST[p.id]).length;
+  const skillsDone=new Set(all.filter(p=>ST[p.id]).map(p=>p.sk)).size;
+  document.getElementById('sT').textContent=total;
+  document.getElementById('sD').textContent=done;
+  document.getElementById('sP').textContent=Math.round(done/total*100)+'%';
+  document.getElementById('sH').textContent=hardLeft;
+  document.getElementById('sK').textContent=skillsDone+'/'+all.length;
+
+  const root=document.getElementById('root');
+  root.innerHTML='';
+  DATA.forEach(d=>{
+    const dP=d.tasks.flatMap(t=>t.projects);
+    const dD=dP.filter(p=>ST[p.id]).length;
+    const pct=Math.round(dD/dP.length*100);
+
+    const tasksHTML=d.tasks.map(t=>{
+      let projs=t.projects;
+      if(CF==='todo') projs=projs.filter(p=>!ST[p.id]);
+      if(CF==='done') projs=projs.filter(p=>ST[p.id]);
+      if(CF==='hard') projs=projs.filter(p=>p.diff==='h'&&!ST[p.id]);
+      const pH=projs.length?projs.map(p=>`
+        <div class="proj${ST[p.id]?' done':''}">
+          <button class="cb${ST[p.id]?' on':''}" onclick="toggle('${p.id}')" aria-label="${ST[p.id]?'Uncheck':'Check'}: ${p.title}">
+            <i class="ti ti-check" aria-hidden="true"></i>
+          </button>
+          <div class="pbody">
+            <div class="prow">
+              <span class="ptitle">${p.title}</span>
+              <span class="skill-tag">${p.sk}</span>
+              <span class="diff ${p.diff}">${p.diff==='e'?'easy':p.diff==='m'?'medium':'hard'}</span>
+            </div>
+            <div class="pdesc">${p.desc}</div>
+            <div class="psvc"><i class="ti ti-cloud" aria-hidden="true"></i>${p.svc}</div>
+          </div>
+        </div>`).join(''):'<div class="empty">No projects match this filter.</div>';
+      return`<div class="task-group"><div class="tg-header">${t.name}</div>${pH}</div>`;
+    }).join('');
+
+    const el=document.createElement('div');
+    el.className=`domain ${d.cls}`;
+    el.innerHTML=`
+      <div class="dhead" onclick="toggleDomain('${d.id}')">
+        <span class="dtag">${d.tag}</span>
+        <span class="dtitle">${d.title}</span>
+        <span class="dprog">${dD}/${dP.length}</span>
+        <i class="ti ti-chevron-down dchev open" id="dc-${d.id}" aria-hidden="true"></i>
+      </div>
+      <div class="pbar-wrap"><div class="pbar" style="width:${pct}%"></div></div>
+      <div id="dl-${d.id}">${tasksHTML}</div>`;
+    root.appendChild(el);
+  });
+}
+render();
+</script>

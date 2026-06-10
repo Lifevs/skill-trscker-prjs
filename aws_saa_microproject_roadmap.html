@@ -1,0 +1,222 @@
+
+<h2 class="sr-only">AWS SAA-C03 Micro-Project Roadmap — interactive skill and progress tracker</h2>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans)}
+.header{padding:1.5rem 0 1rem}
+.header h1{font-size:18px;font-weight:500;color:var(--color-text-primary)}
+.header p{font-size:13px;color:var(--color-text-secondary);margin-top:4px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:1.5rem}
+.stat{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px;text-align:center}
+.stat-num{font-size:22px;font-weight:500;color:var(--color-text-primary)}
+.stat-label{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
+.domain-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.25rem}
+.tab{font-size:12px;padding:6px 12px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);cursor:pointer;background:var(--color-background-primary);color:var(--color-text-secondary);transition:all .15s}
+.tab.active{background:var(--color-background-info);color:var(--color-text-info);border-color:transparent}
+.progress-bar{height:4px;background:var(--color-background-secondary);border-radius:2px;margin-bottom:1.5rem;overflow:hidden}
+.progress-fill{height:100%;border-radius:2px;transition:width .4s}
+.project-list{display:flex;flex-direction:column;gap:10px}
+.project{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden}
+.project-header{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;cursor:pointer;background:var(--color-background-primary)}
+.project-header:hover{background:var(--color-background-secondary)}
+.check{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--color-border-secondary);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;cursor:pointer;transition:all .15s}
+.check.done{background:#1D9E75;border-color:#1D9E75}
+.check i{font-size:11px;color:white}
+.proj-num{font-size:11px;font-weight:500;color:var(--color-text-tertiary);min-width:22px;margin-top:3px}
+.proj-content{flex:1}
+.proj-title{font-size:13px;font-weight:500;color:var(--color-text-primary)}
+.proj-subtitle{font-size:12px;color:var(--color-text-secondary);margin-top:2px}
+.tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:5px}
+.tag{font-size:10px;padding:2px 7px;border-radius:10px}
+.t-domain1{background:#E6F1FB;color:#0C447C}
+.t-domain2{background:#EAF3DE;color:#27500A}
+.t-domain3{background:#FAEEDA;color:#633806}
+.t-domain4{background:#EEEDFE;color:#3C3489}
+.t-skill{background:var(--color-background-secondary);color:var(--color-text-secondary)}
+.expand-icon{font-size:14px;color:var(--color-text-tertiary);transition:transform .2s;flex-shrink:0}
+.project-body{padding:0 14px 12px 46px;display:none;border-top:0.5px solid var(--color-border-tertiary)}
+.project-body.open{display:block}
+.body-section{margin-top:10px}
+.body-label{font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}
+.steps{list-style:none;display:flex;flex-direction:column;gap:3px}
+.steps li{font-size:12px;color:var(--color-text-secondary);padding-left:12px;position:relative;line-height:1.5}
+.steps li::before{content:"→";position:absolute;left:0;color:var(--color-text-tertiary)}
+.skills-grid{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+.skill-badge{font-size:11px;padding:2px 8px;border:0.5px solid var(--color-border-secondary);border-radius:10px;color:var(--color-text-secondary)}
+.ask-btn{margin-top:10px;font-size:12px;padding:5px 12px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-secondary);cursor:pointer}
+.ask-btn:hover{background:var(--color-background-secondary)}
+.difficulty{font-size:11px;padding:2px 8px;border-radius:10px;margin-left:auto;flex-shrink:0}
+.d-beginner{background:#EAF3DE;color:#27500A}
+.d-intermediate{background:#FAEEDA;color:#633806}
+.d-advanced{background:#FAECE7;color:#712B13}
+.filter-row{display:flex;gap:6px;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.filter-label{font-size:12px;color:var(--color-text-secondary)}
+.filter-btn{font-size:11px;padding:4px 10px;border:0.5px solid var(--color-border-secondary);border-radius:10px;cursor:pointer;background:var(--color-background-primary);color:var(--color-text-secondary)}
+.filter-btn.active{background:var(--color-background-secondary);color:var(--color-text-primary)}
+</style>
+
+<div class="header">
+  <h1>AWS SAA-C03 — Hands-on Micro-Project Roadmap</h1>
+  <p>40 projects covering every domain task. Check off as you complete them. Click any project to see exact steps.</p>
+</div>
+
+<div class="stats" id="stats">
+  <div class="stat"><div class="stat-num" id="s-done">0</div><div class="stat-label">Completed</div></div>
+  <div class="stat"><div class="stat-num" id="s-total">40</div><div class="stat-label">Total projects</div></div>
+  <div class="stat"><div class="stat-num" id="s-pct">0%</div><div class="stat-label">Progress</div></div>
+  <div class="stat"><div class="stat-num" id="s-dom">0/4</div><div class="stat-label">Domains touched</div></div>
+</div>
+
+<div class="progress-bar"><div class="progress-fill" id="prog" style="width:0%;background:#1D9E75"></div></div>
+
+<div class="domain-tabs">
+  <button class="tab active" onclick="filterDomain('all')">All 40</button>
+  <button class="tab" onclick="filterDomain(1)">Domain 1 — Secure (30%)</button>
+  <button class="tab" onclick="filterDomain(2)">Domain 2 — Resilient (26%)</button>
+  <button class="tab" onclick="filterDomain(3)">Domain 3 — High-Performing (24%)</button>
+  <button class="tab" onclick="filterDomain(4)">Domain 4 — Cost-Optimized (20%)</button>
+</div>
+
+<div class="filter-row">
+  <span class="filter-label">Difficulty:</span>
+  <button class="filter-btn active" onclick="filterDiff('all')">All</button>
+  <button class="filter-btn" onclick="filterDiff('Beginner')">Beginner</button>
+  <button class="filter-btn" onclick="filterDiff('Intermediate')">Intermediate</button>
+  <button class="filter-btn" onclick="filterDiff('Advanced')">Advanced</button>
+</div>
+
+<div class="project-list" id="project-list"></div>
+
+<script>
+const projects=[
+{id:1,domain:1,task:"1.1",title:"Multi-account IAM lockdown",subtitle:"Root user + MFA + least-privilege IAM policy lab",diff:"Beginner",skills:["IAM users/groups/roles","MFA","SCPs","Least privilege"],steps:["Create AWS Organization with 3 accounts (root, dev, prod)","Enable MFA on root user of every account","Create IAM groups: Admins, Developers, ReadOnly with appropriate managed policies","Write a custom IAM policy allowing only EC2 describe actions; test with IAM simulator","Set an SCP on the dev OU blocking ec2:TerminateInstances","Test role switching between accounts using AWS STS assume-role","Document every permission boundary decision"]},
+{id:2,domain:1,task:"1.1",title:"Cross-account S3 access with roles",subtitle:"Federated access and resource policies across accounts",diff:"Intermediate",skills:["IAM roles","Cross-account access","Resource policies","STS"],steps:["In Account A create an S3 bucket with bucket policy allowing Account B's role","In Account B create an IAM role with sts:AssumeRole to Account A","Write a trust policy and permission policy on the role","Use AWS CLI to assume the role and list bucket objects","Add condition keys: aws:RequestedRegion, aws:MultiFactorAuthPresent","Verify no access without MFA; document the flow"]},
+{id:3,domain:1,task:"1.1",title:"AWS IAM Identity Center SSO setup",subtitle:"Central SSO for multi-account access",diff:"Intermediate",skills:["IAM Identity Center","Federated access","Permission sets"],steps:["Enable IAM Identity Center in the management account","Create permission sets for Developer and Auditor","Assign permission sets to the dev and prod accounts","Create a test user and assign them in Identity Center","Log in via the SSO portal and verify account access","Test SAML federation by configuring a test identity provider"]},
+{id:4,domain:1,task:"1.2",title:"Secure VPC with public/private subnets",subtitle:"Full VPC architecture with security layers",diff:"Beginner",skills:["VPC","Security groups","NACLs","NAT Gateway","Subnets"],steps:["Create a VPC with CIDR 10.0.0.0/16","Create 2 public subnets (us-east-1a, 1b) and 2 private subnets","Attach Internet Gateway; create route tables for public and private","Deploy NAT Gateway in public subnet; update private route table","Create security group: allow HTTP/HTTPS from 0.0.0.0/0 for ALB only","Create NACL blocking inbound traffic on port 23 (Telnet)","Launch EC2 in private subnet; verify internet via NAT but no inbound access"]},
+{id:5,domain:1,task:"1.2",title:"WAF + Shield + CloudFront protection",subtitle:"DDoS and injection attack defense",diff:"Intermediate",skills:["AWS WAF","AWS Shield","CloudFront","Security groups"],steps:["Create a CloudFront distribution in front of an S3 static website","Attach AWS WAF web ACL with managed rules: AWSManagedRulesCommonRuleSet","Add a rate-based rule: block IPs exceeding 1000 req/5 min","Enable AWS Shield Standard (automatic) — review Shield Advanced features","Test WAF by sending a request with SQL injection pattern in query string","Check WAF sampled requests and CloudWatch metrics","Enable logging to S3 via Kinesis Data Firehose"]},
+{id:6,domain:1,task:"1.2",title:"Secrets Manager + Cognito app auth",subtitle:"Secure application credential and user auth flow",diff:"Intermediate",skills:["Secrets Manager","Cognito","Secure application access"],steps:["Create a Secrets Manager secret for DB credentials","Write a Lambda function that retrieves the secret at runtime — no hardcoded creds","Create a Cognito User Pool with email verification","Create an App Client; set up hosted UI login","Add Cognito Authorizer to API Gateway — protect a GET endpoint","Test unauthenticated (401) vs authenticated (200) access","Enable secret rotation with a Lambda rotator"]},
+{id:7,domain:1,task:"1.2",title:"Site-to-Site VPN and Direct Connect simulation",subtitle:"Secure external network connectivity",diff:"Advanced",skills:["Site-to-Site VPN","Direct Connect","PrivateLink","Network segmentation"],steps:["Create a Virtual Private Gateway and attach to VPC","Create a Customer Gateway (use a simulated IP or a second VPC with software VPN)","Establish Site-to-Site VPN tunnel; verify BGP or static routes","Create a PrivateLink endpoint for S3 in a private subnet","Test that S3 access from private subnet uses VPC endpoint (no internet)","Compare latency with and without Direct Connect (use AWS Direct Connect simulator if in lab environment)","Document when to use VPN vs Direct Connect vs PrivateLink"]},
+{id:8,domain:1,task:"1.3",title:"KMS encryption at rest for S3, EBS, RDS",subtitle:"Key management and data encryption lab",diff:"Beginner",skills:["AWS KMS","Encryption at rest","Key policies","Data classification"],steps:["Create a customer-managed KMS key (CMK) with a key policy allowing only specific roles","Enable S3 bucket default encryption using the CMK","Create an EBS volume with KMS encryption; attach to EC2","Enable encryption for a new RDS instance using the CMK","Write a key policy denying kms:Decrypt to all except a specific IAM role","Test access denied when using a different role","Enable automatic key rotation (annually)"]},
+{id:9,domain:1,task:"1.3",title:"TLS termination with ACM + data lifecycle policies",subtitle:"In-transit encryption and data lifecycle controls",diff:"Intermediate",skills:["ACM","TLS","S3 lifecycle","Data retention"],steps:["Request a public certificate in ACM for a test domain","Attach the certificate to an ALB HTTPS listener","Force HTTP→HTTPS redirect on port 80","Create S3 bucket; set lifecycle rule: transition to Glacier after 30 days, delete after 365","Enable S3 Object Lock in compliance mode for a bucket","Set MFA delete on a versioned bucket","Document certificate renewal process (ACM auto-renews)"]},
+{id:10,domain:1,task:"1.3",title:"CloudTrail + Config + Macie audit trail",subtitle:"Data governance and compliance monitoring",diff:"Intermediate",skills:["CloudTrail","AWS Config","Amazon Macie","Data access governance"],steps:["Enable CloudTrail multi-region trail logging to S3 with log file validation","Enable AWS Config recorder for all resource types","Create a Config rule: s3-bucket-public-read-prohibited","Enable Amazon Macie on an S3 bucket containing test PII data","Create a Macie finding filter for credit card numbers","Set up an EventBridge rule to alert SNS when Macie finds sensitive data","Review Config timeline for a changed security group"]},
+{id:11,domain:2,task:"2.1",title:"Serverless microservices with SQS + Lambda",subtitle:"Event-driven loosely coupled architecture",diff:"Beginner",skills:["Lambda","SQS","Event-driven architecture","Serverless","Loose coupling"],steps:["Create two Lambda functions: Order Processor and Notification Sender","Create an SQS standard queue; set Lambda trigger on the queue","Order Processor writes order to DynamoDB and sends message to SQS","Notification Sender reads from SQS and logs a 'notification sent' message","Set Dead Letter Queue (DLQ) for failed messages","Test with 100 concurrent messages; observe Lambda concurrency scaling","Add a visibility timeout and retry policy; document the trade-offs"]},
+{id:12,domain:2,task:"2.1",title:"ECS Fargate microservices with ALB",subtitle:"Container orchestration and load balancing",diff:"Intermediate",skills:["ECS Fargate","ALB","Containers","Microservices","Auto scaling"],steps:["Build a simple Node.js app Docker image; push to Amazon ECR","Create an ECS cluster (Fargate); define a Task Definition","Create an ECS Service with desired count 2; attach to an ALB target group","Configure ALB path-based routing: /api → ECS service","Enable ECS Service Auto Scaling on CPU utilization > 60%","Simulate load with Apache Bench; observe task count scale up","Terminate one task manually; verify ALB health check replaces it"]},
+{id:13,domain:2,task:"2.1",title:"API Gateway + Lambda + DynamoDB REST API",subtitle:"Full serverless REST backend",diff:"Intermediate",skills:["API Gateway","Lambda","DynamoDB","REST API","Serverless"],steps:["Create DynamoDB table with partition key 'id' (PAY_PER_REQUEST billing)","Write Lambda functions for CRUD operations","Create REST API in API Gateway; wire Lambda integrations","Enable API Gateway caching on GET endpoints","Add a usage plan and API key; test rate limiting","Deploy to two stages: dev and prod","Enable X-Ray tracing on Lambda and API Gateway; view service map"]},
+{id:14,domain:2,task:"2.1",title:"Step Functions workflow orchestration",subtitle:"Orchestrating multi-step business processes",diff:"Intermediate",skills:["Step Functions","Workflow orchestration","Lambda","SQS","Event-driven"],steps:["Design a 4-step order fulfillment workflow: Validate → Reserve → Charge → Fulfill","Implement each step as a Lambda function","Create a Standard Workflow in Step Functions; define states in ASL","Add error handling: Catch block on the Charge step → refund state","Add a Wait state simulating async payment gateway callback","Test happy path and failure path","Observe execution history in Step Functions console"]},
+{id:15,domain:2,task:"2.1",title:"SNS fan-out with SQS and Lambda subscribers",subtitle:"Pub/sub messaging pattern",diff:"Beginner",skills:["SNS","SQS","Pub/sub","Queuing","Loose coupling"],steps:["Create an SNS topic: OrderEvents","Create two SQS queues: InventoryQueue and AnalyticsQueue","Subscribe both SQS queues to the SNS topic","Subscribe a Lambda function directly to SNS for real-time alerts","Publish a test message to SNS; verify all three subscribers receive it","Add an SNS filter policy: AnalyticsQueue only receives order_type=B2B","Test filtered delivery; document fan-out vs point-to-point"]},
+{id:16,domain:2,task:"2.2",title:"Multi-AZ RDS with failover test",subtitle:"Highly available relational database",diff:"Intermediate",skills:["RDS Multi-AZ","Failover","Fault tolerance","RDS Proxy"],steps:["Create RDS MySQL Multi-AZ instance","Create RDS Proxy in front of the RDS instance","Connect an EC2-based app to the database via the Proxy endpoint","Force a failover using RDS console; measure downtime","Observe that RDS Proxy maintains connections during failover","Create a read replica; configure app to route reads to replica","Test replica promotion if primary fails"]},
+{id:17,domain:2,task:"2.2",title:"Route 53 failover routing with health checks",subtitle:"DNS-level high availability",diff:"Intermediate",skills:["Route 53","Failover routing","Health checks","HA architecture"],steps:["Deploy identical app on EC2 in us-east-1 (primary) and us-west-2 (secondary)","Create Route 53 health checks for both endpoints","Create Route 53 failover record set: primary → us-east-1, secondary → us-west-2","Stop the EC2 in us-east-1; verify DNS resolves to us-west-2 within TTL","Restore primary; verify traffic returns","Add latency-based routing to the mix; test from different regions","Document RPO and RTO achieved"]},
+{id:18,domain:2,task:"2.2",title:"Disaster recovery with S3 cross-region replication",subtitle:"Data durability and backup strategy",diff:"Intermediate",skills:["S3 CRR","DR strategies","Backup","Data durability","RTO/RPO"],steps:["Create source S3 bucket in us-east-1; enable versioning","Create destination bucket in us-west-2 with versioning","Set up Cross-Region Replication (CRR) rule","Upload objects; verify replication to us-west-2","Create AWS Backup plan: daily snapshot of EBS, RDS, DynamoDB","Set retention: 7 daily, 4 weekly, 12 monthly","Restore an EBS snapshot to a new volume; measure RTO","Document backup-restore vs pilot-light vs warm-standby differences"]},
+{id:19,domain:2,task:"2.2",title:"Auto Scaling group with ALB across AZs",subtitle:"Fault-tolerant elastic compute layer",diff:"Beginner",skills:["EC2 Auto Scaling","ALB","Multi-AZ","Fault tolerance","Immutable infrastructure"],steps:["Create a Launch Template for EC2 with user-data installing Apache","Create an Auto Scaling Group spanning 3 AZs with min=2, max=6","Attach to an ALB target group","Create scaling policy: target tracking on CPU at 50%","Run a stress test (stress-ng) on one instance; observe scale-out","Terminate an instance manually; observe auto replacement","Enable ALB access logs; review traffic distribution across AZs"]},
+{id:20,domain:2,task:"2.2",title:"CloudWatch alarms, dashboards and X-Ray tracing",subtitle:"Workload visibility and observability",diff:"Intermediate",skills:["CloudWatch","X-Ray","Alarms","HA observability","Metrics"],steps:["Create CloudWatch dashboard with EC2 CPU, RDS connections, Lambda errors","Create an alarm: trigger SNS notification when CPU > 80% for 5 minutes","Enable detailed monitoring on EC2 instances","Enable X-Ray on a Lambda function calling DynamoDB and S3","View X-Ray service map; identify latency hotspots","Create CloudWatch Log Insights query to find top error messages","Set up a composite alarm combining multiple conditions"]},
+{id:21,domain:3,task:"3.1",title:"S3 storage tiers and performance tuning",subtitle:"High-performing object storage configuration",diff:"Beginner",skills:["S3","EFS","EBS","Storage types","Performance"],steps:["Create S3 bucket; upload 1000 objects using parallel multipart upload","Enable S3 Transfer Acceleration; compare upload speed","Enable S3 Intelligent-Tiering on a bucket","Create S3 Lifecycle: Standard → Standard-IA (30d) → Glacier (90d)","Configure S3 for static website hosting with CloudFront","Test S3 performance: measure throughput with different prefix strategies","Create an EFS file system; mount on two EC2 instances; test concurrent writes"]},
+{id:22,domain:3,task:"3.1",title:"EBS volume types and IOPS benchmarking",subtitle:"Block storage performance lab",diff:"Intermediate",skills:["EBS","gp3","io2","Storage performance","IOPS"],steps:["Create EC2 with gp3 EBS volume (3000 IOPS default)","Run fio benchmark: sequential read, random 4K read/write","Modify volume to io2 with provisioned 16000 IOPS (no downtime)","Re-run fio; compare throughput and latency","Create EBS RAID-0 array across two gp3 volumes for throughput","Snapshot the volume; restore and verify data","Create an FSx for Windows File Server; mount on Windows EC2; test SMB performance"]},
+{id:23,domain:3,task:"3.2",title:"Lambda performance tuning and concurrency",subtitle:"Elastic serverless compute optimization",diff:"Intermediate",skills:["Lambda","Concurrency","Serverless","Compute optimization","Scaling"],steps:["Create a Lambda function that processes images from S3","Benchmark with 128MB memory: measure duration and cost","Increase memory to 512MB, 1024MB, 3008MB; compare duration (Lambda Power Tuning)","Set Reserved Concurrency to 50 on the function","Set Provisioned Concurrency on a published version; measure cold start elimination","Configure Lambda with VPC access; test performance impact","Use Lambda Destinations for async success/failure routing"]},
+{id:24,domain:3,task:"3.2",title:"EC2 instance type selection and Auto Scaling strategies",subtitle:"Right-sizing compute for workloads",diff:"Intermediate",skills:["EC2 instance types","Auto Scaling","Compute Optimizer","Scaling"],steps:["Deploy a memory-intensive app on m6i.large; monitor memory with CloudWatch agent","Run AWS Compute Optimizer; review recommendations","Switch to r6i instance family; compare performance","Create a mixed-instances ASG with On-Demand base + Spot diversification","Configure target tracking scaling (CPU) + scheduled scaling for peak hours","Test Spot interruption handling with EC2 Spot Interruption Notices","Configure EC2 Hibernate; test resume time vs cold start"]},
+{id:25,domain:3,task:"3.2",title:"EMR cluster for big data processing",subtitle:"Distributed compute for data workloads",diff:"Advanced",skills:["EMR","Batch compute","Distributed computing","Fargate","ECS"],steps:["Create an EMR cluster with master + 2 core nodes + task nodes (Spot)","Upload a 1GB CSV dataset to S3","Run a PySpark job to aggregate and transform the data","Use EMR Auto Scaling to add task nodes during processing","Compare EMR vs AWS Glue for the same transformation task","Run AWS Batch job for a containerized ETL workload","Document when to use EMR vs Glue vs Lambda vs Batch"]},
+{id:26,domain:3,task:"3.3",title:"Aurora with read replicas and ElastiCache",subtitle:"High-performing database with caching",diff:"Intermediate",skills:["Aurora","Read replicas","ElastiCache","Caching strategies","Database performance"],steps:["Create Aurora MySQL cluster with 1 writer + 2 read replicas","Configure Aurora reader endpoint in app for read traffic","Enable Aurora Auto Scaling for read replicas (add on CPU > 70%)","Create ElastiCache Redis cluster (cluster mode disabled)","Implement cache-aside pattern: check Redis → on miss, query Aurora → write to Redis","Measure query latency with and without cache","Enable Aurora Performance Insights; identify slow queries"]},
+{id:27,domain:3,task:"3.3",title:"DynamoDB design, DAX, and global tables",subtitle:"NoSQL at scale with global replication",diff:"Advanced",skills:["DynamoDB","DAX","Global tables","Database capacity","NoSQL"],steps:["Design a DynamoDB table for an e-commerce order system (partition + sort key)","Create a GSI on order_status for query access patterns","Enable DynamoDB DAX cluster; update app to use DAX client","Measure latency improvement: DynamoDB direct vs DAX (microseconds)","Enable DynamoDB Streams; trigger Lambda on new orders","Enable Global Tables across us-east-1 and eu-west-1","Test write in us-east-1; verify replication to eu-west-1 < 1 second"]},
+{id:28,domain:3,task:"3.4",title:"CloudFront CDN with origin groups and caching",subtitle:"Edge acceleration for global users",diff:"Intermediate",skills:["CloudFront","Global Accelerator","Edge networking","CDN","Load balancing"],steps:["Create CloudFront distribution with S3 origin (static assets) and ALB origin (API)","Configure cache behaviors: /api/* → no cache, /* → 1 day TTL","Set up Origin Group with primary ALB and failover ALB","Enable AWS Global Accelerator for the ALB; compare latency to CloudFront","Restrict S3 bucket access using OAC (Origin Access Control)","Enable CloudFront real-time logs to Kinesis Data Firehose","Invalidate cache; measure propagation time"]},
+{id:29,domain:3,task:"3.4",title:"Transit Gateway and multi-VPC hub-spoke networking",subtitle:"Scalable network architecture",diff:"Advanced",skills:["Transit Gateway","VPC peering","PrivateLink","Network topology","Routing"],steps:["Create 3 VPCs: Shared-Services, Dev, Prod (non-overlapping CIDRs)","Create a Transit Gateway; attach all 3 VPCs","Configure TGW route tables: Prod cannot talk to Dev","Test EC2-to-EC2 connectivity across VPCs via TGW","Create a VPC endpoint (PrivateLink) for S3 in each VPC","Simulate on-premises with a VPN attachment to TGW","Measure routing efficiency vs VPC peering mesh (N*(N-1)/2 problem)"]},
+{id:30,domain:3,task:"3.5",title:"Kinesis Data Streams + Firehose + S3 analytics pipeline",subtitle:"Real-time data ingestion and transformation",diff:"Advanced",skills:["Kinesis","Data Firehose","Glue","Athena","Streaming"],steps:["Create Kinesis Data Stream with 4 shards","Write a producer script sending 1000 events/second (simulated IoT data)","Create a Lambda consumer on the stream; transform and enrich events","Create a Kinesis Data Firehose delivery stream → S3 (Parquet format via Glue)","Create Glue Data Catalog table over the S3 data","Query with Athena; calculate average sensor value per hour","Build a QuickSight dashboard on Athena results"]},
+{id:31,domain:3,task:"3.5",title:"AWS Glue ETL + Lake Formation",subtitle:"Data lake build and governance",diff:"Advanced",skills:["Glue","Lake Formation","Athena","Data transformation","Data lake"],steps:["Create a raw S3 zone (CSV) and curated zone (Parquet) for a data lake","Register S3 locations in AWS Lake Formation","Create Glue Crawler to catalog the raw data","Write a Glue ETL job to transform CSV → Parquet and partition by date","Grant Lake Formation permissions: analysts can query curated, not raw","Query curated data with Athena; compare .csv vs .parquet scan performance","Set up Glue DataBrew for visual data preparation on a sample dataset"]},
+{id:32,domain:4,task:"4.1",title:"S3 cost optimization with Intelligent-Tiering and lifecycle",subtitle:"Minimizing storage costs",diff:"Beginner",skills:["S3","Intelligent-Tiering","Lifecycle","Cost management","Storage tiering"],steps:["Create an S3 bucket; upload objects of varying access frequencies","Enable S3 Intelligent-Tiering; observe tier transitions after 30 days (or use S3 console simulation)","Create a lifecycle policy: IA after 30d, Glacier Instant Retrieval after 90d, delete after 2 years","Enable Requester Pays on a bucket; test cost attribution","Use AWS Cost Explorer to see S3 costs by storage class","Enable S3 Storage Lens for organization-wide visibility","Calculate cost savings: standard vs tiered for 10TB dataset"]},
+{id:33,domain:4,task:"4.1",title:"FSx, EFS, and EBS cost comparison lab",subtitle:"Choosing the right storage service for cost",diff:"Intermediate",skills:["FSx","EFS","EBS","Cost analysis","Hybrid storage"],steps:["Create EFS in regional mode and One-Zone mode; compare monthly cost for 1TB","Create FSx for Lustre (scratch); compare to FSx for ONTAP","Create gp2 vs gp3 EBS volumes of same size; calculate cost difference","Use AWS Pricing Calculator to model 3 scenarios: startup, enterprise, archive","Set up AWS DataSync to transfer data from on-premises NFS to EFS","Enable AWS Transfer Family SFTP endpoint backed by S3","Document decision matrix: when to use EBS vs EFS vs S3 vs FSx"]},
+{id:34,domain:4,task:"4.2",title:"Spot Instances, Reserved Instances, and Savings Plans",subtitle:"Compute purchasing strategy for cost optimization",diff:"Intermediate",skills:["Spot Instances","Reserved Instances","Savings Plans","Cost optimization","EC2"],steps:["Launch an On-Demand EC2; note hourly cost","Purchase a 1-year Compute Savings Plan at no-upfront; apply to same instance","Create Spot Fleet with diversified instance types and AZs","Implement Spot interruption handler Lambda (catches 2-minute notice via EventBridge)","Use AWS Compute Optimizer to review RI utilization","Set up AWS Budgets alert at 80% of monthly EC2 budget","Calculate 3-year total cost: On-Demand vs RI vs Savings Plan vs Spot"]},
+{id:35,domain:4,task:"4.2",title:"Serverless vs EC2 cost analysis with Lambda and Fargate",subtitle:"Right compute model for cost efficiency",diff:"Intermediate",skills:["Lambda","Fargate","Cost-optimized compute","Serverless","EC2"],steps:["Deploy a REST API using Lambda + API Gateway; load test 1M requests/month","Deploy same API on EC2 t3.small; run same load","Compare costs: Lambda (pay-per-request) vs EC2 (always-on)","Deploy same on Fargate with ECS; compare to both","Use AWS Cost and Usage Report to analyze charges by service","Run AWS Compute Optimizer on EC2s; apply rightsizing recommendation","Document breakeven point: when EC2 becomes cheaper than Lambda"]},
+{id:36,domain:4,task:"4.3",title:"RDS cost optimization: instance sizing, Aurora Serverless, reserved",subtitle:"Database cost controls",diff:"Intermediate",skills:["RDS","Aurora Serverless","Reserved Instances","Database cost","Caching"],steps:["Create RDS db.t3.medium; review CloudWatch CPU and connection metrics","Purchase RDS Reserved Instance (1-year, no-upfront) for same configuration","Create Aurora Serverless v2 for dev/test workload; observe ACU scaling","Enable ElastiCache Redis to offload reads from RDS; measure RDS cost impact","Set Aurora cluster to stop during off-hours via EventBridge + Lambda","Use AWS Cost Explorer groupBy:RDS to identify cost drivers","Delete and recreate RDS snapshots to understand storage billing"]},
+{id:37,domain:4,task:"4.3",title:"DynamoDB cost optimization: on-demand vs provisioned + TTL",subtitle:"NoSQL cost controls",diff:"Intermediate",skills:["DynamoDB","TTL","Cost management","Capacity planning","Caching"],steps:["Create DynamoDB table in On-Demand mode; run load test","Switch to Provisioned mode with Auto Scaling; compare costs at same workload","Enable DynamoDB TTL on a session table; observe automatic item expiry","Enable DynamoDB table class: Standard vs Standard-Infrequent Access (for rarely read data)","Use DynamoDB capacity calculator to size provisioned capacity","Add DAX cache for read-heavy workload; calculate DynamoDB read unit savings","Enable point-in-time recovery; understand backup storage costs"]},
+{id:38,domain:4,task:"4.4",title:"NAT Gateway cost optimization and VPC endpoint savings",subtitle:"Minimizing data transfer costs in networks",diff:"Intermediate",skills:["NAT Gateway","VPC endpoints","Cost-optimized networking","Data transfer"],steps:["Launch EC2 in private subnet using NAT Gateway; simulate S3 downloads","Create VPC Gateway Endpoint for S3; verify traffic no longer goes through NAT","Measure NAT Gateway cost reduction (no per-GB charge through endpoint)","Create Interface Endpoint for SSM; verify EC2 SSM access without NAT","Compare cost: single shared NAT Gateway vs per-AZ NAT Gateways","Use AWS Cost and Usage Report to find top data transfer charges","Document: NatGateway-Hours vs NatGateway-Bytes pricing components"]},
+{id:39,domain:4,task:"4.4",title:"Direct Connect vs VPN cost and bandwidth planning",subtitle:"Network connectivity cost optimization",diff:"Advanced",skills:["Direct Connect","VPN","Network cost","Bandwidth","Transit Gateway"],steps:["Set up AWS Site-to-Site VPN (simulated); note per-connection-hour cost","Price a Direct Connect 1Gbps hosted connection in AWS Pricing Calculator","Calculate break-even: at what data volume does DX become cheaper than VPN + internet egress","Create Transit Gateway with VPN attachment; calculate TGW data processing fee","Configure VPC peering (free within same AZ) vs cross-AZ transfer (charged)","Use AWS Global Accelerator; compare cost to CloudFront for API traffic","Document: egress pricing by region; identify cheapest egress region for your workload"]},
+{id:40,domain:4,task:"4.4",title:"CloudFront cost optimization and CDN strategy",subtitle:"Reducing data transfer costs with edge caching",diff:"Intermediate",skills:["CloudFront","CDN","Cost optimization","Edge caching","Network"],steps:["Deploy app without CloudFront; measure monthly data transfer cost from ALB","Add CloudFront distribution; configure cache TTLs aggressively for static assets","Measure cache hit ratio in CloudFront metrics (aim for >80%)","Use CloudFront Price Class to limit to cheapest edge locations","Compare CloudFront vs Global Accelerator pricing for your traffic pattern","Set up origin shield to reduce requests hitting origin","Calculate total savings: before vs after CloudFront for 10TB/month workload"]}
+];
+
+let currentDomain='all',currentDiff='all',completed=new Set();
+const domColors={1:'t-domain1',2:'t-domain2',3:'t-domain3',4:'t-domain4'};
+const diffClass={Beginner:'d-beginner',Intermediate:'d-intermediate',Advanced:'d-advanced'};
+
+function updateStats(){
+  const visible=projects.filter(p=>matchFilter(p));
+  const done=[...completed].filter(id=>matchFilter(projects.find(p=>p.id===id))).length;
+  document.getElementById('s-done').textContent=done;
+  document.getElementById('s-total').textContent=visible.length;
+  document.getElementById('s-pct').textContent=visible.length?Math.round(done/visible.length*100)+'%':'0%';
+  const domains=new Set([...completed].map(id=>projects.find(p=>p.id===id)?.domain).filter(Boolean));
+  document.getElementById('s-dom').textContent=domains.size+'/4';
+  document.getElementById('prog').style.width=(visible.length?done/visible.length*100:0)+'%';
+}
+
+function matchFilter(p){
+  if(!p)return false;
+  const dOk=currentDomain==='all'||p.domain===currentDomain;
+  const diffOk=currentDiff==='all'||p.diff===currentDiff;
+  return dOk&&diffOk;
+}
+
+function filterDomain(d){
+  currentDomain=d;
+  document.querySelectorAll('.domain-tabs .tab').forEach((t,i)=>{
+    t.classList.toggle('active',i===(d==='all'?0:d));
+  });
+  render();
+}
+function filterDiff(d){
+  currentDiff=d;
+  document.querySelectorAll('.filter-btn').forEach(b=>{
+    b.classList.toggle('active',b.textContent.trim()===(d==='all'?'All':d));
+  });
+  render();
+}
+
+function toggle(id){
+  if(completed.has(id))completed.delete(id);else completed.add(id);
+  const check=document.getElementById('chk-'+id);
+  check.classList.toggle('done',completed.has(id));
+  check.innerHTML=completed.has(id)?'<i class="ti ti-check"></i>':'';
+  updateStats();
+}
+
+function expand(id){
+  const body=document.getElementById('body-'+id);
+  const icon=document.getElementById('icon-'+id);
+  const open=body.classList.toggle('open');
+  icon.style.transform=open?'rotate(180deg)':'';
+}
+
+function render(){
+  const list=document.getElementById('project-list');
+  const filtered=projects.filter(matchFilter);
+  list.innerHTML=filtered.map((p,i)=>`
+<div class="project">
+  <div class="project-header" onclick="expand(${p.id})">
+    <div class="check ${completed.has(p.id)?'done':''}" id="chk-${p.id}" onclick="event.stopPropagation();toggle(${p.id})">${completed.has(p.id)?'<i class="ti ti-check"></i>':''}</div>
+    <span class="proj-num">${String(i+1).padStart(2,'0')}</span>
+    <div class="proj-content">
+      <div class="proj-title">${p.title}</div>
+      <div class="proj-subtitle">${p.subtitle}</div>
+      <div class="tags">
+        <span class="tag ${domColors[p.domain]}">Domain ${p.domain} · Task ${p.task}</span>
+        ${p.skills.slice(0,2).map(s=>`<span class="tag t-skill">${s}</span>`).join('')}
+      </div>
+    </div>
+    <span class="difficulty ${diffClass[p.diff]}">${p.diff}</span>
+    <i class="ti ti-chevron-down expand-icon" id="icon-${p.id}" aria-hidden="true"></i>
+  </div>
+  <div class="project-body" id="body-${p.id}">
+    <div class="body-section">
+      <div class="body-label">Steps</div>
+      <ul class="steps">${p.steps.map(s=>`<li>${s}</li>`).join('')}</ul>
+    </div>
+    <div class="body-section">
+      <div class="body-label">Skills gained</div>
+      <div class="skills-grid">${p.skills.map(s=>`<span class="skill-badge">${s}</span>`).join('')}</div>
+    </div>
+    <button class="ask-btn" onclick="sendPrompt('Give me a detailed step-by-step guide for the AWS micro-project: ${p.title}')">Get detailed guide for this project ↗</button>
+  </div>
+</div>`).join('');
+  updateStats();
+}
+
+render();
+</script>

@@ -1,0 +1,786 @@
+
+<h2 class="sr-only">DVA-C02 Full Skill Coverage Tracker — every exam skill mapped to a hands-on micro project</h2>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg-base: #0B0F19;
+  --bg-surface: #151B2B;
+  --bg-surface-hover: #1E2638;
+  --bg-card: #111623;
+  --text-primary: #F1F5F9;
+  --text-secondary: #94A3B8;
+  --text-tertiary: #64748B;
+  --accent-blue: #3B82F6;
+  --accent-green: #10B981;
+  --accent-yellow: #F59E0B;
+  --accent-purple: #8B5CF6;
+  --danger: #EF4444;
+  --border-dim: rgba(255, 255, 255, 0.08);
+  --border-active: rgba(255, 255, 255, 0.16);
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --radius-lg: 16px;
+  --radius-md: 12px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg-base); color: var(--text-primary); font-family: var(--font-sans); line-height: 1.6; font-size: 16px; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border-width: 0; }
+.wrap { max-width: 1800px; margin: 0 auto; padding: 2rem 3rem; }
+.topbar { margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border-dim); }
+.topbar h1 { font-size: 2.2rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+.topbar p { font-size: 1.1rem; color: var(--text-secondary); }
+
+/* Dashboard Grid */
+.dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
+.metric-card { background: var(--bg-card); border: 1px solid var(--border-dim); border-radius: var(--radius-lg); padding: 1.5rem; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+.metric-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; }
+.metric-card.m-blue::before { background: var(--accent-blue); }
+.metric-card.m-green::before { background: var(--accent-green); }
+.metric-card.m-purple::before { background: var(--accent-purple); }
+.metric-card.m-yellow::before { background: var(--accent-yellow); }
+
+.m-title { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-secondary); font-weight: 600; margin-bottom: 0.5rem; }
+.m-value { font-size: 2.5rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.25rem; }
+.m-desc { font-size: 0.9rem; color: var(--text-tertiary); margin-top: auto; padding-top: 0.5rem; border-top: 1px solid var(--border-dim); }
+
+/* Controls */
+.controls { display: flex; gap: 12px; margin-bottom: 2rem; flex-wrap: wrap; align-items: center; background: var(--bg-surface); padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border-dim); }
+.controls span { font-size: 1rem; color: var(--text-secondary); font-weight: 500; margin-right: 8px; }
+.fb, .rst { font-size: 0.95rem; padding: 8px 18px; border-radius: 20px; border: 1px solid var(--border-dim); background: transparent; cursor: pointer; color: var(--text-secondary); font-family: inherit; font-weight: 500; transition: all 0.2s; }
+.fb:hover, .rst:hover { background: var(--bg-surface-hover); color: var(--text-primary); }
+.fb.on { background: var(--accent-blue); color: #fff; border-color: var(--accent-blue); box-shadow: 0 0 15px rgba(59, 130, 246, 0.3); }
+.rst { margin-left: auto; color: var(--accent-yellow); border-color: rgba(245, 158, 11, 0.3); }
+
+/* Domains */
+.domain { margin-bottom: 2rem; background: var(--bg-surface); border: 1px solid var(--border-dim); border-radius: var(--radius-lg); overflow: hidden; }
+.dhead { padding: 1.5rem; display: flex; align-items: center; gap: 1.25rem; cursor: pointer; user-select: none; transition: background 0.2s; }
+.dhead:hover { background: var(--bg-surface-hover); }
+.dtag { font-size: 0.9rem; font-weight: 600; padding: 4px 12px; border-radius: 12px; white-space: nowrap; }
+.dtitle { font-size: 1.3rem; font-weight: 600; color: var(--text-primary); flex: 1; }
+.dprog { font-size: 1.1rem; color: var(--text-secondary); font-weight: 500; background: rgba(255,255,255,0.05); padding: 4px 12px; border-radius: 12px; }
+.dchev { font-size: 1.2rem; color: var(--text-secondary); transition: transform 0.3s; }
+.dchev.open { transform: rotate(180deg); }
+
+.pbar-wrap { height: 4px; background: rgba(255,255,255,0.05); }
+.pbar { height: 100%; transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+
+.task-group { border-top: 1px solid var(--border-dim); }
+.tg-header { padding: 1rem 1.5rem; background: rgba(0,0,0,0.2); font-size: 0.95rem; font-weight: 600; color: var(--text-secondary); letter-spacing: 0.05em; text-transform: uppercase; }
+
+/* Project Rows */
+.proj { padding: 1.5rem; border-top: 1px solid var(--border-dim); display: flex; gap: 1.5rem; transition: background 0.2s; align-items: flex-start; }
+.proj:hover { background: var(--bg-surface-hover); }
+.proj.s-done { background: rgba(16, 185, 129, 0.03); }
+.proj.s-progress { background: rgba(59, 130, 246, 0.03); border-left: 3px solid var(--accent-blue); }
+
+.p-actions { display: flex; flex-direction: column; gap: 10px; min-width: 140px; }
+.btn-act { font-family: inherit; font-size: 0.9rem; font-weight: 600; padding: 10px; border-radius: 8px; border: 1px solid transparent; cursor: pointer; transition: all 0.2s; text-align: center; }
+.btn-start { background: rgba(59, 130, 246, 0.1); color: var(--accent-blue); border-color: rgba(59, 130, 246, 0.2); }
+.btn-start:hover { background: rgba(59, 130, 246, 0.2); }
+.btn-done { background: rgba(16, 185, 129, 0.1); color: var(--accent-green); border-color: rgba(16, 185, 129, 0.2); }
+.btn-done:hover { background: rgba(16, 185, 129, 0.2); }
+.btn-reset { background: rgba(239, 68, 68, 0.1); color: var(--danger); border-color: rgba(239, 68, 68, 0.2); }
+.btn-reset:hover { background: rgba(239, 68, 68, 0.2); }
+
+.pbody { flex: 1; min-width: 0; }
+.prow { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
+.ptitle { font-size: 1.25rem; font-weight: 600; color: var(--text-primary); }
+.proj.s-done .ptitle { text-decoration: line-through; color: var(--text-secondary); }
+.skill-tag { font-size: 0.85rem; padding: 4px 10px; border-radius: 12px; background: rgba(255,255,255,0.08); color: var(--text-secondary); }
+.diff { font-size: 0.85rem; padding: 4px 10px; border-radius: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+.e { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+.m { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+.h { background: rgba(239, 68, 68, 0.15); color: #f87171; }
+.pdesc { font-size: 1.05rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px; }
+.psvc { font-size: 0.95rem; color: var(--text-tertiary); display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; background: rgba(255,255,255,0.03); border-radius: 8px; }
+
+.pmeta { display: flex; gap: 1.5rem; margin-top: 16px; font-size: 0.9rem; color: var(--text-tertiary); border-top: 1px dashed var(--border-dim); padding-top: 12px; }
+.pmeta span { display: flex; align-items: center; gap: 6px; }
+.pmeta strong { color: var(--text-secondary); font-weight: 500; }
+
+.d1 .dtag { background: rgba(59, 130, 246, 0.2); color: #60a5fa; } .d1 .pbar { background: #3b82f6; }
+.d2 .dtag { background: rgba(239, 68, 68, 0.2); color: #f87171; } .d2 .pbar { background: #ef4444; }
+.d3 .dtag { background: rgba(16, 185, 129, 0.2); color: #34d399; } .d3 .pbar { background: #10b981; }
+.d4 .dtag { background: rgba(245, 158, 11, 0.2); color: #fbbf24; } .d4 .pbar { background: #f59e0b; }
+
+.empty { padding: 2rem; text-align: center; font-size: 1.1rem; color: var(--text-tertiary); }
+
+/* Video Game Animations */
+@keyframes flashStart {
+  0% { transform: scale(1); box-shadow: 0 0 0 rgba(59, 130, 246, 0); }
+  50% { transform: scale(1.02); box-shadow: 0 0 30px rgba(59, 130, 246, 0.8); background: rgba(59, 130, 246, 0.1); border-color: var(--accent-blue); z-index: 10; }
+  100% { transform: scale(1); box-shadow: 0 0 0 rgba(59, 130, 246, 0); }
+}
+
+@keyframes flashComplete {
+  0% { transform: scale(1); box-shadow: 0 0 0 rgba(16, 185, 129, 0); filter: brightness(1); }
+  50% { transform: scale(1.05); box-shadow: 0 0 50px rgba(16, 185, 129, 1); filter: brightness(1.5); background: rgba(16, 185, 129, 0.2); border-color: var(--accent-green); z-index: 10; }
+  100% { transform: scale(1); box-shadow: 0 0 0 rgba(16, 185, 129, 0); filter: brightness(1); }
+}
+
+.anim-start { animation: flashStart 0.8s ease-out forwards; position: relative; }
+.anim-complete { animation: flashComplete 1s ease-out forwards; position: relative; }
+
+/* Achievement Toast */
+.achievement {
+  position: fixed;
+  bottom: -100px;
+  right: 20px;
+  background: var(--bg-card);
+  border: 2px solid var(--accent-yellow);
+  padding: 15px 25px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.5), inset 0 0 10px rgba(245,158,11,0.2);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  z-index: 9999;
+  transition: bottom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.achievement.show { bottom: 20px; }
+.ach-icon { font-size: 2.5rem; text-shadow: 0 0 10px rgba(245,158,11,0.8); }
+.ach-text { color: var(--accent-yellow); font-weight: 800; text-transform: uppercase; letter-spacing: 2px; font-size: 1.1rem; }
+.ach-sub { font-size: 0.8rem; color: var(--text-primary); font-weight: normal; margin-top: 4px; letter-spacing: normal; text-transform: none; }
+
+/* SDE Lifecycle UI */
+.stage-bar { display: flex; gap: 4px; margin-bottom: 12px; margin-top: 14px; }
+.stage { flex: 1; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; position: relative; overflow: hidden; }
+.stage-fill { position: absolute; top:0; left:0; height: 100%; background: var(--accent-blue); width: 0%; transition: width 0.3s; }
+.stage.active .stage-fill { width: 100%; background: var(--accent-yellow); animation: pulseStage 1.5s infinite; }
+.stage.done .stage-fill { width: 100%; background: var(--accent-green); }
+
+@keyframes pulseStage { 0% { opacity: 0.7; } 50% { opacity: 1; } 100% { opacity: 0.7; } }
+
+.live-timer { font-family: monospace; font-size: 1.1rem; color: var(--accent-yellow); background: rgba(245,158,11,0.1); padding: 4px 8px; border-radius: 6px; display: inline-flex; align-items: center; gap: 6px; border: 1px solid rgba(245,158,11,0.3); }
+.live-timer.t-planning { color: #a78bfa; background: rgba(167,139,250,0.1); border-color: rgba(167,139,250,0.3); }
+.live-timer.t-coding { color: #60a5fa; background: rgba(96,165,250,0.1); border-color: rgba(96,165,250,0.3); }
+.live-timer.t-testing { color: #f472b6; background: rgba(244,114,182,0.1); border-color: rgba(244,114,182,0.3); }
+
+.archetype { text-align: center; margin-top: 10px; font-weight: 600; font-size: 1.1rem; color: #a78bfa; text-transform: uppercase; letter-spacing: 2px; }
+
+.btn-plan { background: rgba(167,139,250,0.1); color: #a78bfa; border-color: rgba(167,139,250,0.3); }
+.btn-code { background: rgba(96,165,250,0.1); color: #60a5fa; border-color: rgba(96,165,250,0.3); }
+.btn-test { background: rgba(244,114,182,0.1); color: #f472b6; border-color: rgba(244,114,182,0.3); }
+
+.btn-break { background: rgba(245,158,11,0.1); color: var(--accent-yellow); border-color: rgba(245,158,11,0.3); }
+.btn-resume { background: rgba(16,185,129,0.1); color: var(--accent-green); border-color: rgba(16,185,129,0.3); }
+.live-timer.paused { border-style: dashed; opacity: 0.8; }
+</style>
+
+<div class="wrap">
+<div class="topbar">
+  <h1><i class="ti ti-flask" aria-hidden="true"></i> DVA-C02 full skill coverage tracker</h1>
+  <p>Every skill (1.1.x → 4.3.x) mapped to a hands-on project · check off as you build</p>
+</div>
+<div id="dashboard-root"></div>
+
+<div class="controls">
+  <span>Filter Projects:</span>
+  <button class="fb on" onclick="filt('all',this)">All</button>
+  <button class="fb" onclick="filt('todo',this)">To-do</button>
+  <button class="fb" onclick="filt('progress',this)">In Progress</button>
+  <button class="fb" onclick="filt('done',this)">Completed</button>
+  <button class="fb" onclick="filt('hard',this)">Hard Only</button>
+  <button class="fb" style="margin-left:auto; color:var(--accent-green); border-color:rgba(16,185,129,0.3);" onclick="exportData()">💾 Save Game (Local DB)</button>
+  <button class="fb" style="color:var(--accent-purple); border-color:rgba(139,92,246,0.3);" onclick="document.getElementById('importFile').click()">📂 Load Game (Import)</button>
+  <input type="file" id="importFile" style="display:none" onchange="importData(event)" accept=".json">
+  <button class="fb" style="color:var(--danger); border-color:rgba(239,68,68,0.3);" onclick="resetAll()">⟳ Reset All</button>
+</div>
+<div id="root"></div>
+</div>
+
+<script>
+const DATA=[
+{id:'d1',cls:'d1',tag:'Domain 1 · 32%',title:'Development with AWS Services',tasks:[
+  {name:'Task 1 · Develop code for applications hosted on AWS',projects:[
+    {id:'p101',skill:'1.1.1',title:'Architectural patterns deep-dive app',diff:'m',desc:'Build 4 mini-apps: monolithic CRUD, microservices via SQS, choreography with EventBridge, and fan-out with SNS. Compare patterns by drawing them after building.',svc:'Lambda · SQS · SNS · EventBridge · API Gateway'},
+    {id:'p102',skill:'1.1.2',title:'Stateful vs stateless login service',diff:'m',desc:'Implement a session-based login (state in server memory) then rebuild it stateless using JWT + ElastiCache. Scale each horizontally and observe behavior differences.',svc:'Lambda · ElastiCache · Cognito · API Gateway'},
+    {id:'p103',skill:'1.1.3',title:'Tight vs loose coupling refactor',diff:'m',desc:'Start with two Lambda functions calling each other directly (tight). Refactor to use SQS between them (loose). Break one and observe how each coupling handles the failure.',svc:'Lambda · SQS · API Gateway'},
+    {id:'p104',skill:'1.1.4',title:'Sync vs async API experiment',diff:'e',desc:'Build the same file-processing API twice — synchronous (waits for result) and async (returns jobId immediately, polls). Benchmark both under load.',svc:'API Gateway · Lambda · S3 · SQS'},
+    {id:'p105',skill:'1.1.5',title:'Fault-tolerant order processing service',diff:'h',desc:'Write an order processor in Python/Node. Add retry logic, idempotency keys, dead-letter queue fallback, and circuit-breaker via SSM flag. Force failures and verify recovery.',svc:'Lambda · SQS · DynamoDB · SSM · CloudWatch'},
+    {id:'p106',skill:'1.1.6',title:'API Gateway with full request/response transform',diff:'m',desc:'Create REST API with mapping templates (VTL) that transform request body, add headers, rename fields. Add input validator with JSON Schema model. Override 400/500 responses.',svc:'API Gateway · Lambda · JSON Schema'},
+    {id:'p107',skill:'1.1.7',title:'SAM local unit testing suite',diff:'e',desc:'Write a Lambda with 3 handlers. Create SAM template. Write unit tests with mocked AWS SDK calls. Run sam local invoke with JSON event files for each path.',svc:'AWS SAM · Lambda · Python/Node'},
+    {id:'p108',skill:'1.1.8',title:'Full messaging patterns lab',diff:'h',desc:'Build: SNS→SQS fan-out, SQS FIFO with deduplication, EventBridge custom bus with pattern matching, and Step Functions wait-for-callback with SQS. One project, four patterns.',svc:'SNS · SQS FIFO · EventBridge · Step Functions'},
+    {id:'p109',skill:'1.1.9',title:'AWS SDK multi-service orchestrator',diff:'m',desc:'Write a Lambda that chains: S3 GetObject → Textract DetectText → DynamoDB PutItem → SNS Publish. Use SDK v3 with proper error handling per service call.',svc:'Lambda · S3 · DynamoDB · SNS · SDK v3'},
+    {id:'p110',skill:'1.1.10',title:'Kinesis streaming ETL pipeline',diff:'h',desc:'Producer emits 1000 records/sec to Kinesis. Lambda consumer transforms each record (parse JSON, enrich, filter nulls), writes to S3 via batching. Handle shard splits.',svc:'Kinesis Data Streams · Lambda · S3 · CloudWatch'},
+    {id:'p111',skill:'1.1.11',title:'Amazon Q Developer-assisted feature build',diff:'e',desc:'Use Q Developer in VS Code to: generate a Lambda from a comment description, explain legacy code, write docstrings, and suggest security fixes. Document each Q interaction.',svc:'Amazon Q Developer · Lambda · VS Code'},
+    {id:'p112',skill:'1.1.12',title:'EventBridge event-driven notification hub',diff:'m',desc:'Build custom EventBridge bus. Define 3 event patterns (order.created, order.shipped, order.failed). Route each to different targets (Lambda, SQS, SNS). Test with put-events CLI.',svc:'EventBridge · Lambda · SQS · SNS · CLI'},
+    {id:'p113',skill:'1.1.13',title:'Resilient third-party API integration',diff:'h',desc:'Call a public REST API from Lambda. Implement: exponential backoff retry (3 attempts), circuit-breaker using SSM parameter, dead-letter on final failure, and structured error logging.',svc:'Lambda · SSM · SQS · CloudWatch'},
+  ]},
+  {name:'Task 2 · Develop code for AWS Lambda',projects:[
+    {id:'p201',skill:'1.2.1',title:'Lambda accessing RDS inside VPC',diff:'m',desc:'Deploy Lambda into a VPC private subnet. Access an RDS MySQL instance (also private). Configure security groups, NAT Gateway for internet, and VPC endpoints for S3.',svc:'Lambda · VPC · RDS · NAT Gateway · VPC Endpoints'},
+    {id:'p202',skill:'1.2.2',title:'Lambda configuration master lab',diff:'m',desc:'Create 6 Lambda variants: different memory (128→3008MB), timeouts, runtimes (Python, Node, Go), custom handler paths, layers, and destinations. Document behavior of each knob.',svc:'Lambda · Lambda Layers · CloudWatch'},
+    {id:'p203',skill:'1.2.3',title:'Lambda error lifecycle with destinations',diff:'m',desc:'Lambda that randomly fails. Configure: on-success destination (SNS), on-failure destination (SQS), DLQ for async invocations. Test all paths and verify message routing.',svc:'Lambda · SNS · SQS · CloudWatch'},
+    {id:'p204',skill:'1.2.4',title:'Lambda testing with SAM + TestContainers',diff:'m',desc:'Write Lambda with DynamoDB integration. Test locally using sam local + DynamoDB Local via Docker. Write integration tests against local stack before deploying.',svc:'AWS SAM · Lambda · DynamoDB Local · Docker'},
+    {id:'p205',skill:'1.2.5',title:'Lambda multi-service integration map',diff:'h',desc:'One Lambda function integrated with: API Gateway (sync), SQS (poll), Kinesis (stream), DynamoDB Streams, S3 events, EventBridge, and SNS. Build all 7 trigger types.',svc:'Lambda · API GW · SQS · Kinesis · DynamoDB · S3 · EventBridge'},
+    {id:'p206',skill:'1.2.6',title:'Lambda performance tuning lab',diff:'m',desc:'Profile a Lambda with X-Ray. Test provisioned concurrency vs on-demand. Use Lambda Power Tuning to find optimal memory. Compare cold starts across memory configs.',svc:'Lambda · X-Ray · CloudWatch · Lambda Power Tuning'},
+    {id:'p207',skill:'1.2.7',title:'Real-time data transform with Lambda + Kinesis',diff:'h',desc:'IoT sensor simulator pushes JSON to Kinesis. Lambda reads in batches, parses, computes rolling averages, detects anomalies, writes cleaned data to S3 partitioned by date/hour.',svc:'Kinesis · Lambda · S3 · CloudWatch'},
+  ]},
+  {name:'Task 3 · Use data stores in application development',projects:[
+    {id:'p301',skill:'1.3.1',title:'DynamoDB partition key design experiment',diff:'h',desc:'Create 3 tables with bad (low-cardinality), medium, and good (high-cardinality) partition keys. Load test all 3. Observe throttling, hot partitions, and CloudWatch metrics.',svc:'DynamoDB · Lambda · CloudWatch'},
+    {id:'p302',skill:'1.3.2',title:'Consistency models comparison',diff:'m',desc:'Write code that reads DynamoDB with strongly consistent vs eventually consistent reads. Under concurrent writes, capture the difference. Also compare Aurora read replicas.',svc:'DynamoDB · Aurora · Lambda'},
+    {id:'p303',skill:'1.3.3',title:'DynamoDB query vs scan performance test',diff:'m',desc:'Load 100k items. Run query (with partition key) vs scan (full table) for the same result. Measure consumed capacity units, latency, and cost difference.',svc:'DynamoDB · Lambda · CloudWatch'},
+    {id:'p304',skill:'1.3.4',title:'DynamoDB keys and indexes deep-dive',diff:'h',desc:'Design a table with PK+SK, GSI (for alternate query pattern), and LSI (for range sort). Write queries that use each. Understand projection types (KEYS_ONLY, INCLUDE, ALL).',svc:'DynamoDB · Lambda · SDK'},
+    {id:'p305',skill:'1.3.5',title:'Serialization formats lab',diff:'m',desc:'Store the same object in DynamoDB as: raw JSON string, DynamoDB JSON (marshalled), binary (gzip+base64), and using DynamoDB DocumentClient. Compare size and query-ability.',svc:'DynamoDB · Lambda · S3'},
+    {id:'p306',skill:'1.3.6',title:'Multi-store CRUD application',diff:'h',desc:'Build a product catalog app using: DynamoDB (metadata), S3 (images), ElastiCache (hot items cache), RDS Aurora (relational queries). Each store for what it does best.',svc:'DynamoDB · S3 · ElastiCache · Aurora · Lambda'},
+    {id:'p307',skill:'1.3.7',title:'Data lifecycle automation',diff:'m',desc:'S3 lifecycle rule: Standard→IA→Glacier→Delete. DynamoDB TTL to auto-expire sessions. Lambda that archives old DynamoDB items to S3 via DynamoDB Streams.',svc:'S3 · DynamoDB TTL · Lambda · DynamoDB Streams'},
+    {id:'p308',skill:'1.3.8',title:'ElastiCache caching strategy lab',diff:'h',desc:'Implement cache-aside, write-through, and read-through caching patterns with ElastiCache Redis. Measure hit rates and latency for each. Test TTL expiry behavior.',svc:'ElastiCache Redis · Lambda · DynamoDB · CloudWatch'},
+    {id:'p309',skill:'1.3.9',title:'OpenSearch log search and analytics',diff:'h',desc:'Stream Lambda logs to OpenSearch via subscription filter. Index documents. Build queries: full-text search, aggregations, date-range filter. Create a dashboard in OpenSearch.',svc:'OpenSearch · Lambda · CloudWatch Logs · Kinesis Firehose'},
+  ]}
+]},
+{id:'d2',cls:'d2',tag:'Domain 2 · 26%',title:'Security',tasks:[
+  {name:'Task 1 · Implement authentication and/or authorization',projects:[
+    {id:'p401',skill:'2.1.1',title:'Cognito federated identity with Google',diff:'h',desc:'Set up Cognito User Pool with Google as federated IdP. Exchange Google OAuth token for Cognito JWT. Use identity pool to get temporary AWS credentials for S3 access.',svc:'Cognito · IAM · S3 · API Gateway'},
+    {id:'p402',skill:'2.1.2',title:'Bearer token authorizer lab',diff:'m',desc:'Build Lambda authorizer that validates Bearer JWT (both Cognito and custom HMAC-signed). Return IAM Allow/Deny policy. Test with expired, invalid, and valid tokens.',svc:'API Gateway · Lambda · Cognito · JWT'},
+    {id:'p403',skill:'2.1.3',title:'Programmatic AWS access patterns',diff:'m',desc:'Configure 4 access methods: IAM user access keys (bad practice demo), EC2 instance role, Lambda execution role, and CLI with named profile. Compare security of each.',svc:'IAM · EC2 · Lambda · CLI · STS'},
+    {id:'p404',skill:'2.1.4',title:'Authenticated AWS SDK calls from Lambda',diff:'e',desc:'Lambda calls S3, DynamoDB, Secrets Manager, and SSM using its execution role. Add explicit SigV4 signing for one raw HTTP call. Understand how SDK handles auth automatically.',svc:'Lambda · IAM · S3 · DynamoDB · SSM'},
+    {id:'p405',skill:'2.1.5',title:'Cross-account role assumption',diff:'h',desc:'Two AWS accounts. Account A Lambda assumes a role in Account B via STS AssumeRole. Uses temporary credentials to read S3 and write DynamoDB in Account B. Handle MFA session.',svc:'IAM · STS · S3 · Lambda'},
+    {id:'p406',skill:'2.1.6',title:'IAM policy authoring deep-dive',diff:'m',desc:'Write policies for: S3 prefix-restricted access, DynamoDB row-level, Lambda invocation-only, and deny-unless-MFA. Test each with IAM Policy Simulator and real calls.',svc:'IAM · S3 · DynamoDB · Lambda · Policy Simulator'},
+    {id:'p407',skill:'2.1.7',title:'Fine-grained authorization with ABAC',diff:'h',desc:'Attribute-based access control: tag resources (env=prod/dev). Write IAM policies that use aws:RequestedRegion and resource tags as conditions. Test cross-environment access denial.',svc:'IAM · DynamoDB · S3 · STS · Lambda'},
+    {id:'p408',skill:'2.1.8',title:'Cross-service auth in microservices',diff:'h',desc:'3 Lambda microservices. Service A calls B (uses STS AssumeRole). B calls C (uses Cognito identity pool). Implement token passing, role chaining, and audit trail in CloudTrail.',svc:'Lambda · STS · Cognito · CloudTrail · API Gateway'},
+  ]},
+  {name:'Task 2 · Implement encryption by using AWS services',projects:[
+    {id:'p501',skill:'2.2.1',title:'Encryption at rest and in transit audit',diff:'m',desc:'Enable: S3 SSE-KMS, DynamoDB encryption, RDS encryption, EBS encryption, ElastiCache in-transit TLS. Use CloudTrail to verify all data paths. Document what\'s automatic vs manual.',svc:'S3 · KMS · DynamoDB · RDS · EBS · ElastiCache'},
+    {id:'p502',skill:'2.2.2',title:'ACM certificate lifecycle',diff:'e',desc:'Request public cert via ACM DNS validation. Attach to ALB and API Gateway custom domain. Request private cert via AWS Private CA. Understand renewal and revocation.',svc:'ACM · Private CA · ALB · API Gateway · Route 53'},
+    {id:'p503',skill:'2.2.3',title:'Client-side vs server-side encryption',diff:'h',desc:'Encrypt an object client-side (AES-256 in Lambda using KMS data key), store in S3. Also store same object with S3 SSE-KMS. Compare: who holds keys, where decryption happens.',svc:'S3 · KMS · Lambda · CloudTrail'},
+    {id:'p504',skill:'2.2.4',title:'KMS full encryption workflow',diff:'m',desc:'GenerateDataKey → encrypt payload locally → store ciphertext. On read: decrypt data key with KMS → decrypt payload. Test with both CMK and AWS-managed keys.',svc:'KMS · Lambda · S3 · DynamoDB'},
+    {id:'p505',skill:'2.2.5',title:'SSH key and certificate generation for dev',diff:'e',desc:'Generate RSA and ED25519 SSH key pairs. Use AWS Systems Manager Session Manager as SSH-less access. Generate self-signed cert with OpenSSL for local dev. Import to ACM.',svc:'EC2 · Systems Manager · ACM · OpenSSL'},
+    {id:'p506',skill:'2.2.6',title:'Cross-account KMS encryption',diff:'h',desc:'KMS key in Account A with key policy allowing Account B. Lambda in Account B encrypts/decrypts using Account A\'s key ARN. Test permission boundaries and grant tokens.',svc:'KMS · Lambda · IAM · STS'},
+    {id:'p507',skill:'2.2.7',title:'KMS key rotation management',diff:'e',desc:'Create CMK with auto-rotation enabled (annual). Observe how AWS handles old key versions for decryption. Manually rotate and verify old ciphertexts still decrypt correctly.',svc:'KMS · CloudTrail · Lambda'},
+  ]},
+  {name:'Task 3 · Manage sensitive data in application code',projects:[
+    {id:'p601',skill:'2.3.1',title:'PII and PHI data classification system',diff:'m',desc:'Build a Lambda that scans incoming user records, identifies PII fields (email, SSN, phone) and PHI fields (diagnosis, DOB), tags DynamoDB items with classification level.',svc:'Lambda · DynamoDB · Macie · CloudWatch'},
+    {id:'p602',skill:'2.3.2',title:'Lambda env var encryption with KMS',diff:'e',desc:'Store DB password as Lambda env var encrypted with KMS CMK. Decrypt in handler using SDK. Compare with storing in Secrets Manager. Understand when each is appropriate.',svc:'Lambda · KMS · Secrets Manager'},
+    {id:'p603',skill:'2.3.3',title:'Secrets Manager full lifecycle',diff:'m',desc:'Store RDS credentials in Secrets Manager. Write Lambda rotation function. Enable automatic rotation (7-day). Use GetSecretValue in app. Test secret access from ECS task.',svc:'Secrets Manager · Lambda · RDS · ECS'},
+    {id:'p604',skill:'2.3.4',title:'Input sanitization middleware',diff:'m',desc:'API Gateway + Lambda that sanitizes: HTML injection, SQL special chars, oversized payloads, null bytes. Add WAF rules as first layer. Log all sanitization actions.',svc:'API Gateway · Lambda · WAF · CloudWatch'},
+    {id:'p605',skill:'2.3.5',title:'Response masking by caller role',diff:'h',desc:'User API returns full data to admin role, masked data (email → ***@***.com, last 4 of phone) to standard role. Role determined from Cognito groups in JWT claims.',svc:'Lambda · Cognito · API Gateway · DynamoDB'},
+    {id:'p606',skill:'2.3.6',title:'Multi-tenant data isolation patterns',diff:'h',desc:'Build 3 isolation approaches: tenant-per-table, shared table with tenant_id partition key, and row-level IAM policy via Cognito identity pool. Test cross-tenant access denial.',svc:'DynamoDB · Cognito · IAM · Lambda · API Gateway'},
+  ]}
+]},
+{id:'d3',cls:'d3',tag:'Domain 3 · 24%',title:'Deployment',tasks:[
+  {name:'Task 1 · Prepare application artifacts to be deployed',projects:[
+    {id:'p701',skill:'3.1.1',title:'Dependency packaging strategies',diff:'m',desc:'Package a Lambda 4 ways: zip with dependencies, Lambda Layer for shared libs, container image with all deps, and using CodeArtifact as private package registry.',svc:'Lambda · Lambda Layers · ECR · CodeArtifact'},
+    {id:'p702',skill:'3.1.2',title:'Proper project directory structure',diff:'e',desc:'Scaffold a production-grade serverless project: src/, tests/, infra/ (SAM/CDK), scripts/, .github/workflows/. Add a Makefile with build/test/deploy targets.',svc:'AWS SAM · CDK · CodeBuild'},
+    {id:'p703',skill:'3.1.3',title:'Git branching with deployment environments',diff:'m',desc:'Set up main→prod, develop→staging, feature/*→dev branch strategy. Each branch auto-deploys to its environment via CodePipeline. Practice git-flow with PRs.',svc:'CodeCommit · CodePipeline · Lambda'},
+    {id:'p704',skill:'3.1.4',title:'Resource sizing configuration',diff:'m',desc:'Configure Lambda memory from 128MB to 10GB. Set ECS task CPU/memory. Configure RDS instance class. Use CloudWatch to find the minimum spec that meets SLA.',svc:'Lambda · ECS · RDS · CloudWatch'},
+    {id:'p705',skill:'3.1.5',title:'AppConfig environment-specific configuration',diff:'m',desc:'Create AppConfig application with 3 environments (dev/staging/prod). Store feature flags and config per environment. Read config in Lambda at runtime with polling. Deploy config change without code deploy.',svc:'AppConfig · Lambda · CloudWatch'},
+  ]},
+  {name:'Task 2 · Test applications in development environments',projects:[
+    {id:'p801',skill:'3.2.1',title:'Full test suite with SAM and CodeBuild',diff:'m',desc:'Unit tests (pytest/jest), integration tests against SAM local, and end-to-end tests against dev stage API. All run in CodeBuild. Generate coverage report as artifact.',svc:'AWS SAM · CodeBuild · API Gateway · Lambda'},
+    {id:'p802',skill:'3.2.2',title:'Integration tests with mocked external APIs',diff:'h',desc:'App calls Stripe and a weather API. Use WireMock in CodeBuild to mock both. Write integration tests that verify your code handles success, error, and timeout from each.',svc:'Lambda · CodeBuild · WireMock · API Gateway'},
+    {id:'p803',skill:'3.2.3',title:'API Gateway stage-based testing',diff:'m',desc:'Create dev/test/prod stages in API Gateway with stage variables. Lambda reads stage variable to use different DynamoDB tables per stage. Test stage isolation end-to-end.',svc:'API Gateway · Lambda · DynamoDB'},
+    {id:'p804',skill:'3.2.4',title:'SAM multi-environment stack deployment',diff:'m',desc:'Write SAM template with Parameters. Deploy to dev (small memory, dev table), staging (medium), and prod (large, provisioned concurrency) using sam deploy --config-env.',svc:'AWS SAM · Lambda · DynamoDB · CloudFormation'},
+    {id:'p805',skill:'3.2.5',title:'Event-driven app testing strategy',diff:'h',desc:'Test EventBridge routing by sending test events via CLI. Test SQS consumers by sending direct test messages. Test Kinesis processors using sam local invoke with stream events.',svc:'EventBridge · SQS · Kinesis · Lambda · SAM'},
+  ]},
+  {name:'Task 3 · Automate deployment testing',projects:[
+    {id:'p901',skill:'3.3.1',title:'Test event library for Lambda and API Gateway',diff:'e',desc:'Create a test-events/ folder with JSON payloads for: API Gateway proxy event, SQS batch, S3 notification, Kinesis, DynamoDB Stream, EventBridge, and scheduled event.',svc:'Lambda · AWS SAM · API Gateway'},
+    {id:'p902',skill:'3.3.2',title:'API deployment to multiple environments via pipeline',diff:'m',desc:'CodePipeline deploys API Gateway to dev→staging→prod with manual approval before prod. Each stage has a different throttle limit and API key.',svc:'CodePipeline · API Gateway · Lambda'},
+    {id:'p903',skill:'3.3.3',title:'Lambda alias and weighted traffic lab',diff:'h',desc:'Deploy Lambda v1 and v2. Create LIVE alias pointing to v1. Shift 10% traffic to v2 using alias routing. Monitor errors per version. Promote v2 by updating alias to 100%.',svc:'Lambda · CloudWatch · CodeDeploy · Aliases'},
+    {id:'p904',skill:'3.3.4',title:'IaC with SAM + CloudFormation nested stacks',diff:'h',desc:'SAM template that deploys API+Lambda. Separate CloudFormation nested stack for DynamoDB + IAM. Parent stack references child outputs. Deploy entire stack with one command.',svc:'AWS SAM · CloudFormation · Lambda · DynamoDB'},
+    {id:'p905',skill:'3.3.5',title:'API Gateway environment management',diff:'m',desc:'Create dev/test/prod API Gateway stages. Different stage variables, throttle rates, WAF associations, and access logs per stage. Deploy to each and test isolation.',svc:'API Gateway · WAF · CloudWatch · Lambda'},
+    {id:'p906',skill:'3.3.6',title:'Amazon Q Developer automated test generation',diff:'e',desc:'Give Q Developer your Lambda function code. Have it generate: unit tests, edge case tests, and load test events. Run generated tests. Evaluate Q\'s coverage completeness.',svc:'Amazon Q Developer · Lambda · CodeBuild'},
+  ]},
+  {name:'Task 4 · Deploy code using CI/CD services',projects:[
+    {id:'p1001',skill:'3.4.1',title:'Lambda packaging options comparison',diff:'m',desc:'Deploy same Lambda 3 ways: zip from S3, container image from ECR, Lambda Layer for shared code. Compare cold start, deploy time, and size limits of each.',svc:'Lambda · S3 · ECR · Lambda Layers'},
+    {id:'p1002',skill:'3.4.2',title:'API Gateway custom domain with stages',diff:'m',desc:'Set up api.yourdomain.com with ACM cert. Map /v1 to prod stage, /dev to dev stage. Configure base path mapping and test routing to each stage.',svc:'API Gateway · ACM · Route 53 · CloudFront'},
+    {id:'p1003',skill:'3.4.3',title:'IaC template update workflow',diff:'m',desc:'Start with a CloudFormation stack. Add resources via change sets. Update SAM template and run sam deploy --guided. Practice rollback using previous template version.',svc:'CloudFormation · AWS SAM · Lambda'},
+    {id:'p1004',skill:'3.4.4',title:'Full environment lifecycle management',diff:'h',desc:'Manage 3 environments using CloudFormation StackSets. Create, update, and teardown each environment. Use SSM Parameter Store for environment-specific config values.',svc:'CloudFormation · SSM · Lambda · DynamoDB'},
+    {id:'p1005',skill:'3.4.5',title:'Blue/green + canary deployment lab',diff:'h',desc:'CodeDeploy blue/green for Lambda (alias-based). Canary for ECS (10% → 100%). Rolling for Elastic Beanstalk. Observe all 3 strategies and intentionally trigger rollbacks.',svc:'CodeDeploy · Lambda · ECS · Elastic Beanstalk'},
+    {id:'p1006',skill:'3.4.6',title:'Git push triggers full CI/CD pipeline',diff:'m',desc:'Push to CodeCommit triggers CodePipeline: CodeBuild runs tests → builds artifact → CodeDeploy deploys to Lambda. Fail a test intentionally and observe pipeline stop.',svc:'CodeCommit · CodePipeline · CodeBuild · CodeDeploy'},
+    {id:'p1007',skill:'3.4.7',title:'Orchestrated multi-environment workflow',diff:'h',desc:'CodePipeline with 4 stages: Source → Build → Deploy-Dev (auto) → Approve → Deploy-Prod. Use Step Functions for complex deployment orchestration logic between stages.',svc:'CodePipeline · Step Functions · Lambda · CloudFormation'},
+    {id:'p1008',skill:'3.4.8',title:'Rollback strategies implementation',diff:'h',desc:'Implement rollbacks for: Lambda (previous version alias), ECS (previous task definition), Elastic Beanstalk (previous version), CloudFormation (previous stack). Trigger and verify each.',svc:'Lambda · ECS · Elastic Beanstalk · CloudFormation'},
+    {id:'p1009',skill:'3.4.9',title:'Git labels and release management',diff:'m',desc:'Implement semantic versioning (v1.2.3 git tags). Use CodePipeline source from tag. Create release branches. Practice hotfix flow: branch from tag, fix, PR, tag new patch.',svc:'CodeCommit · CodePipeline · Lambda'},
+    {id:'p1010',skill:'3.4.10',title:'Dynamic deployments with API Gateway stage variables',diff:'m',desc:'API Gateway stage variable LAMBDA_ALIAS points to dev/staging/prod alias. Change the variable to redirect all traffic to a different Lambda version without redeploying.',svc:'API Gateway · Lambda · Aliases'},
+    {id:'p1011',skill:'3.4.11',title:'All three deployment strategies from scratch',diff:'h',desc:'Implement blue/green (swap target groups), canary (weighted routing), and rolling (batch replace) for the same application. Document when to use each based on risk tolerance.',svc:'CodeDeploy · Lambda · ECS · ALB · CloudWatch'},
+  ]}
+]},
+{id:'d4',cls:'d4',tag:'Domain 4 · 18%',title:'Troubleshooting and Optimization',tasks:[
+  {name:'Task 1 · Assist in a root cause analysis',projects:[
+    {id:'p1101',skill:'4.1.1',title:'Deliberate bug hunt',diff:'m',desc:'Deploy a Lambda with 5 intentional bugs (off-by-one, wrong env var, missing IAM permission, incorrect DynamoDB key, unhandled promise rejection). Debug each using only logs.',svc:'Lambda · CloudWatch · X-Ray'},
+    {id:'p1102',skill:'4.1.2',title:'Metrics + logs + traces trifecta',diff:'h',desc:'Instrument a multi-service app with CloudWatch metrics, structured logs, and X-Ray traces. Cause a latency spike. Use all three tools together to pinpoint root cause.',svc:'CloudWatch · X-Ray · Lambda · API Gateway · DynamoDB'},
+    {id:'p1103',skill:'4.1.3',title:'CloudWatch Logs Insights query lab',diff:'m',desc:'Generate 10k log events with errors, warnings, latency data, and user IDs. Write 10 Logs Insights queries: error rate by hour, p99 latency, top 10 slow requests, unique user count.',svc:'CloudWatch Logs Insights · Lambda'},
+    {id:'p1104',skill:'4.1.4',title:'Custom metrics with EMF',diff:'m',desc:'Use CloudWatch Embedded Metric Format to emit: order processing time, cart item count, payment success rate. Create a CloudWatch dashboard showing all 3. Set alarms on thresholds.',svc:'Lambda · CloudWatch EMF · CloudWatch Dashboards'},
+    {id:'p1105',skill:'4.1.5',title:'CloudWatch dashboard and Container Insights',diff:'m',desc:'Build a CloudWatch dashboard with widgets for: Lambda errors, API Gateway latency, DynamoDB throttles, ECS CPU/memory. Add anomaly detection to key metrics.',svc:'CloudWatch · Lambda · API Gateway · DynamoDB · ECS'},
+    {id:'p1106',skill:'4.1.6',title:'Deployment failure analysis',diff:'h',desc:'Intentionally fail a CodeDeploy deployment (bad Lambda, failing health check). Use CodeDeploy logs, CloudWatch, and CloudTrail to diagnose. Document the exact failure chain.',svc:'CodeDeploy · Lambda · CloudWatch · CloudTrail'},
+    {id:'p1107',skill:'4.1.7',title:'Service integration bug hunt',diff:'h',desc:'Build a chain: API Gateway → Lambda A → SQS → Lambda B → DynamoDB. Introduce a bug at each layer on separate deployments. Use X-Ray trace map to find each one.',svc:'X-Ray · API Gateway · Lambda · SQS · DynamoDB'},
+  ]},
+  {name:'Task 2 · Instrument code for observability',projects:[
+    {id:'p1201',skill:'4.2.1',title:'Logging vs monitoring vs observability comparison',diff:'e',desc:'Build a simple app then add: CloudWatch Logs (logging), CloudWatch metrics + alarms (monitoring), X-Ray traces + Service Map (observability). Document what each reveals.',svc:'CloudWatch · X-Ray · Lambda'},
+    {id:'p1202',skill:'4.2.2',title:'Effective logging strategy implementation',diff:'m',desc:'Add structured logging with log levels (DEBUG/INFO/WARN/ERROR), correlation IDs, request context, and redacted PII. Use log groups with retention. Enable log insights indexing.',svc:'Lambda · CloudWatch Logs · Logs Insights'},
+    {id:'p1203',skill:'4.2.3',title:'Custom metric emission from code',diff:'m',desc:'Emit custom CloudWatch metrics using PutMetricData SDK call and EMF format. Compare both methods. Create metric math expressions. Build percentile-based alarms.',svc:'Lambda · CloudWatch · SDK'},
+    {id:'p1204',skill:'4.2.4',title:'X-Ray annotations and subsegments',diff:'m',desc:'Add X-Ray annotations (user_id, tenant_id) and metadata (request payload). Create subsegments for each DynamoDB call and external API call. Filter traces by annotation.',svc:'X-Ray · Lambda · DynamoDB · API Gateway'},
+    {id:'p1205',skill:'4.2.5',title:'Quota limit alerts and deployment notifications',diff:'m',desc:'CloudWatch alarm on Lambda concurrency approaching account limit. EventBridge rule for CodeDeploy deployment success/failure → SNS → email/SMS. Service Quotas dashboard.',svc:'CloudWatch · EventBridge · SNS · CodeDeploy'},
+    {id:'p1206',skill:'4.2.6',title:'End-to-end distributed tracing',diff:'h',desc:'Trace a request through: Route 53 → CloudFront → API Gateway → Lambda → DynamoDB → S3. Enable X-Ray on every service. View complete trace in Service Map.',svc:'X-Ray · API Gateway · Lambda · DynamoDB · S3 · CloudFront'},
+    {id:'p1207',skill:'4.2.7',title:'Structured logging for all events',diff:'m',desc:'Implement structured JSON logging for: API requests, DB queries, cache hits/misses, auth events, and errors. Use consistent schema. Query with Logs Insights and CloudWatch Contributor Insights.',svc:'Lambda · CloudWatch Logs · Logs Insights'},
+    {id:'p1208',skill:'4.2.8',title:'Health checks and readiness probes',diff:'m',desc:'Add /health endpoint to Lambda (via API Gateway) and ECS container. Configure ALB health checks. ECS container health check command. Test: graceful degradation when DB is down.',svc:'Lambda · ECS · ALB · CloudWatch · Route 53'},
+  ]},
+  {name:'Task 3 · Optimize applications using AWS services',projects:[
+    {id:'p1301',skill:'4.3.1',title:'Lambda concurrency deep-dive',diff:'h',desc:'Observe reserved concurrency (limits function). Configure provisioned concurrency (pre-warms). Test account-level concurrency limit. Observe throttles, retries, and DLQ behavior.',svc:'Lambda · CloudWatch · SQS · DLQ'},
+    {id:'p1302',skill:'4.3.2',title:'Application performance profiling',diff:'h',desc:'Use X-Ray to profile end-to-end. Use Lambda Power Tuning to find optimal memory. Profile DynamoDB with CloudWatch Contributor Insights. Identify and fix the top bottleneck.',svc:'X-Ray · Lambda · DynamoDB · CloudWatch'},
+    {id:'p1303',skill:'4.3.3',title:'Minimum viable compute sizing',diff:'m',desc:'Run a CPU-bound and memory-bound Lambda workload. Graph duration×price for memory 128→3008MB. Find crossover point. Apply same exercise to ECS task sizing.',svc:'Lambda · ECS · CloudWatch'},
+    {id:'p1304',skill:'4.3.4',title:'SNS subscription filter policy optimization',diff:'m',desc:'SNS topic with 4 SQS subscribers. Add filter policies so each queue only receives relevant message attributes. Measure how filtering reduces SQS processing cost and Lambda invocations.',svc:'SNS · SQS · Lambda · CloudWatch'},
+    {id:'p1305',skill:'4.3.5',title:'CloudFront cache header tuning',diff:'m',desc:'API behind CloudFront. Set Cache-Control headers per route: no-cache (user data), 60s (product list), 1d (static assets). Verify caching using curl -I and CloudFront cache statistics.',svc:'CloudFront · API Gateway · Lambda · S3'},
+    {id:'p1306',skill:'4.3.6',title:'Application-level caching architecture',diff:'h',desc:'Add 3 caching layers: CloudFront (CDN), API Gateway caching (response cache), ElastiCache Redis (data cache). Measure hit rate and latency at each layer. Test cache invalidation.',svc:'CloudFront · API Gateway · ElastiCache · Lambda · DynamoDB'},
+    {id:'p1307',skill:'4.3.7',title:'Resource usage optimization audit',diff:'h',desc:'Profile a multi-service app for waste: over-provisioned Lambda memory, unused DynamoDB capacity, idle ECS tasks, orphaned S3 objects. Fix each and document savings.',svc:'Lambda · DynamoDB · ECS · S3 · Cost Explorer'},
+    {id:'p1308',skill:'4.3.8',title:'Performance issue analysis workflow',diff:'h',desc:'Intentionally create 4 performance issues: N+1 DynamoDB queries, Lambda cold start, SQS queue depth buildup, and CloudFront cache miss spike. Identify and fix each.',svc:'DynamoDB · Lambda · SQS · CloudFront · X-Ray'},
+    {id:'p1309',skill:'4.3.9',title:'Log-based bottleneck identification',diff:'m',desc:'Parse Lambda logs to find slow handler invocations. Use Logs Insights to graph latency percentiles over time. Identify patterns: time-of-day spikes, specific user actions, cold starts.',svc:'CloudWatch Logs Insights · Lambda · X-Ray'},
+  ]}
+]}
+];
+
+const SK = 'dva_full_v3';
+
+function load() {
+  try {
+    let curr = JSON.parse(localStorage.getItem(SK));
+    if (curr) return curr;
+    
+    let old = JSON.parse(localStorage.getItem('dva_full_v2') || '{}');
+    let st = {};
+    for (let k in old) {
+      if (old[k] === true) {
+        st[k] = { status: 'done', start: Date.now() - 3600000, end: Date.now(), timeSpent: 3600000 };
+      }
+    }
+    return st;
+  } catch { return {}; }
+}
+function save(s) { try { localStorage.setItem(SK, JSON.stringify(s)); } catch{} }
+
+let ST = load();
+let CF = 'all';
+
+let META = JSON.parse(localStorage.getItem(SK+'_meta') || '{"focusTime":0, "streak":0, "lastDate":null, "startedCount":0, "timePlanning":0, "timeCoding":0, "timeTesting":0}');
+function saveMeta() { localStorage.setItem(SK+'_meta', JSON.stringify(META)); }
+
+
+function pauseStage(id) {
+  let s = ST[id];
+  if (!s || s.isPaused || !s.lastStageStart) return;
+  let now = Date.now();
+  let spentInStage = now - s.lastStageStart;
+  s.stages[s.status] = (s.stages[s.status] || 0) + spentInStage;
+  
+  if(s.status === 'planning') META.timePlanning += spentInStage;
+  if(s.status === 'coding') META.timeCoding += spentInStage;
+  if(s.status === 'testing') META.timeTesting += spentInStage;
+  META.focusTime += spentInStage;
+  
+  s.lastStageStart = null;
+  s.isPaused = true;
+  save(ST);
+  saveMeta();
+  render();
+}
+
+function resumeStage(id) {
+  let s = ST[id];
+  if (!s || !s.isPaused) return;
+  s.lastStageStart = Date.now();
+  s.isPaused = false;
+  save(ST);
+  render();
+}
+
+// Lifecycle mapping
+
+const STAGES = ['todo', 'planning', 'coding', 'testing', 'done'];
+
+function updateStatus(id, stat, title) {
+  if (!ST[id]) ST[id] = { status: 'todo', stages: { planning:0, coding:0, testing:0 }, lastStageStart: null, start: null, end: null, timeSpent: 0 };
+  let s = ST[id];
+  let now = Date.now();
+  
+  // ensure new structure is present for migrated tasks
+  if(!s.stages) s.stages = { planning:0, coding:0, testing:0 };
+  
+  const projEl = document.getElementById('proj-' + id);
+  let prevStat = s.status;
+  
+  // Accumulate time for previous stage if any
+  if (prevStat !== 'todo' && prevStat !== 'done' && !s.isPaused && s.lastStageStart) {
+      let spentInStage = now - s.lastStageStart;
+      s.stages[prevStat] = (s.stages[prevStat] || 0) + spentInStage;
+      
+      // Add to global meta
+      if(prevStat === 'planning') META.timePlanning += spentInStage;
+      if(prevStat === 'coding') META.timeCoding += spentInStage;
+      if(prevStat === 'testing') META.timeTesting += spentInStage;
+      META.focusTime += spentInStage;
+  }
+
+  s.status = stat;
+  s.isPaused = false;
+  s.lastStageStart = now;
+
+  if (stat === 'planning') {
+    if (!s.start) {
+      s.start = now;
+      META.startedCount = (META.startedCount || 0) + 1;
+    }
+    if(projEl) playAnim(projEl, 'anim-start');
+  } 
+  else if (stat === 'coding' || stat === 'testing') {
+      if(projEl) playAnim(projEl, 'anim-start');
+  }
+  else if (stat === 'done') {
+      s.end = now;
+      s.timeSpent = Object.values(s.stages).reduce((a,b)=>a+b, 0) || (now - (s.start || now));
+      
+      let today = new Date().toDateString();
+      if (META.lastDate !== today) {
+        META.streak += 1;
+        META.lastDate = today;
+      }
+      
+      if(projEl) playAnim(projEl, 'anim-complete');
+      showAchievement("Quest Complete!", title || "Skill acquired.");
+      fireConfetti();
+  } else if (stat === 'todo') {
+      delete ST[id];
+  }
+  
+  save(ST);
+  saveMeta();
+  
+  if(stat === 'todo' || !projEl) {
+    render();
+  } else {
+    setTimeout(() => render(), 800);
+  }
+}
+
+// Timer logic
+setInterval(() => {
+    let now = Date.now();
+    document.querySelectorAll('[data-timer]').forEach(el => {
+        let id = el.getAttribute('data-id');
+        let stage = el.getAttribute('data-timer');
+        let s = ST[id];
+        if(s && s.status === stage && s.lastStageStart) {
+            let activeMs = now - s.lastStageStart;
+            let totalMs = (s.stages[stage] || 0) + activeMs;
+            let mins = Math.floor(totalMs / 60000);
+            let secs = Math.floor((totalMs % 60000) / 1000);
+            el.innerHTML = `⏱️ ${mins}m ${secs}s`;
+        }
+    });
+}, 1000);
+
+
+function playAnim(el, animClass) {
+  el.classList.add(animClass);
+  setTimeout(() => { el.classList.remove(animClass); }, 1000);
+}
+
+function showAchievement(msg, sub) {
+  let ach = document.getElementById('achievement');
+  if(!ach) {
+    ach = document.createElement('div');
+    ach.id = 'achievement';
+    ach.className = 'achievement';
+    document.body.appendChild(ach);
+  }
+  ach.innerHTML = `<div class="ach-icon">🌟</div><div><div class="ach-text">${msg}</div><div class="ach-sub">${sub}</div></div>`;
+  
+  void ach.offsetWidth; // trigger reflow
+  ach.classList.add('show');
+  setTimeout(() => ach.classList.remove('show'), 4000);
+}
+
+function fireConfetti() {
+  const colors = ['#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#ef4444', '#fff'];
+  for (let i = 0; i < 70; i++) {
+    let conf = document.createElement('div');
+    conf.style.position = 'fixed';
+    let size = Math.random() * 8 + 6;
+    conf.style.width = size + 'px';
+    conf.style.height = size + 'px';
+    conf.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    
+    let startX = window.innerWidth / 2;
+    let startY = window.innerHeight;
+    conf.style.left = startX + 'px';
+    conf.style.top = startY + 'px';
+    conf.style.zIndex = '9999';
+    conf.style.pointerEvents = 'none';
+    conf.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    
+    document.body.appendChild(conf);
+    
+    let angle = (Math.random() * Math.PI) - Math.PI; 
+    let velocity = Math.random() * 25 + 15;
+    let dx = Math.cos(angle) * velocity;
+    let dy = Math.sin(angle) * velocity;
+    let gravity = 0.6;
+    
+    let x = startX;
+    let y = startY;
+    let t = 0;
+    let anim = setInterval(() => {
+      x += dx;
+      y += dy;
+      dy += gravity;
+      t++;
+      conf.style.left = x + 'px';
+      conf.style.top = y + 'px';
+      conf.style.transform = `rotate(${t * 15}deg)`;
+      
+      if (y > window.innerHeight + 100) {
+        clearInterval(anim);
+        conf.remove();
+      }
+    }, 20);
+  }
+}
+
+function exportData() {
+  const data = { ST, META };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'dva_c02_savegame.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showAchievement("Game Saved!", "Metrics successfully exported.");
+}
+
+function importData(event) {
+  const file = event.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if(data.ST && data.META) {
+        ST = data.ST;
+        META = data.META;
+        save(ST);
+        saveMeta();
+        render();
+        showAchievement("Game Loaded!", "Welcome back, architect.");
+      } else {
+        alert("Invalid save file format.");
+      }
+    } catch(err) {
+      alert("Error reading save file.");
+    }
+  };
+  reader.readAsText(file);
+}
+
+function filt(f, el) {
+  CF = f;
+  document.querySelectorAll('.fb').forEach(b => b.classList.remove('on'));
+  el.classList.add('on');
+  render();
+}
+
+function resetAll() {
+  if (confirm('Are you sure you want to reset all progress and metrics?')) {
+    ST = {};
+    META = {focusTime:0, streak:0, lastDate:null, startedCount:0, timePlanning:0, timeCoding:0, timeTesting:0};
+    save(ST);
+    saveMeta();
+    render();
+  }
+}
+
+function toggleDomain(id) {
+  const l = document.getElementById('dlist-'+id);
+  const c = document.getElementById('dchev-'+id);
+  const open = l.style.display !== 'none';
+  l.style.display = open ? 'none' : '';
+  c.classList.toggle('open', !open);
+}
+
+function formatTime(ms) {
+  if (!ms) return '0h 0m';
+  let mins = Math.floor(ms / 60000);
+  let hrs = Math.floor(mins / 60);
+  mins = mins % 60;
+  return `${hrs}h ${mins}m`;
+}
+function formatDate(ts) {
+  if (!ts) return 'N/A';
+  return new Date(ts).toLocaleString([], { month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' });
+}
+
+function render() {
+  const allP = DATA.flatMap(d => d.tasks.flatMap(t => t.projects));
+  const total = allP.length;
+  
+  let doneCount = 0;
+  let progressCount = 0;
+  let skillsHit = new Set();
+  
+  allP.forEach(p => {
+    let st = ST[p.id];
+    if (st && st.status === 'done') { doneCount++; skillsHit.add(p.skill); }
+    if (st && st.status !== 'todo' && st.status !== 'done') { progressCount++; }
+  });
+
+  const completionPct = total === 0 ? 0 : Math.round((doneCount / total) * 100);
+  const discipline = META.startedCount ? Math.round((doneCount / META.startedCount) * 100) : 0;
+  
+  // Behavior Analysis Archetype
+  let tP = META.timePlanning || 0;
+  let tC = META.timeCoding || 0;
+  let tT = META.timeTesting || 0;
+  let totalSDE = tP + tC + tT || 1; // avoid / 0
+  let archetype = "Initiate your journey";
+  if(tC > tP && tC > tT) archetype = "The Fast Coder (Bias for Action)";
+  else if (tP > tC) archetype = "The Meticulous Planner";
+  else if (tT > tC) archetype = "The Quality Enforcer (Testing heavy)";
+
+  // Render Dashboard
+  const dashHTML = `
+    <div class="dashboard-grid">
+      <div class="metric-card m-blue">
+        <div class="m-title">Project Lifecycle</div>
+        <div class="m-value">${doneCount} <span style="font-size:1.2rem;color:var(--text-tertiary)">/ ${total}</span></div>
+        <div class="m-desc">${progressCount} active · ${total - doneCount - progressCount} queued</div>
+      </div>
+      <div class="metric-card m-purple">
+        <div class="m-title">SDE Behavior Analysis</div>
+        <div class="m-value" style="font-size:1.5rem;">${Math.round(tP/totalSDE*100)}% <span style="font-size:1rem;color:var(--text-tertiary)">Plan</span> · ${Math.round(tC/totalSDE*100)}% <span style="font-size:1rem;color:var(--text-tertiary)">Code</span></div>
+        <div class="m-desc">Archetype: <strong>${archetype}</strong></div>
+      </div>
+      <div class="metric-card m-green">
+        <div class="m-title">Consistency Streak</div>
+        <div class="m-value">${META.streak} <span style="font-size:1.2rem;color:var(--text-tertiary)">days</span></div>
+        <div class="m-desc">Consecutive days of completing tasks</div>
+      </div>
+      <div class="metric-card m-yellow">
+        <div class="m-title">Deep Focus (All Stages)</div>
+        <div class="m-value">${formatTime(META.focusTime)}</div>
+        <div class="m-desc">Total time invested in hands-on building</div>
+      </div>
+    </div>
+  `;
+  document.getElementById('dashboard-root').innerHTML = dashHTML;
+
+  // Render Projects
+  const root = document.getElementById('root');
+  root.innerHTML = '';
+  
+  DATA.forEach(d => {
+    const dProjs = d.tasks.flatMap(t => t.projects);
+    const dDone = dProjs.filter(p => ST[p.id] && ST[p.id].status === 'done').length;
+    const pct = Math.round((dDone / dProjs.length) * 100);
+
+    const tasksHTML = d.tasks.map(t => {
+      let projs = t.projects.filter(p => {
+        let st = ST[p.id] ? ST[p.id].status : 'todo';
+        if (CF === 'todo') return st === 'todo';
+        if (CF === 'progress') return st !== 'todo' && st !== 'done';
+        if (CF === 'done') return st === 'done';
+        if (CF === 'hard') return p.diff === 'h' && st !== 'done';
+        return true;
+      });
+      
+      const projsHTML = projs.length ? projs.map(p => {
+        let st = ST[p.id] || { status: 'todo', stages: {} };
+        let sClass = st.status === 'done' ? ' s-done' : (st.status !== 'todo' ? ' s-progress' : '');
+        
+        let metaHtml = '';
+        if (st.status !== 'todo') {
+           metaHtml = `<div class="pmeta">`;
+           if (st.start) metaHtml += `<span><strong>Started:</strong> ${formatDate(st.start)}</span>`;
+           
+           if (st.status === 'planning' || st.status === 'coding' || st.status === 'testing') {
+              let timerClass = 't-' + st.status;
+              if (st.isPaused) {
+                  let totalMs = st.stages[st.status] || 0;
+                  let mins = Math.floor(totalMs / 60000);
+                  let secs = Math.floor((totalMs % 60000) / 1000);
+                  metaHtml += `<span class="live-timer paused ${timerClass}">⏱️ ${mins}m ${secs}s (Paused)</span>`;
+              } else {
+                  metaHtml += `<span class="live-timer ${timerClass}" data-timer="${st.status}" data-id="${p.id}">⏱️ 0m 0s</span>`;
+              }
+           }
+           
+           if (st.end) metaHtml += `<span><strong>Completed:</strong> ${formatDate(st.end)}</span>`;
+           if (st.timeSpent) metaHtml += `<span><strong>Total Focus:</strong> ${formatTime(st.timeSpent)}</span>`;
+           metaHtml += `</div>`;
+        }
+
+        // Render Action Buttons
+        let btnHtml = '';
+        if (st.status === 'todo') {
+            btnHtml += `<button class="btn-act btn-start" onclick="updateStatus('${p.id}', 'planning', \`${p.title}\`)">Start Planning</button>`;
+        } else {
+            if (st.status !== 'done') {
+                if (st.isPaused) {
+                    btnHtml += `<button class="btn-act btn-resume" onclick="resumeStage('${p.id}')">Resume</button>`;
+                } else {
+                    btnHtml += `<button class="btn-act btn-break" onclick="pauseStage('${p.id}')">Take a Break</button>`;
+                }
+            }
+            if (st.status === 'planning') btnHtml += `<button class="btn-act btn-plan" onclick="updateStatus('${p.id}', 'coding', \`${p.title}\`)">Move to Coding</button>`;
+            if (st.status === 'coding') btnHtml += `<button class="btn-act btn-code" onclick="updateStatus('${p.id}', 'testing', \`${p.title}\`)">Move to Testing</button>`;
+            if (st.status === 'testing') btnHtml += `<button class="btn-act btn-test" onclick="updateStatus('${p.id}', 'done', \`${p.title}\`)">Complete Project</button>`;
+            btnHtml += `<button class="btn-act btn-reset" onclick="updateStatus('${p.id}', 'todo', \`${p.title}\`)">Reset</button>`;
+        }
+
+        // Render Stage Bar
+        let stagesBar = '';
+        if (st.status !== 'todo') {
+            const actI = ['todo','planning','coding','testing','done'].indexOf(st.status);
+            stagesBar = `<div class="stage-bar">
+                <div class="stage ${actI>1?'done':actI===1?'active':''}"><div class="stage-fill"></div></div>
+                <div class="stage ${actI>2?'done':actI===2?'active':''}"><div class="stage-fill"></div></div>
+                <div class="stage ${actI>3?'done':actI===3?'active':''}"><div class="stage-fill"></div></div>
+                <div class="stage ${actI===4?'done':''}"><div class="stage-fill"></div></div>
+            </div>`;
+        }
+
+        return `
+        <div class="proj${sClass}" id="proj-${p.id}">
+          <div class="p-actions">
+            ${btnHtml}
+          </div>
+          <div class="pbody">
+            <div class="prow">
+              <span class="ptitle">${p.title}</span>
+              <span class="skill-tag">${p.skill}</span>
+              <span class="diff ${p.diff}">${p.diff === 'e' ? 'easy' : p.diff === 'm' ? 'medium' : 'hard'}</span>
+            </div>
+            <div class="pdesc">${p.desc}</div>
+            <div class="psvc">AWS Services: ${p.svc}</div>
+            ${metaHtml}
+            ${stagesBar}
+          </div>
+        </div>`;
+      }).join('') : '';
+      
+      return projsHTML ? `<div class="task-group"><div class="tg-header">${t.name}</div>${projsHTML}</div>` : '';
+    }).join('');
+
+    if (tasksHTML.trim() === '') return; // Hide empty domains based on filter
+
+    const el = document.createElement('div');
+    el.className = `domain ${d.cls}`;
+    el.innerHTML = `
+      <div class="dhead" onclick="toggleDomain('${d.id}')">
+        <span class="dtag">${d.tag}</span>
+        <span class="dtitle">${d.title}</span>
+        <span class="dprog">${dDone} / ${dProjs.length}</span>
+        <div class="dchev open" id="dchev-${d.id}">▼</div>
+      </div>
+      <div class="pbar-wrap"><div class="pbar" style="width:${pct}%"></div></div>
+      <div id="dlist-${d.id}">${tasksHTML}</div>`;
+    root.appendChild(el);
+  });
+  
+  if(root.innerHTML === '') {
+    root.innerHTML = '<div class="empty">No projects match this filter.</div>';
+  }
+}
+render();
+
+</script>
